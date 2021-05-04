@@ -3,6 +3,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {useState} from "react";
 
 
+const menuIconSize = 40;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         menuButton: {
@@ -11,13 +12,14 @@ const useStyles = makeStyles((theme: Theme) =>
         appbar: {
             background: "transparent",
             boxShadow: "none",
+            position: "static",
+            height: 0,
         },
         menuIconBox: {
             backgroundColor: "orange",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            padding: 5,
             borderRadius: 5,
             marginTop: 10,
 
@@ -25,6 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
         backdrop: {
             zIndex: theme.zIndex.drawer + 1,
             color: '#fff',
+            backgroundColor: "rgba(255,102,0,0.8)",
+        },
+        icon: {
+            width: menuIconSize,
+            height: menuIconSize,
         },
     }),
 );
@@ -32,22 +39,22 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function NavigationBar() {
     const classes = useStyles();
     const [openBackdrop, setOpenBackdrop] = useState(false);
-    const handleToggle = () => {
+    const handleToggle = () => { // Toggle backdrop
         setOpenBackdrop(!openBackdrop);
     }
     return (
         <>
-            <AppBar className={classes.appbar} position="static">
+            <AppBar className={classes.appbar}>
                 <Toolbar>
                     <div className={classes.menuIconBox}>
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleToggle}>
-                                <MenuIcon />
+                                <MenuIcon className={classes.icon} />
                         </IconButton>
                     </div>
                 </Toolbar>
             </AppBar>
             <Backdrop className={classes.backdrop} open={openBackdrop} onClick={handleToggle}>
-                Test
+                <h1>MENYKNAPPER VIL VISES HER</h1>
             </Backdrop>
         </>
     )
