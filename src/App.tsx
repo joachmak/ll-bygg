@@ -5,6 +5,7 @@ import NavigationBar from "./components/NavigationBar";
 import About from "./components/about/About";
 import {createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
 import Services from "./components/services/Services";
+import Footer from "./components/Footer";
 
 function App() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -24,7 +25,7 @@ function App() {
             <About margin={margin} />
             <Divider className={classes.divider} />
             <Services margin={margin} />
-            <Divider className={classes.divider} />
+            <Footer />
         </div>
     );
 }

@@ -27,7 +27,6 @@ export default function Services(props:{margin:number}) {
     return(
         <>
             <Container className={classes.container}>
-
                 <Grid item lg={8} md={10} xs={12} className={classes.gridContainer}>
                     <Grid container direction={"column"}>
                         <Typography variant={"h4"} className={classes.title}>
@@ -40,7 +39,7 @@ export default function Services(props:{margin:number}) {
                                         <Typography variant={"h5"} className={classes.title} color={"textSecondary"}>
                                             <b>{service[0]}</b>
                                         </Typography>
-                                        <Typography variant={"body2"} className={classes.title} color={"textSecondary"}>
+                                        <Typography variant={"body2"} className={classes.text} color={"textSecondary"}>
                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, autem excepturi? Ad aliquam aliquid at atque, ex facere magnam modi nostrum perspiciatis repellat sapiente tempore totam. Adipisci corporis dolorem ipsa.
                                         </Typography>
                                     </Grid>
