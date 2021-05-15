@@ -1,22 +1,22 @@
 import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        container: {
-            display: "flex",
-            justifyContent: "center",
-            margin: "50px auto",
-            textAlign: "left",
-        },
-        title: {
-            marginBottom: 15,
-        },
-        text: {
-            lineHeight: "200%",
-        }
-    }),
-);
-export default function About() {
+export default function About(props: {margin:number}) {
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+            container: {
+                display: "flex",
+                justifyContent: "center",
+                margin: props.margin + "px auto",
+                textAlign: "left",
+            },
+            title: {
+                marginBottom: 15,
+            },
+            text: {
+                lineHeight: "200%",
+            }
+        }),
+    );
     const classes = useStyles()
     return (
         <>
@@ -33,6 +33,7 @@ export default function About() {
                         <br /><br />
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cumque dolor maxime perspiciatis quia. Ab alias, assumenda, est ex, magnam molestiae mollitia natus numquam quas quasi totam velit vero voluptates?
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum itaque obcaecati optio saepe sequi? Beatae consequuntur corporis deleniti dolorem ex, incidunt libero nobis nulla obcaecati odio sequi, soluta unde vero?
+                        <br /><br />
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem beatae dolores eius error esse exercitationem fugit harum in incidunt ipsum, itaque, labore officiis praesentium provident repellendus repudiandae sapiente voluptatem?
                     </Typography>
                 </Grid>
