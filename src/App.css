@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+::selection {
+  color: darkorange; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: darkorange; /* Gecko Browsers */
+}
