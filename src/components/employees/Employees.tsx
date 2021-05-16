@@ -23,7 +23,7 @@ export default function Employees(props: {margin:number}) {
     let employees = [
             {
                 name: "Ludvig Vik Løite",
-                role: "Bedriftseier",
+                role: "Innehaver",
                 description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur dolor eos et labore officia tempore ut! Alias amet beatae deserunt dolore fugiat id, in quo, recusandae sed ut voluptates.",
                 url: "https://intern.orakel.ntnu.no/media/cache/80/c4/80c41993bd39581dcaec44b6b2101f36.png",
             },

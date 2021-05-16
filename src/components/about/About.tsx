@@ -26,7 +26,7 @@ export default function About(props: {margin:number}) {
                         Om oss
                     </Typography>
                     <Typography variant={"caption"} color={"textSecondary"} className={classes.title}>
-                        <b>STIFTET I 2019</b>
+                        <b>STIFTET I 2016</b>
                     </Typography>
                     <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi commodi dignissimos error fugit iste labore, maxime necessitatibus vero! Consectetur, dignissimos fugit id ipsam iure laboriosam non quas quibusdam veritatis voluptate?

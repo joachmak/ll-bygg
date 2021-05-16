@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         header: {
             height: "100vh",
-
             background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + img.default + "')",
             backgroundSize: "cover",
             // @ts-ignore
