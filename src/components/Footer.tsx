@@ -1,6 +1,9 @@
 import {Container, createStyles, Grid, Link, makeStyles, Theme, Typography} from "@material-ui/core";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import PhoneIcon from '@material-ui/icons/Phone';
+import EmailIcon from '@material-ui/icons/Email';
+import RoomIcon from '@material-ui/icons/Room';
 
 export default function Footer() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -41,7 +44,24 @@ export default function Footer() {
             },
             icon: {
                 color: "white",
-                marginRight: 5
+                marginRight: 10
+            },
+            iconText: {
+                display: "flex",
+                alignItems: "center",
+                color: "white",
+                textDecoration: "none",
+            },
+            map: {
+                height: "300px",
+                border: "5px solid #999",
+                borderRadius: 5,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+            },
+            link: {
+                color: "orange",
             }
         }),
     );
@@ -51,24 +71,38 @@ export default function Footer() {
             <div className={classes.root}>
                 <Container className={classes.container}>
                     <Grid item lg={8} md={10} xs={12} className={classes.gridContainer}>
-                        <Grid item xs={12} className={classes.center}>
-                            <Link href={"#"}><InstagramIcon className={classes.icon} /></Link>
-                            <Link href={"#"}><FacebookIcon className={classes.icon} /></Link>
-                        </Grid>
-                        <Grid item lg={6} sm={12}>
-                            <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi commodi dignissimos error fugit iste labore, maxime necessitatibus vero! Consectetur, dignissimos fugit id ipsam iure laboriosam non quas quibusdam veritatis voluptate?
-                                <br /><br />
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cumque dolor maxime perspiciatis quia. Ab alias, assumenda, est ex, magnam molestiae mollitia natus numquam quas quasi totam velit vero voluptates?
-                            </Typography>
-                        </Grid>
-                        <Grid item lg={6} sm={12}>
-
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant={"body2"} className={classes.textFaded + " " + classes.center + " " + classes.marginTop15}>
-                                <b>Nettside laget av <Link href={"#"}>Joachim Maksim</Link></b>
-                            </Typography>
+                        <Grid container spacing={4} alignItems={"center"}>
+                            <Grid item xs={12} className={classes.center}>
+                                <Link href={"#"} className={classes.icon}><InstagramIcon /></Link>
+                                <Link href={"#"} className={classes.icon}><FacebookIcon /></Link>
+                            </Grid>
+                            <Grid item lg={6} sm={12}>
+                                <Typography variant={"body2"} className={classes.text}>
+                                    <Link href={"tel: 4747300567"} className={classes.iconText}>
+                                        <PhoneIcon className={classes.icon} /> (+47) 473 00 567
+                                    </Link>
+                                </Typography>
+                                <Typography variant={"body2"} className={classes.text}>
+                                    <Link href={"mailto: joachimmaksim@gmail.com"} className={classes.iconText}>
+                                        <EmailIcon className={classes.icon} /> joachimmaksim@gmail.com
+                                    </Link>
+                                </Typography>
+                                <Typography variant={"body2"} className={classes.text}>
+                                    <Link href={"mailto: joachimmaksim@gmail.com"} className={classes.iconText}>
+                                        <RoomIcon className={classes.icon} /> Odd Brochmanns veg 2, 7051 Trondheim
+                                    </Link>
+                                </Typography>
+                            </Grid>
+                            <Grid item lg={6} sm={12}>
+                                <div className={classes.map}>
+                                    <Typography variant={"body2"} className={classes.text}>Kart vil vises her</Typography>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant={"body2"} className={classes.textFaded + " " + classes.center + " " + classes.marginTop15}>
+                                    <b>Nettside laget av <Link href={"#"} className={classes.link}>Foxden Consulting</Link> (2021)</b>
+                                </Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Container>
