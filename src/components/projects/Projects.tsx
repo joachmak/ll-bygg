@@ -20,15 +20,15 @@ function ProjectGrid() {
     )
 }
 
-function ProjectDesc() {
+function ProjectDesc(props: {isMobile:boolean}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectDesc: {
-                padding: 15,
+                padding: props.isMobile ? "5px 0" : 5,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                maxHeight: "100%",
+                height: "100%",
                 maxWidth: "100%",
             },
             title: {
@@ -36,12 +36,13 @@ function ProjectDesc() {
             },
             text: {
                 lineHeight: "200%",
+                marginBottom: props.isMobile ? "3.5em" : "0",
             },
         }),
     );
     const classes = useStyles();
     const textTitleStyle = "h5"; // Anbefaler h5
-    const textStyle = "body1"; // Anbefaler body1, body2 eller caption
+    const textStyle = "body2"; // Anbefaler body1, body2 eller caption
     return (
         <Grid item sm={6} xs={12}>
             <div className={classes.projectDesc}>
@@ -50,8 +51,6 @@ function ProjectDesc() {
                         Prosjekt-tittel
                     </Typography>
                     <Typography variant={textStyle} className={classes.text} color={"textSecondary"}>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum eos ex hic id non nostrum, obcaecati porro. Doloribus laboriosam laborum libero mollitia nisi, officia perspiciatis quia repudiandae sit tempora velit.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum eos ex hic id non nostrum, obcaecati porro. Doloribus laboriosam laborum libero mollitia nisi, officia perspiciatis quia repudiandae sit tempora velit.
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum eos ex hic id non nostrum, obcaecati porro. Doloribus laboriosam laborum libero mollitia nisi, officia perspiciatis quia repudiandae sit tempora velit.
                     </Typography>
                 </div>
@@ -105,17 +104,17 @@ export default function Projects(props: {margin:number}) {
                                 return isMobile ?
                                     <>
                                         <ProjectGrid />
-                                        <ProjectDesc />
+                                        <ProjectDesc isMobile={isMobile} />
                                     </>
                                 :
                                 toggle ?
                                     <>
                                         <ProjectGrid />
-                                        <ProjectDesc />
+                                        <ProjectDesc isMobile={isMobile} />
                                     </>
                                     :
                                     <>
-                                        <ProjectDesc />
+                                        <ProjectDesc isMobile={isMobile} />
                                         <ProjectGrid />
                                     </>
                             }
