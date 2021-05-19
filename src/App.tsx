@@ -12,7 +12,7 @@ import {
     createMuiTheme,
     ThemeProvider,
 } from '@material-ui/core/styles';
-import {orange} from "@material-ui/core/colors";
+import Projects from "./components/projects/Projects";
 
 
 function App() {
@@ -41,6 +41,8 @@ function App() {
                 <About margin={margin} />
                 <Divider className={classes.divider} />
                 <Services margin={margin} />
+                <Divider className={classes.divider} />
+                <Projects margin={margin} />
                 <Divider className={classes.divider} />
                 <Employees margin={margin} />
                 <Divider className={classes.divider} />
