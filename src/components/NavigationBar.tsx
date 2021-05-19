@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "white",
             backgroundColor: "rgba(255,140,0,0.8)",
             position: "fixed",
+            zIndex: 1,
         },
         backdrop: {
             zIndex: theme.zIndex.drawer + 1,
