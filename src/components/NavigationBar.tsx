@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 5,
-            marginTop: 10,
-
+            marginTop: 20,
+            color: "white",
+            backgroundColor: "rgba(255,140,0,0.8)",
+            position: "fixed",
         },
         backdrop: {
             zIndex: theme.zIndex.drawer + 1,
@@ -55,7 +57,7 @@ export default function NavigationBar() {
     const menuItems:string[] = ["hjem", "om oss", "våre tjenester", "våre prosjekter", "kontakt oss", "våre ansatte"]
     return (
         <>
-            <AppBar className={classes.appbar}>
+            <AppBar position={"fixed"} className={classes.appbar}>
                 <Toolbar>
                     <div className={classes.menuIconBox}>
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleToggle}>
