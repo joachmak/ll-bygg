@@ -30,14 +30,13 @@ const useStyles = makeStyles((theme: Theme) =>
         backdrop: {
             zIndex: theme.zIndex.drawer + 1,
             color: '#fff',
-            backgroundColor: "rgba(255,102,0,0.9)",
+            backgroundColor: "rgba(255,102,0,0.93)",
         },
         icon: {
             width: menuIconSize,
             height: menuIconSize,
         },
         menuText: {
-            textShadow: "0px 3px 4px rgba(0,0,0,0.4)",
             flex: 1,
         },
         menuTextContainer: {
