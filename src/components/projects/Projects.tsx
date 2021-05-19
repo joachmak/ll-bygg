@@ -38,7 +38,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
             projectHoverDiv: {
                 minWidth: "100%",
                 minHeight: 50,
-                backgroundColor: "rgba(0,0,0,0.8)",
+                backgroundColor: "rgba(255,140,0, 0.9)",
                 color: "white",
                 display: "flex",
                 alignItems: "center",
@@ -81,11 +81,11 @@ function ProjectGrid(props: {projectData:projectObj}) {
     )
 }
 
-function ProjectDesc(props: {isMobile:boolean, isLast:boolean, projectData:projectObj}) {
+function ProjectDesc(props: {isMobile:boolean, toggle:boolean, isLast:boolean, projectData:projectObj}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectDesc: {
-                padding: props.isMobile ? "5px 0" : 5,
+                padding: props.isMobile ? "5px 0" : (props.toggle ? "5px 15px" : "5px 15px 5px 0"),
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -169,17 +169,17 @@ export default function Projects(props: {margin:number}) {
                                 return isMobile ?
                                     <>
                                         <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
                                     </>
                                 :
                                 toggle ?
                                     <>
                                         <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
                                     </>
                                     :
                                     <>
-                                        <ProjectDesc projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
                                         <ProjectGrid key={project.key} projectData={project} />
                                     </>
                             }

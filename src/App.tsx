@@ -6,7 +6,6 @@ import About from "./components/about/About";
 import {createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
 import Services from "./components/services/Services";
 import Footer from "./components/Footer";
-import Employees from "./components/employees/Employees";
 import ContactForm from "./components/contactform/ContactForm";
 import {
     createMuiTheme,

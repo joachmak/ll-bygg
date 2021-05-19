@@ -35,6 +35,12 @@ export default function ProjectCarousel(props:carouselProps) {
                         backgroundColor: 'orange',
                     }
                 }}
+                activeIndicatorIconButtonProps={{
+                    style: {
+                        backgroundColor: 'darkorange',
+                        color: "orange",
+                    }
+                }}
                 buttonWrapper={
                     {
                         style: {
