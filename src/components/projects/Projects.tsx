@@ -8,6 +8,7 @@ interface projectObj {
 }
 
 function ProjectGrid(props: {projectData:projectObj}) {
+    let [projectHover, setProjectHover] = useState(false);
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectGrid: {
@@ -17,14 +18,41 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 backgroundImage: "url('https://previews.123rf.com/images/panoramarx/panoramarx1512/panoramarx151200001/49902703-construction-of-a-wood-plastic-composite-garden-terrace.jpg')",
                 backgroundSize: "cover",
                 minHeight: 250,
+                padding: 0,
+                display: "flex",
+                alignItems: "flex-end",
             },
+            displayProjectText: {
+                color: "white",
+            },
+            projectHoverDiv: {
+                minWidth: "100%",
+                minHeight: 75,
+                backgroundColor: "rgba(0,0,0,0.8)",
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: projectHover ? "100%" : "0%",
+                transition: "0.2s ease-in-out"
+            }
         }),
     );
     const classes = useStyles();
     return (
         <Grid item sm={6} xs={12}>
             {/*@ts-ignore*/}
-            <Button id={"" + props.id} className={classes.projectGrid} onClick={e => {console.log("Click " + e.target.id)}}>
+            <Button id={"" + props.id} className={classes.projectGrid} onMouseEnter={() => setProjectHover(true)} onMouseLeave={() => setProjectHover(false)} onClick={e => {console.log("Click " + e.target.id)}}>
+                <div className={classes.projectHoverDiv}>
+                    <Typography variant={"body2"} className={classes.displayProjectText}>
+                        <b>
+                            Vis
+                            {
+                                " " + props.projectData.images.length + " bilde" + (props.projectData.images.length > 1 ? "r" : "")
+                            }
+                        </b>
+                    </Typography>
+                </div>
             </Button>
         </Grid>
     )
