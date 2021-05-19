@@ -1,4 +1,4 @@
-import {Button, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Backdrop, Button, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
 
 interface projectObj {
@@ -6,10 +6,18 @@ interface projectObj {
     imgUrl: string;
     description: string;
     images: string[];
+    title: string;
 }
 
 function ProjectGrid(props: {projectData:projectObj}) {
     let [projectHover, setProjectHover] = useState(false);
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectGrid: {
@@ -36,14 +44,23 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 justifyContent: "center",
                 opacity: projectHover ? "100%" : "0%",
                 transition: "0.2s ease-in-out"
-            }
+            },
+            backdrop: {
+                zIndex: theme.zIndex.drawer + 1,
+                color: '#fff',
+            },
         }),
     );
     const classes = useStyles();
     return (
         <Grid item sm={6} xs={12}>
-            {/*@ts-ignore*/}
-            <Button id={"" + props.id} className={classes.projectGrid} onMouseEnter={() => setProjectHover(true)} onMouseLeave={() => setProjectHover(false)} onClick={e => {console.log("Click " + e.target.id)}}>
+            <Button
+                id={"" + props.projectData.key}
+                className={classes.projectGrid}
+                onMouseEnter={() => setProjectHover(true)}
+                onMouseLeave={() => setProjectHover(false)}
+                onClick={handleToggle}
+            >
                 <div className={classes.projectHoverDiv}>
                     <Typography variant={"body2"} className={classes.displayProjectText}>
                         <b>
@@ -55,11 +72,14 @@ function ProjectGrid(props: {projectData:projectObj}) {
                     </Typography>
                 </div>
             </Button>
+            <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+                BACKDROP
+            </Backdrop>
         </Grid>
     )
 }
 
-function ProjectDesc(props: {isMobile:boolean, isLast:boolean}) {
+function ProjectDesc(props: {isMobile:boolean, isLast:boolean, projectData:projectObj}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectDesc: {
@@ -87,7 +107,7 @@ function ProjectDesc(props: {isMobile:boolean, isLast:boolean}) {
             <div className={classes.projectDesc}>
                 <div>
                     <Typography variant={textTitleStyle} className={classes.title} color={"textSecondary"}>
-                        Prosjekt-tittel
+                        { props.projectData.title }
                     </Typography>
                     <Typography variant={textStyle} className={classes.text} color={"textSecondary"}>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum eos ex hic id non nostrum, obcaecati porro. Doloribus laboriosam laborum libero mollitia nisi, officia perspiciatis quia repudiandae sit tempora velit.
@@ -128,10 +148,10 @@ export default function Projects(props: {margin:number}) {
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
 
     let projects:projectObj[] = [
-        {key: 1, imgUrl:"https://i2.wp.com/www.homesteadbuildingsystemsinc.com/wp-content/uploads/2016/09/Project-Manager-Walking-through-Framed-House.jpg?fit=1920%2C1080&ssl=1", description:"", images:[""]},
-        {key: 2, imgUrl:"https://media.istockphoto.com/photos/carpenter-working-with-equipment-on-wooden-table-in-carpentry-shop-picture-id1147804793?k=6&m=1147804793&s=612x612&w=0&h=dB2GkD3p9cz-icf56LGcKQZggtUA4Rp_KU5WxKMfFfM=", description:"", images:["", ""]},
-        {key: 3, imgUrl:"https://www.careersinconstruction.ca/sites/default/files/styles/career_banner/public/images/careers/4841_stone_farmhouse_reno_8x12_low_0.jpg?itok=VJi18X5T", description:"", images:["", "", "", "", "", ""]},
-        {key: 4, imgUrl:"https://www.homestratosphere.com/wp-content/uploads/2019/12/wooden-chair-woodworker-dec142019-min.jpg", description:"", images:["", "", ""]}];
+        {key: 1, title: "Bygging av hytte", imgUrl:"https://i2.wp.com/www.homesteadbuildingsystemsinc.com/wp-content/uploads/2016/09/Project-Manager-Walking-through-Framed-House.jpg?fit=1920%2C1080&ssl=1", description:"", images:[""]},
+        {key: 2, title: "Måling av ting", imgUrl:"https://media.istockphoto.com/photos/carpenter-working-with-equipment-on-wooden-table-in-carpentry-shop-picture-id1147804793?k=6&m=1147804793&s=612x612&w=0&h=dB2GkD3p9cz-icf56LGcKQZggtUA4Rp_KU5WxKMfFfM=", description:"", images:["", ""]},
+        {key: 3, title: "Prosjekt med tresag", imgUrl:"https://www.careersinconstruction.ca/sites/default/files/styles/career_banner/public/images/careers/4841_stone_farmhouse_reno_8x12_low_0.jpg?itok=VJi18X5T", description:"", images:["", "", "", "", "", ""]},
+        {key: 4, title: "Stol-prosjekt", imgUrl:"https://www.homestratosphere.com/wp-content/uploads/2019/12/wooden-chair-woodworker-dec142019-min.jpg", description:"", images:["", "", ""]}];
     let toggle = false; // Controls whether to display text on left or right side
     let projectCount = 0; // Used to check which image is last
     return (
@@ -147,17 +167,17 @@ export default function Projects(props: {margin:number}) {
                                 return isMobile ?
                                     <>
                                         <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc isMobile={isMobile} isLast={projectCount === projects.length} />
+                                        <ProjectDesc projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
                                     </>
                                 :
                                 toggle ?
                                     <>
                                         <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc isMobile={isMobile} isLast={projectCount === projects.length} />
+                                        <ProjectDesc projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
                                     </>
                                     :
                                     <>
-                                        <ProjectDesc isMobile={isMobile} isLast={projectCount === projects.length} />
+                                        <ProjectDesc projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
                                         <ProjectGrid key={project.key} projectData={project} />
                                     </>
                             }
