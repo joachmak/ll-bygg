@@ -1,7 +1,13 @@
 import {Button, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
+interface projectObj {
+    key: number;
+    imgUrl: string;
+    description: string;
+    images: string[];
+}
 
-function ProjectGrid(props: {id:number}) {
+function ProjectGrid(props: {projectData:projectObj}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectGrid: {
@@ -19,8 +25,6 @@ function ProjectGrid(props: {id:number}) {
         <Grid item sm={6} xs={12}>
             {/*@ts-ignore*/}
             <Button id={"" + props.id} className={classes.projectGrid} onClick={e => {console.log("Click " + e.target.id)}}>
-                <div>
-                </div>
             </Button>
         </Grid>
     )
@@ -94,11 +98,11 @@ export default function Projects(props: {margin:number}) {
     }, []);
     let isMobile: boolean = (width <= 599);
 
-    let projects = [
-        {id: 1, imgUrl:"", description:""},
-        {id: 2, imgUrl:"", description:""},
-        {id: 3, imgUrl:"", description:""},
-        {id: 4, imgUrl:"", description:""}];
+    let projects:projectObj[] = [
+        {key: 1, imgUrl:"", description:"", images:[""]},
+        {key: 2, imgUrl:"", description:"", images:[""]},
+        {key: 3, imgUrl:"", description:"", images:[""]},
+        {key: 4, imgUrl:"", description:"", images:[""]}];
     let toggle = false;
     console.log("Is mobile? " + isMobile)
     return (
@@ -113,19 +117,19 @@ export default function Projects(props: {margin:number}) {
                                 toggle = !toggle
                                 return isMobile ?
                                     <>
-                                        <ProjectGrid id={project.id} />
+                                        <ProjectGrid key={project.key} projectData={project} />
                                         <ProjectDesc isMobile={isMobile} />
                                     </>
                                 :
                                 toggle ?
                                     <>
-                                        <ProjectGrid id={project.id} />
+                                        <ProjectGrid key={project.key} projectData={project} />
                                         <ProjectDesc isMobile={isMobile} />
                                     </>
                                     :
                                     <>
                                         <ProjectDesc isMobile={isMobile} />
-                                        <ProjectGrid id={project.id} />
+                                        <ProjectGrid key={project.key} projectData={project} />
                                     </>
                             }
                             )
