@@ -1,4 +1,5 @@
 import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import Employees from "../employees/Employees";
 
 export default function About(props: {margin:number}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -20,12 +21,14 @@ export default function About(props: {margin:number}) {
     const classes = useStyles()
     return (
         <>
+
             <Container className={classes.container}>
                 <Grid item lg={8} md={10} xs={12}>
                     <Typography variant={"h4"} className={classes.title}>
                         Om oss
                     </Typography>
-                    <Typography variant={"caption"} color={"textSecondary"} className={classes.title}>
+                    <Employees margin={props.margin} />
+                    <Typography variant={"h5"} color={"textSecondary"} className={classes.title}>
                         <b>STIFTET I 2016</b>
                     </Typography>
                     <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>

@@ -16,6 +16,7 @@ export default function Employees(props: {margin:number}) {
             gridContainer: {
                 display: "flex",
                 justifyContent: "center",
+                marginBottom: props.margin,
             }
         }),
     );
@@ -43,20 +44,13 @@ export default function Employees(props: {margin:number}) {
 
     return (
         <>
-            <Container className={classes.container}>
-                <Grid item lg={8} md={10} xs={12}>
-                    <Typography variant={"h4"} className={classes.title}>
-                        Våre ansatte
-                    </Typography>
-                    <Grid container spacing={3} className={classes.gridContainer}>
-                        {
-                            employees.map(employee =>
-                                <EmployeeCard url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
-                            )
-                        }
-                    </Grid>
-                </Grid>
-            </Container>
+            <Grid container spacing={3} className={classes.gridContainer}>
+                {
+                    employees.map(employee =>
+                        <EmployeeCard url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
+                    )
+                }
+            </Grid>
         </>
     )
 }

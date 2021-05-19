@@ -55,7 +55,7 @@ export default function NavigationBar() {
     const handleToggle = () => { // Toggle backdrop
         setOpenBackdrop(!openBackdrop);
     }
-    const menuItems:string[] = ["hjem", "om oss", "våre tjenester", "våre prosjekter", "kontakt oss", "våre ansatte"]
+    const menuItems:string[] = ["hjem", "våre tjenester", "om oss", "våre prosjekter", "våre ansatte", "kontakt oss"]
     return (
         <>
             <AppBar position={"fixed"} className={classes.appbar}>

@@ -38,13 +38,11 @@ function App() {
             <ThemeProvider theme={theme}>
                 <NavigationBar />
                 <Header />
-                <About margin={margin} />
-                <Divider className={classes.divider} />
                 <Services margin={margin} />
                 <Divider className={classes.divider} />
-                <Projects margin={margin} />
+                <About margin={margin} />
                 <Divider className={classes.divider} />
-                <Employees margin={margin} />
+                <Projects margin={margin} />
                 <Divider className={classes.divider} />
                 <ContactForm margin={margin} />
                 <Footer />
