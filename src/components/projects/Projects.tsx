@@ -15,7 +15,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 backgroundColor: "rgba(0,0,0,0.1)",
                 height: "100%",
                 width: "100%",
-                backgroundImage: "url('https://previews.123rf.com/images/panoramarx/panoramarx1512/panoramarx151200001/49902703-construction-of-a-wood-plastic-composite-garden-terrace.jpg')",
+                backgroundImage: "url('" + props.projectData.imgUrl + "')",
                 backgroundSize: "cover",
                 minHeight: 250,
                 padding: 0,
@@ -27,7 +27,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
             },
             projectHoverDiv: {
                 minWidth: "100%",
-                minHeight: 75,
+                minHeight: 50,
                 backgroundColor: "rgba(0,0,0,0.8)",
                 color: "white",
                 display: "flex",
@@ -58,7 +58,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
     )
 }
 
-function ProjectDesc(props: {isMobile:boolean}) {
+function ProjectDesc(props: {isMobile:boolean, isLast:boolean}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectDesc: {
@@ -74,7 +74,7 @@ function ProjectDesc(props: {isMobile:boolean}) {
             },
             text: {
                 lineHeight: "200%",
-                marginBottom: props.isMobile ? "3.5em" : "0",
+                marginBottom: props.isMobile && !props.isLast ? "3.5em" : "0",
             },
         }),
     );
@@ -127,11 +127,12 @@ export default function Projects(props: {margin:number}) {
     let isMobile: boolean = (width <= 599);
 
     let projects:projectObj[] = [
-        {key: 1, imgUrl:"", description:"", images:[""]},
-        {key: 2, imgUrl:"", description:"", images:[""]},
-        {key: 3, imgUrl:"", description:"", images:[""]},
-        {key: 4, imgUrl:"", description:"", images:[""]}];
+        {key: 1, imgUrl:"https://i2.wp.com/www.homesteadbuildingsystemsinc.com/wp-content/uploads/2016/09/Project-Manager-Walking-through-Framed-House.jpg?fit=1920%2C1080&ssl=1", description:"", images:[""]},
+        {key: 2, imgUrl:"https://media.istockphoto.com/photos/carpenter-working-with-equipment-on-wooden-table-in-carpentry-shop-picture-id1147804793?k=6&m=1147804793&s=612x612&w=0&h=dB2GkD3p9cz-icf56LGcKQZggtUA4Rp_KU5WxKMfFfM=", description:"", images:["", ""]},
+        {key: 3, imgUrl:"https://www.careersinconstruction.ca/sites/default/files/styles/career_banner/public/images/careers/4841_stone_farmhouse_reno_8x12_low_0.jpg?itok=VJi18X5T", description:"", images:["", "", "", "", "", ""]},
+        {key: 4, imgUrl:"https://www.homestratosphere.com/wp-content/uploads/2019/12/wooden-chair-woodworker-dec142019-min.jpg", description:"", images:["", "", ""]}];
     let toggle = false;
+    let projectCount = 0;
     console.log("Is mobile? " + isMobile)
     return (
         <>
@@ -140,23 +141,23 @@ export default function Projects(props: {margin:number}) {
                     <Typography variant={"h4"} className={classes.title}>Våre prosjekter</Typography>
                     <Grid container spacing={0}>
                         {
-
                             projects.map(project => {
                                 toggle = !toggle
+                                projectCount += 1
                                 return isMobile ?
                                     <>
                                         <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc isMobile={isMobile} />
+                                        <ProjectDesc isMobile={isMobile} isLast={projectCount === projects.length} />
                                     </>
                                 :
                                 toggle ?
                                     <>
                                         <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc isMobile={isMobile} />
+                                        <ProjectDesc isMobile={isMobile} isLast={projectCount === projects.length} />
                                     </>
                                     :
                                     <>
-                                        <ProjectDesc isMobile={isMobile} />
+                                        <ProjectDesc isMobile={isMobile} isLast={projectCount === projects.length} />
                                         <ProjectGrid key={project.key} projectData={project} />
                                     </>
                             }
