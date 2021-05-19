@@ -1,5 +1,6 @@
 import {Button, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
+
 interface projectObj {
     key: number;
     imgUrl: string;
@@ -124,16 +125,15 @@ export default function Projects(props: {margin:number}) {
             window.removeEventListener('resize', handleWindowSizeChange);
         }
     }, []);
-    let isMobile: boolean = (width <= 599);
+    let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
 
     let projects:projectObj[] = [
         {key: 1, imgUrl:"https://i2.wp.com/www.homesteadbuildingsystemsinc.com/wp-content/uploads/2016/09/Project-Manager-Walking-through-Framed-House.jpg?fit=1920%2C1080&ssl=1", description:"", images:[""]},
         {key: 2, imgUrl:"https://media.istockphoto.com/photos/carpenter-working-with-equipment-on-wooden-table-in-carpentry-shop-picture-id1147804793?k=6&m=1147804793&s=612x612&w=0&h=dB2GkD3p9cz-icf56LGcKQZggtUA4Rp_KU5WxKMfFfM=", description:"", images:["", ""]},
         {key: 3, imgUrl:"https://www.careersinconstruction.ca/sites/default/files/styles/career_banner/public/images/careers/4841_stone_farmhouse_reno_8x12_low_0.jpg?itok=VJi18X5T", description:"", images:["", "", "", "", "", ""]},
         {key: 4, imgUrl:"https://www.homestratosphere.com/wp-content/uploads/2019/12/wooden-chair-woodworker-dec142019-min.jpg", description:"", images:["", "", ""]}];
-    let toggle = false;
-    let projectCount = 0;
-    console.log("Is mobile? " + isMobile)
+    let toggle = false; // Controls whether to display text on left or right side
+    let projectCount = 0; // Used to check which image is last
     return (
         <>
             <Container className={classes.container}>
