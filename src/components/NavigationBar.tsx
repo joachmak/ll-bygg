@@ -1,9 +1,21 @@
-import {AppBar, Backdrop, createStyles, IconButton, makeStyles, Theme, Toolbar, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Backdrop,
+    createStyles,
+    IconButton,
+    Link,
+    makeStyles,
+    Theme,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {useState} from "react";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 
-const menuIconSize = 40;
+const menuIconSize = 40; // Burger menu icon
+const arrowIconSize = 60; // Right-arrow icon when hovering over menu element
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         menuButton: {
@@ -38,14 +50,50 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         menuText: {
             flex: 1,
+            color: "white",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
         },
         menuTextContainer: {
             display: "flex",
             flexDirection: "column",
             minHeight: "70vh",
+        },
+        navigateIconHover: {
+            opacity: 1,
+            width: arrowIconSize,
+            height: arrowIconSize,
+            marginLeft: 5,
+            transition: "all 0.2s ease-in-out",
+        },
+        navigateIconExit: {
+            opacity: 0,
+            width: arrowIconSize,
+            height: arrowIconSize,
+            transition: "all 0.2s ease-in-out",
         }
     }),
 );
+
+function MenuItem(props:{boldText:boolean, menuItem:string}) {
+    const classes = useStyles();
+    let [hover, setHover] = useState(false);
+    return (
+        <>
+            <Link underline="none" className={classes.menuText} href={"#"} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
+                <NavigateNextIcon className={hover ? classes.navigateIconHover : classes.navigateIconExit} />
+                <Typography variant={"h3"}>
+                    {
+                        props.boldText ?
+                            <b>{props.menuItem.toUpperCase()}</b> : props.menuItem.toUpperCase()
+                    }
+                </Typography>
+            </Link>
+        </>
+    )
+}
 
 export default function NavigationBar() {
     const classes = useStyles();
@@ -54,7 +102,7 @@ export default function NavigationBar() {
     const handleToggle = () => { // Toggle backdrop
         setOpenBackdrop(!openBackdrop);
     }
-    const menuItems:string[] = ["hjem", "våre tjenester", "om oss", "våre prosjekter", "kontakt oss"]
+    const menuItems = ["hjem", "våre tjenester", "om oss", "våre prosjekter", "kontakt oss"]
     return (
         <>
             <AppBar position={"fixed"} className={classes.appbar}>
@@ -70,12 +118,7 @@ export default function NavigationBar() {
                 <div className={classes.menuTextContainer}>
                     {
                         menuItems.map(menuItem =>
-                            <Typography variant={"h3"} className={classes.menuText}>
-                                {
-                                    boldText ?
-                                        <b>{menuItem.toUpperCase()}</b> : menuItem.toUpperCase()
-                                }
-                            </Typography>
+                            <MenuItem boldText={boldText} menuItem={menuItem} />
                         )
                     }
                 </div>

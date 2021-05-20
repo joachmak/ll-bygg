@@ -27,7 +27,7 @@ export default function About(props: {margin:number}) {
                     <Typography variant={"h4"} className={classes.title}>
                         Om oss
                     </Typography>
-                    <Employees margin={props.margin} />
+                    <Employees margin={15} />
                     <Typography variant={"h5"} color={"textSecondary"} className={classes.title}>
                         <b>STIFTET I 2016</b>
                     </Typography>
