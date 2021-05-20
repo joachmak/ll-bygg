@@ -34,7 +34,7 @@ export default function ContactForm(props: {margin:number}) {
                         <TextField required fullWidth id="standard-basic" label="Adresse" className={classes.textField} />
                         <TextField required fullWidth id="standard-basic" label="Tema" className={classes.textField} />
                         <TextField required multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
-                        <div className="g-recaptcha" data-sitekey="your_site_key"></div>
+                        
                         <Button variant={"outlined"} color={"primary"} >Send henvendelse</Button>
 
 
