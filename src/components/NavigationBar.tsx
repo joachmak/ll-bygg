@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
             opacity: 1,
             width: arrowIconSize,
             height: arrowIconSize,
-            marginLeft: 5,
+            paddingLeft: 5,
             transition: "all 0.2s ease-in-out",
         },
         navigateIconExit: {
