@@ -11,10 +11,15 @@ export default function ProjectCarousel(props:carouselProps) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             image: {
-                maxWidth: "90vw",
                 maxHeight: "90vh",
-                minWidth: "10vw",
-                minHeight: "10vh",
+                maxWidth: "90vw",
+                margin: "auto",
+                alignSelf: "center",
+            },
+            imgContainer: {
+                width: "90vw",
+                height: "90vh",
+                display: "flex",
             }
         }),
     );
@@ -45,7 +50,6 @@ export default function ProjectCarousel(props:carouselProps) {
                     {
                         style: {
                             position: "absolute",
-
                             height: "150px",
                             backgroundColor: "orange",
                             top: "calc(50% - 70px)",
@@ -75,7 +79,11 @@ export default function ProjectCarousel(props:carouselProps) {
                 }}
             >
             {
-                props.imgUrls.map(imageUrl => <img alt={"bilde"} className={classes.image} src={imageUrl} />)
+                props.imgUrls.map(imageUrl =>
+                    <div className={classes.imgContainer}>
+                        <img alt={"bilde"} className={classes.image} src={imageUrl} />
+                    </div>
+                    )
             }
             </Carousel>
         </>
