@@ -63,7 +63,7 @@ export default function Footer() {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
-                backgroundColor: "#111",
+                backgroundColor: "#222",
                 width: "100%",
                 padding: "50px 0"
             },
@@ -113,12 +113,15 @@ export default function Footer() {
                 textDecoration: "none",
             },
             map: {
-                height: "300px",
-                border: "5px solid #999",
+                maxHeight: "400px",
+                minHeight: "300px",
+                maxWidth: "400px",
                 borderRadius: 5,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                backgroundImage: "url('https://assets.website-files.com/5e832e12eb7ca02ee9064d42/5f7db426b676b95755fb2844_Group%20805.jpg')",
+                backgroundSize: "cover",
             },
             link: {
                 color: "orange",
@@ -152,14 +155,13 @@ export default function Footer() {
                                     <FacebookIcon />
                                 </Link>
                             </Grid>
-                            <Grid item lg={6} sm={12}>
+                            <Grid item sm={6} xs={12}>
                                 <FooterIcon text={"(+47) 473 00 567"} linkTo={"tel: 4747300567"} icon={<PhoneIcon />}/>
                                 <FooterIcon text={"Kontakt oss via e-post"} linkTo={"mailto: joachimmaksim@gmail.com"} icon={<EmailIcon />}/>
                                 <FooterIcon text={"Odd Brochmanns veg 2, 7051 Trondheim"} linkTo={"#"} icon={<RoomIcon />}/>
                             </Grid>
-                            <Grid item lg={6} sm={12}>
+                            <Grid item sm={6} xs={12}>
                                 <div className={classes.map}>
-                                    <Typography variant={"body2"} className={classes.text}>Kart vil vises her</Typography>
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
