@@ -10,7 +10,7 @@ import {
     Typography
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { useScrollSection } from "react-scroll-section";
 
@@ -75,19 +75,35 @@ const useStyles = makeStyles((theme: Theme) =>
             width: arrowIconSize,
             height: arrowIconSize,
             transition: "all 0.2s ease-in-out",
+        },
+        navigateIconMobile: {
+            opacity: 0,
+            width: 0,
+            height: 0,
         }
     }),
 );
 
 function MenuItem(props:{reference:string, boldText:boolean, menuItem:string}) {
+    const [width, setWidth] = useState<number>(window.innerWidth);
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+    let isMobile: boolean = (width <= 768);
     const classes = useStyles();
     let [hover, setHover] = useState(false);
     const headerSection = useScrollSection(props.reference);
     return (
         <>
             <Link onClick={headerSection.onClick} underline="none" className={classes.menuText} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
-                <NavigateNextIcon className={hover ? classes.navigateIconHover : classes.navigateIconExit} />
-                <Typography variant={"h3"}>
+                <NavigateNextIcon className={isMobile ? classes.navigateIconMobile : (hover ? classes.navigateIconHover : classes.navigateIconExit)} />
+                <Typography variant={isMobile ? "h5" : "h4"}>
                     {
                         props.boldText ?
                             <b>{props.menuItem.toUpperCase()}</b> : props.menuItem.toUpperCase()

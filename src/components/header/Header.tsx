@@ -1,11 +1,7 @@
-import {createStyles, makeStyles, Theme, Typography} from "@material-ui/core";
-import {useState} from "react";
-//import headerImage from "./header.JPG"
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
 let img = require("./header.JPG")
 let logoImg = require("./llbygg_redusert.png")
-let textImg = require("./ll_bygg_tekst.png")
-let symbolImg = require("./ll_symbol.png")
 const darkness = 0.25 // Higher = darker
 
 export default function Header() {
@@ -40,7 +36,7 @@ export default function Header() {
     const classes = useStyles()
     return (
         <div className={classes.header}>
-            <img src={logoImg.default} height={200} />
+            <img alt={"Header"} src={logoImg.default} height={200} />
         </div>
     )
 }
