@@ -2,6 +2,7 @@ import {createStyles, makeStyles, Theme, Typography} from "@material-ui/core";
 //import headerImage from "./header.JPG"
 
 let img = require("./header.JPG")
+let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,6 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
         typography: {
             color: "white",
             marginTop: 20,
+        },
+        imgBg: {
+            backgroundColor: "rgba(0,0,0,0.4)",
+            width: "100%",
+            height: 150,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
         }
     }),
 );
@@ -33,6 +42,9 @@ export default function Header() {
             <Typography variant={"h5"} className={classes.typography}>
                 <b>BYGGET MED KUNNSKAP & KJÆRLIGHET AV LOKALE HÅNDVERKERE</b>
             </Typography>
+            <div className={classes.imgBg}>
+                <img src={logoImg.default} height={100} />
+            </div>
         </div>
     )
 }
