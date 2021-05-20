@@ -1,9 +1,63 @@
-import {Container, createStyles, Grid, Link, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Container, createStyles, Grid, Link, makeStyles, SvgIconTypeMap, Theme, Typography} from "@material-ui/core";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import RoomIcon from '@material-ui/icons/Room';
+import {useState} from "react";
+
+function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+            text: {
+                lineHeight: "200%",
+                color: "white",
+                display: "flex",
+                flexDirection: "row",
+                transition: "all 0.2s ease-in-out",
+            },
+            textHover: {
+                lineHeight: "200%",
+                color: "orange",
+                display: "flex",
+                flexDirection: "row",
+                paddingLeft: 5,
+                transition: "all 0.2s ease-in-out",
+            },
+            iconText: {
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                textDecoration: "none",
+            },
+            iconDiv: {
+                marginRight: 10,
+                color: "white",
+            },
+            iconDivHover: {
+                marginRight: 10,
+                color: "orange",
+            }
+        }),
+    );
+    const classes = useStyles()
+    let [hover, setHover] = useState(false);
+    return (
+        <>
+            <Link
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+                href={props.linkTo}
+                underline={"none"}
+                className={classes.iconText}
+            >
+                <Typography variant={"body2"} className={hover ? classes.textHover : classes.text}>
+                    <div className={hover ? classes.iconDivHover : classes.iconDiv}>{props.icon}</div> {props.text}
+                </Typography>
+            </Link>
+        </>
+    )
+}
 
 export default function Footer() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -44,7 +98,13 @@ export default function Footer() {
             },
             icon: {
                 color: "white",
-                marginRight: 10
+                marginRight: 10,
+                transition: "all 0.2s ease-in-out",
+            },
+            iconHover: {
+                marginRight: 10,
+                color: theme.palette.primary.main,
+                transition: "all 0.2s ease-in-out",
             },
             iconText: {
                 display: "flex",
@@ -66,6 +126,8 @@ export default function Footer() {
         }),
     );
     const classes = useStyles()
+    let [iconHoverInsta, setIconHoverInsta] = useState(false);
+    let [iconHoverFb, setIconHoverFb] = useState(false);
     return (
         <>
             <div className={classes.root}>
@@ -73,25 +135,27 @@ export default function Footer() {
                     <Grid item lg={8} md={10} xs={12} className={classes.gridContainer}>
                         <Grid container spacing={4} alignItems={"center"}>
                             <Grid item xs={12} className={classes.center}>
-                                <Link href={"#"} className={classes.icon}><InstagramIcon /></Link>
-                                <Link href={"#"} className={classes.icon}><FacebookIcon /></Link>
+                                <Link
+                                    onMouseEnter={() => setIconHoverInsta(true)}
+                                    onMouseLeave={() => setIconHoverInsta(false)}
+                                    href={"#"}
+                                    className={iconHoverInsta ? classes.iconHover : classes.icon}
+                                >
+                                    <InstagramIcon />
+                                </Link>
+                                <Link
+                                    onMouseEnter={() => setIconHoverFb(true)}
+                                    onMouseLeave={() => setIconHoverFb(false)}
+                                    href={"#"}
+                                    className={iconHoverFb ? classes.iconHover : classes.icon}
+                                >
+                                    <FacebookIcon />
+                                </Link>
                             </Grid>
                             <Grid item lg={6} sm={12}>
-                                <Typography variant={"body2"} className={classes.text}>
-                                    <Link href={"tel: 4747300567"} className={classes.iconText}>
-                                        <PhoneIcon className={classes.icon} /> (+47) 473 00 567
-                                    </Link>
-                                </Typography>
-                                <Typography variant={"body2"} className={classes.text}>
-                                    <Link href={"mailto: joachimmaksim@gmail.com"} className={classes.iconText}>
-                                        <EmailIcon className={classes.icon} /> joachimmaksim@gmail.com
-                                    </Link>
-                                </Typography>
-                                <Typography variant={"body2"} className={classes.text}>
-                                    <Link href={"mailto: joachimmaksim@gmail.com"} className={classes.iconText}>
-                                        <RoomIcon className={classes.icon} /> Odd Brochmanns veg 2, 7051 Trondheim
-                                    </Link>
-                                </Typography>
+                                <FooterIcon text={"(+47) 473 00 567"} linkTo={"tel: 4747300567"} icon={<PhoneIcon />}/>
+                                <FooterIcon text={"Kontakt oss via e-post"} linkTo={"mailto: joachimmaksim@gmail.com"} icon={<EmailIcon />}/>
+                                <FooterIcon text={"Odd Brochmanns veg 2, 7051 Trondheim"} linkTo={"#"} icon={<RoomIcon />}/>
                             </Grid>
                             <Grid item lg={6} sm={12}>
                                 <div className={classes.map}>
