@@ -29,21 +29,23 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 backgroundSize: "cover",
                 minHeight: 250,
                 padding: 0,
-                display: "flex",
-                alignItems: "flex-end",
+                borderRadius: 0,
             },
             displayProjectText: {
                 color: "white",
+                opacity: projectHover ? "100%" : "0%",
+                transition: "all 0.2s ease-in-out",
             },
             projectHoverDiv: {
-                minWidth: "100%",
-                minHeight: 50,
+                width: "100%",
+                height: projectHover ? "100%" : 0,
+                bottom: "0",
                 backgroundColor: "rgba(255,140,0, 0.9)",
                 color: "white",
+                position: "absolute",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                opacity: projectHover ? "100%" : "0%",
                 transition: "0.2s ease-in-out",
             },
             backdrop: {
@@ -64,7 +66,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 onClick={handleToggle}
             >
                 <div className={classes.projectHoverDiv}>
-                    <Typography variant={"body2"} className={classes.displayProjectText}>
+                    <Typography variant={"body1"} className={classes.displayProjectText}>
                         <b>
                             Vis
                             {
