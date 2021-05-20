@@ -108,7 +108,7 @@ function ProjectDesc(props: {isMobile:boolean, toggle:boolean, isLast:boolean, p
         <Grid item sm={6} xs={12}>
             <div className={classes.projectDesc}>
                 <div>
-                    <Typography variant={textTitleStyle} className={classes.title} color={"textSecondary"}>
+                    <Typography variant={textTitleStyle} className={classes.title} color={"textPrimary"}>
                         { props.projectData.title }
                     </Typography>
                     <Typography variant={textStyle} className={classes.text} color={"textSecondary"}>
