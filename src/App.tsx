@@ -12,6 +12,7 @@ import {
     ThemeProvider,
 } from '@material-ui/core/styles';
 import Projects from "./components/projects/Projects";
+import { ScrollingProvider, Section } from "react-scroll-section";
 
 
 function App() {
@@ -32,20 +33,39 @@ function App() {
             },
         }
     });
+    const menuItems = [ // [section-reference, menu-text]
+        ["hjemRef", "hjem"],
+        ["tjenesteRef", "våre tjenester"],
+        ["omRef", "om oss"],
+        ["prosjektRef", "våre prosjekter"],
+        ["kontaktRef", "kontakt oss"]
+    ]
     return (
         <div className="App">
-            <ThemeProvider theme={theme}>
-                <NavigationBar />
-                <Header />
-                <Services margin={margin} />
-                <Divider className={classes.divider} />
-                <About margin={margin} />
-                <Divider className={classes.divider} />
-                <Projects margin={margin} />
-                <Divider className={classes.divider} />
-                <ContactForm margin={margin} />
-                <Footer />
-            </ThemeProvider>
+            <ScrollingProvider scrollBehavior={"smooth"}>
+                <ThemeProvider theme={theme}>
+                    <NavigationBar menuItems={menuItems} />
+                    <Section id={"hjemRef"}>
+                        <Header />
+                    </Section>
+                    <Section id={"tjenesteRef"}>
+                        <Services margin={margin} />
+                    </Section>
+                    <Divider className={classes.divider} />
+                    <Section id={"omRef"}>
+                        <About margin={margin} />
+                    </Section>
+                    <Divider className={classes.divider} />
+                    <Section id={"prosjektRef"}>
+                        <Projects margin={margin} />
+                    </Section>
+                    <Divider className={classes.divider} />
+                    <Section id={"kontaktRef"}>
+                        <ContactForm margin={margin} />
+                    </Section>
+                    <Footer />
+                </ThemeProvider>
+            </ScrollingProvider>
         </div>
     );
 }

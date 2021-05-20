@@ -12,6 +12,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import {useState} from "react";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { useScrollSection } from "react-scroll-section";
 
 
 const menuIconSize = 40; // Burger menu icon
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
+            cursor: "pointer",
         },
         menuTextContainer: {
             display: "flex",
@@ -77,12 +79,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function MenuItem(props:{boldText:boolean, menuItem:string}) {
+function MenuItem(props:{reference:string, boldText:boolean, menuItem:string}) {
     const classes = useStyles();
     let [hover, setHover] = useState(false);
+    const headerSection = useScrollSection(props.reference);
     return (
         <>
-            <Link underline="none" className={classes.menuText} href={"#"} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
+            <Link onClick={headerSection.onClick} underline="none" className={classes.menuText} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
                 <NavigateNextIcon className={hover ? classes.navigateIconHover : classes.navigateIconExit} />
                 <Typography variant={"h3"}>
                     {
@@ -95,14 +98,14 @@ function MenuItem(props:{boldText:boolean, menuItem:string}) {
     )
 }
 
-export default function NavigationBar() {
+export default function NavigationBar(props:{menuItems:string[][]}) {
     const classes = useStyles();
     const boldText = false;
     const [openBackdrop, setOpenBackdrop] = useState(false);
     const handleToggle = () => { // Toggle backdrop
         setOpenBackdrop(!openBackdrop);
     }
-    const menuItems = ["hjem", "våre tjenester", "om oss", "våre prosjekter", "kontakt oss"]
+    console.log(props.menuItems)
     return (
         <>
             <AppBar position={"fixed"} className={classes.appbar}>
@@ -117,8 +120,8 @@ export default function NavigationBar() {
             <Backdrop className={classes.backdrop} open={openBackdrop} onClick={handleToggle}>
                 <div className={classes.menuTextContainer}>
                     {
-                        menuItems.map(menuItem =>
-                            <MenuItem boldText={boldText} menuItem={menuItem} />
+                        props.menuItems.map(menuItem =>
+                            <MenuItem boldText={boldText} menuItem={menuItem[1]} reference={menuItem[0]} />
                         )
                     }
                 </div>

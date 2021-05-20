@@ -44,7 +44,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 alignItems: "center",
                 justifyContent: "center",
                 opacity: projectHover ? "100%" : "0%",
-                transition: "0.2s ease-in-out"
+                transition: "0.2s ease-in-out",
             },
             backdrop: {
                 zIndex: theme.zIndex.drawer + 1,
