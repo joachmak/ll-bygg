@@ -1,4 +1,4 @@
-import {Container, createStyles, Grid, Link, makeStyles, SvgIconTypeMap, Theme, Typography} from "@material-ui/core";
+import {Container, createStyles, Grid, Link, makeStyles, Theme, Typography} from "@material-ui/core";
 import InstagramIcon from '@material-ui/icons/Instagram';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import PhoneIcon from '@material-ui/icons/Phone';

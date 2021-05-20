@@ -7,6 +7,7 @@ import {createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
 import Services from "./components/services/Services";
 import Footer from "./components/Footer";
 import ContactForm from "./components/contactform/ContactForm";
+import News from "./components/news/News"
 import {
     createMuiTheme,
     ThemeProvider,
@@ -38,6 +39,7 @@ function App() {
         ["tjenesteRef", "våre tjenester"],
         ["omRef", "om oss"],
         ["prosjektRef", "våre prosjekter"],
+        ["nyhetRef", "nyheter"],
         ["kontaktRef", "kontakt oss"]
     ]
     return (
@@ -45,24 +47,35 @@ function App() {
             <ScrollingProvider scrollBehavior={"smooth"}>
                 <ThemeProvider theme={theme}>
                     <NavigationBar menuItems={menuItems} />
+
                     <Section id={"hjemRef"}>
                         <Header />
                     </Section>
+
                     <Section id={"tjenesteRef"}>
                         <Services margin={margin} />
                     </Section>
                     <Divider className={classes.divider} />
+
                     <Section id={"omRef"}>
                         <About margin={margin} />
                     </Section>
                     <Divider className={classes.divider} />
+
                     <Section id={"prosjektRef"}>
                         <Projects margin={margin} />
                     </Section>
                     <Divider className={classes.divider} />
+
+                    <Section id={"nyhetRef"}>
+                        <News margin={margin} />
+                    </Section>
+                    <Divider className={classes.divider} />
+
                     <Section id={"kontaktRef"}>
                         <ContactForm margin={margin} />
                     </Section>
+
                     <Footer />
                 </ThemeProvider>
             </ScrollingProvider>
