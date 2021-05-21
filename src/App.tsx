@@ -86,9 +86,9 @@ function App() {
                 <ThemeProvider theme={theme}>
                     <Router>
                         <Switch>
-                            <UnAuthenticatedRoute path={"/admin"}>
+                            <DisallowAuthenticatedRoute path={"/admin"}>
                                 <Login />
-                            </UnAuthenticatedRoute>
+                            </DisallowAuthenticatedRoute>
                             <AuthenticatedRoute path={"/adminPanel"}>
                                 <AdminPanel />
                             </AuthenticatedRoute>
@@ -155,13 +155,21 @@ function AuthenticatedRoute({ children, redirect = "/", ...rest }: AuthRouteProp
 }
 
 function UnAuthenticatedRoute({ children, redirect = "/", ...rest }: AuthRouteProps) {
+    return (
+        <Route {...rest}>
+            {children}
+        </Route>
+    )
+}
+
+function DisallowAuthenticatedRoute({ children, redirect = "/adminPanel", ...rest }: AuthRouteProps) {
     const [user, loading, error] = useAuthState(firebase.app().auth())
     error && console.error(error)
     return (
         <Route {...rest}>
             {loading && <CircularProgress />}
-            {(user && !loading) && <Redirect to={redirect} />}
-            {!user && children}
+            {((user && !loading)) && <Redirect to={redirect} />}
+            {(!user || error) && !loading && children}
         </Route>
     )
 }

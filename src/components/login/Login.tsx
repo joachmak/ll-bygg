@@ -34,10 +34,11 @@ export default function Login() {
     let [password, setPassword] = useState("")
     let [loading, setLoading] = useState(false)
     let [errorState, setErrorState] = useState("")
+    const auth = firebase.app().auth()
     const history = useHistory()
     const submit = () => {
         setLoading(true)
-        firebase.app().auth().signInWithEmailAndPassword(email, password).then(() => {
+        auth.signInWithEmailAndPassword(email, password).then(() => {
             setErrorState("")
             history.push("/adminPanel")
         }).catch(e => {
@@ -51,8 +52,8 @@ export default function Login() {
         <>
             <form className={classes.root} noValidate autoComplete="off">
                 <Typography variant={"h5"} >Logg inn</Typography>
-                <TextField onChange={e => setEmail(e.target.value)} id="outlined-basic" label="E-post" className={classes.txtField} variant="outlined" />
-                <TextField onChange={e => setPassword(e.target.value)} type="password" label="Passord" className={classes.txtField} variant="outlined" />
+                <TextField onChange={e => {setEmail(e.target.value)}} id="outlined-basic" label="E-post" className={classes.txtField} variant="outlined" />
+                <TextField onChange={e => {setPassword(e.target.value)}} type="password" label="Passord" className={classes.txtField} variant="outlined" />
                 {
                     errorState
                 }
