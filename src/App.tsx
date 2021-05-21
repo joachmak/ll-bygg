@@ -15,9 +15,11 @@ import {
 import Projects from "./components/projects/Projects";
 import { ScrollingProvider, Section } from "react-scroll-section";
 import {announcementInterface} from "./components/news/Announcement";
-
+import firebase from "firebase"
+import {collection, get} from "typesaurus"
 
 function App() {
+    const firebaseApp = firebase.apps[0]
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             divider: {
@@ -73,6 +75,7 @@ function App() {
                 ["prosjektRef", "våre prosjekter"],
                 ["kontaktRef", "kontakt oss"]
             ]
+
     return (
         <div className="App">
             <ScrollingProvider scrollBehavior={"smooth"}>
@@ -106,11 +109,9 @@ function App() {
                             <Divider className={classes.divider} />
                         </>
                     }
-
                     <Section id={"kontaktRef"}>
                         <ContactForm margin={margin} />
                     </Section>
-
                     <Footer />
                 </ThemeProvider>
             </ScrollingProvider>
