@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/header/Header";
 import NavigationBar from "./components/NavigationBar";
 import About from "./components/about/About";
-import {createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
+import {CircularProgress, createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
 import Services from "./components/services/Services";
 import Footer from "./components/Footer";
 import ContactForm from "./components/contactform/ContactForm";
@@ -15,6 +15,13 @@ import {
 import Projects from "./components/projects/Projects";
 import { ScrollingProvider, Section } from "react-scroll-section";
 import {announcementInterface} from "./components/news/Announcement";
+import {BrowserRouter as Router, Switch, Route, RouteProps} from "react-router-dom";
+import { Redirect } from "react-router";
+import { useAuthState } from "react-firebase-hooks/auth";
+import 'firebase/auth'
+import firebase from 'firebase/app'
+import Login from "./components/login/Login";
+import AdminPanel from "./components/adminpanel/AdminPanel";
 
 function App() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -77,39 +84,51 @@ function App() {
         <div className="App">
             <ScrollingProvider scrollBehavior={"smooth"}>
                 <ThemeProvider theme={theme}>
-                    <NavigationBar menuItems={menuItems} />
+                    <Router>
+                        <Switch>
+                            <UnAuthenticatedRoute path={"/admin"}>
+                                <Login />
+                            </UnAuthenticatedRoute>
+                            <AuthenticatedRoute path={"/adminPanel"}>
+                                <AdminPanel />
+                            </AuthenticatedRoute>
+                            <UnAuthenticatedRoute path={"/"}>
+                                <NavigationBar menuItems={menuItems} />
 
-                    <Section id={"hjemRef"}>
-                        <Header />
-                    </Section>
+                                <Section id={"hjemRef"}>
+                                    <Header />
+                                </Section>
 
-                    <Section id={"tjenesteRef"}>
-                        <Services margin={margin} />
-                    </Section>
-                    <Divider className={classes.divider} />
+                                <Section id={"tjenesteRef"}>
+                                    <Services margin={margin} />
+                                </Section>
+                                <Divider className={classes.divider} />
 
-                    <Section id={"omRef"}>
-                        <About margin={margin} />
-                    </Section>
-                    <Divider className={classes.divider} />
+                                <Section id={"omRef"}>
+                                    <About margin={margin} />
+                                </Section>
+                                <Divider className={classes.divider} />
 
-                    <Section id={"prosjektRef"}>
-                        <Projects margin={margin} />
-                    </Section>
-                    <Divider className={classes.divider} />
-                    {
-                        news.length > 0 &&
-                        <>
-                            <Section id={"nyhetRef"}>
-                                <News news={news} margin={margin} />
-                            </Section>
-                            <Divider className={classes.divider} />
-                        </>
-                    }
-                    <Section id={"kontaktRef"}>
-                        <ContactForm margin={margin} />
-                    </Section>
-                    <Footer />
+                                <Section id={"prosjektRef"}>
+                                    <Projects margin={margin} />
+                                </Section>
+                                <Divider className={classes.divider} />
+                                {
+                                    news.length > 0 &&
+                                    <>
+                                        <Section id={"nyhetRef"}>
+                                            <News news={news} margin={margin} />
+                                        </Section>
+                                        <Divider className={classes.divider} />
+                                    </>
+                                }
+                                <Section id={"kontaktRef"}>
+                                    <ContactForm margin={margin} />
+                                </Section>
+                                <Footer />
+                            </UnAuthenticatedRoute>
+                        </Switch>
+                    </Router>
                 </ThemeProvider>
             </ScrollingProvider>
         </div>
@@ -117,3 +136,33 @@ function App() {
 }
 
 export default App;
+
+// Redirect user
+interface AuthRouteProps extends RouteProps {
+    redirect?: string
+}
+
+function AuthenticatedRoute({ children, redirect = "/", ...rest }: AuthRouteProps) {
+    const [user, loading, error] = useAuthState(firebase.app().auth())
+    error && console.error(error)
+    return (
+        <Route {...rest}>
+            {loading && <CircularProgress />}
+            {((!user && !loading) || error) && <Redirect to={redirect} />}
+            {user && children}
+        </Route>
+    )
+}
+
+function UnAuthenticatedRoute({ children, redirect = "/", ...rest }: AuthRouteProps) {
+    const [user, loading, error] = useAuthState(firebase.app().auth())
+    error && console.error(error)
+    return (
+        <Route {...rest}>
+            {loading && <CircularProgress />}
+            {(user && !loading) && <Redirect to={redirect} />}
+            {!user && children}
+        </Route>
+    )
+}
+
