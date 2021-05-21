@@ -41,7 +41,7 @@ export default function News(props:{margin:number, news:announcementInterface[]}
                             {
                                 /* @ts-ignore */
                                 props.news.sort((a,b) => b.date - a.date).map(announcement =>
-                                    <Announcement announcement={announcement} />
+                                    <Announcement key={announcement.id} announcement={announcement} />
                                 )
                             }
                         </Grid>

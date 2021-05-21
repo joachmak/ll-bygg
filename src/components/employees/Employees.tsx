@@ -47,7 +47,7 @@ export default function Employees(props: {margin:number}) {
             <Grid container spacing={3} className={classes.gridContainer}>
                 {
                     employees.map(employee =>
-                        <EmployeeCard url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
+                        <EmployeeCard key={employee.name} url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
                     )
                 }
             </Grid>

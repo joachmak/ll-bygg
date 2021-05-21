@@ -80,7 +80,7 @@ export default function ProjectCarousel(props:carouselProps) {
             >
             {
                 props.imgUrls.map(imageUrl =>
-                    <div className={classes.imgContainer}>
+                    <div key={imageUrl} className={classes.imgContainer}>
                         <img alt={"bilde"} className={classes.image} src={imageUrl} />
                     </div>
                     )

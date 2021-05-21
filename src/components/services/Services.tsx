@@ -53,7 +53,8 @@ export default function Services(props:{margin:number}) {
                         <Grid container spacing={4}>
                             {
                                 services.map(service =>
-                                    <Grid item xl={4} lg={6} md={8} sm={10} xs={12}>
+                                    // @ts-ignore
+                                    <Grid key={service[0]} item xl={4} lg={6} md={8} sm={10} xs={12}>
                                         <div className={classes.iconContainer}>
                                             <div className={classes.iconContainer}>
                                                 {/* @ts-ignore */}

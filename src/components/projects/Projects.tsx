@@ -168,22 +168,28 @@ export default function Projects(props: {margin:number}) {
                             projects.map(project => {
                                 toggle = !toggle
                                 projectCount += 1
-                                return isMobile ?
-                                    <>
-                                        <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
-                                    </>
-                                :
-                                toggle ?
-                                    <>
-                                        <ProjectGrid key={project.key} projectData={project} />
-                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
-                                    </>
-                                    :
-                                    <>
-                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
-                                        <ProjectGrid key={project.key} projectData={project} />
-                                    </>
+                                return (
+                                    <Grid container key={project.key}>
+                                        {
+                                            isMobile ?
+                                                <>
+                                                    <ProjectGrid projectData={project} />
+                                                    <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                                </>
+                                                :
+                                                toggle ?
+                                                    <>
+                                                        <ProjectGrid projectData={project} />
+                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                                        <ProjectGrid projectData={project} />
+                                                    </>
+                                        }
+                                    </Grid>
+                                )
                             }
                             )
                         }

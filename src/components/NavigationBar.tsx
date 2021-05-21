@@ -121,7 +121,6 @@ export default function NavigationBar(props:{menuItems:string[][]}) {
     const handleToggle = () => { // Toggle backdrop
         setOpenBackdrop(!openBackdrop);
     }
-    console.log(props.menuItems)
     return (
         <>
             <AppBar position={"fixed"} className={classes.appbar}>
@@ -137,7 +136,7 @@ export default function NavigationBar(props:{menuItems:string[][]}) {
                 <div className={classes.menuTextContainer}>
                     {
                         props.menuItems.map(menuItem =>
-                            <MenuItem boldText={boldText} menuItem={menuItem[1]} reference={menuItem[0]} />
+                            <MenuItem key={menuItem[0]} boldText={boldText} menuItem={menuItem[1]} reference={menuItem[0]} />
                         )
                     }
                 </div>

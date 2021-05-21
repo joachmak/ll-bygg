@@ -51,8 +51,8 @@ function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
                 underline={"none"}
                 className={classes.iconText}
             >
-                <Typography variant={"body2"} className={hover ? classes.textHover : classes.text}>
-                    <div className={hover ? classes.iconDivHover : classes.iconDiv}>{props.icon}</div> {props.text}
+                <Typography variant={"body2"} className={hover ? classes.textHover + " " + classes.iconDivHover : classes.text + " " + classes.iconDiv}>
+                    {props.icon} {props.text}
                 </Typography>
             </Link>
         </>
@@ -95,6 +95,9 @@ export default function Footer() {
             },
             marginTop15: {
                 marginTop: 15
+            },
+            marginRight10: {
+                marginRight: 10,
             },
             icon: {
                 color: "white",
@@ -156,9 +159,9 @@ export default function Footer() {
                                 </Link>
                             </Grid>
                             <Grid item sm={6} xs={12}>
-                                <FooterIcon text={"(+47) 473 00 567"} linkTo={"tel: 4747300567"} icon={<PhoneIcon />}/>
-                                <FooterIcon text={"Kontakt oss via e-post"} linkTo={"mailto: joachimmaksim@gmail.com"} icon={<EmailIcon />}/>
-                                <FooterIcon text={"Odd Brochmanns veg 2, 7051 Trondheim"} linkTo={"#"} icon={<RoomIcon />}/>
+                                <FooterIcon text={"(+47) 473 00 567"} linkTo={"tel: 4747300567"} icon={<PhoneIcon className={classes.marginRight10} />}/>
+                                <FooterIcon text={"Kontakt oss via e-post"} linkTo={"mailto: joachimmaksim@gmail.com"} icon={<EmailIcon className={classes.marginRight10} />}/>
+                                <FooterIcon text={"Odd Brochmanns veg 2, 7051 Trondheim"} linkTo={"#"} icon={<RoomIcon className={classes.marginRight10} />}/>
                             </Grid>
                             <Grid item sm={6} xs={12}>
                                 <div className={classes.map}>
