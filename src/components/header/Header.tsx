@@ -36,7 +36,7 @@ export default function Header() {
     const classes = useStyles()
     return (
         <div className={classes.header}>
-            <img alt={"Header"} src={logoImg.default} height={200} />
+            <img alt={"Header"} className={"headerAnim"} src={logoImg.default} height={200} />
         </div>
     )
 }

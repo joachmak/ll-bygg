@@ -37,6 +37,22 @@
   }
 }
 
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.headerAnim {
+  /* This section calls the slideInFromLeft animation we defined above */
+  animation: 1.5s ease-out 0s 1 slideInFromBottom;
+}
+
 ::selection {
   background-color: rgba(255, 122, 0, 0.5); /* WebKit/Blink Browsers */
   color: #333;
