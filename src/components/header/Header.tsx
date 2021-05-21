@@ -12,7 +12,6 @@ export default function Header() {
                 background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + img.default + "')",
                 backgroundAttachment: "fixed",
                 backgroundSize: "cover",
-                // @ts-ignore
                 boxShadow: "inset 0 0 7em 1em #000",
                 display: "flex",
                 alignItems: "center",
