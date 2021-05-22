@@ -3,11 +3,11 @@ import firebase from "firebase";
 import {useHistory} from 'react-router-dom'
 import Services from "../services/Services";
 import About from "../about/About";
-import Projects from "../projects/Projects";
 import News from "../news/News";
-import ContactForm from "../contactform/ContactForm";
-import Footer from "../Footer";
 import React from "react";
+import ProjectsAdmin from "../projects/ProjectsAdmin";
+import FooterAdmin from "../FooterAdmin";
+import HeaderAdmin from "../header/HeaderAdmin";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -53,22 +53,20 @@ export default function AdminPanel() {
                     Lagre endringer og logg ut
                 </Button>
             </form>
-
-            <Services margin={margin} />
+            <HeaderAdmin />
+            <Services admin={true} margin={margin} />
             <Divider className={classes.divider} />
 
-            <About margin={margin} />
+            <About admin={true} margin={margin} />
             <Divider className={classes.divider} />
 
-            <Projects margin={margin} />
+            <ProjectsAdmin margin={15} />
             <Divider className={classes.divider} />
 
-            <News news={[]} margin={margin} />
-            <Divider className={classes.divider} />
+            <News admin={true} news={[]} margin={margin} />
 
-            <ContactForm margin={margin} />
 
-            <Footer />
+            <FooterAdmin />
         </>
     )
 }

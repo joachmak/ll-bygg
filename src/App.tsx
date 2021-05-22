@@ -99,12 +99,12 @@ function App() {
                                 </Section>
 
                                 <Section id={"tjenesteRef"}>
-                                    <Services margin={margin} />
+                                    <Services margin={margin} admin={false} />
                                 </Section>
                                 <Divider className={classes.divider} />
 
                                 <Section id={"omRef"}>
-                                    <About margin={margin} />
+                                    <About admin={false} margin={margin} />
                                 </Section>
                                 <Divider className={classes.divider} />
 
@@ -116,7 +116,7 @@ function App() {
                                     news.length > 0 &&
                                     <>
                                         <Section id={"nyhetRef"}>
-                                            <News news={news} margin={margin} />
+                                            <News admin={false} news={news} margin={margin} />
                                         </Section>
                                         <Divider className={classes.divider} />
                                     </>

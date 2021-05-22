@@ -5,6 +5,7 @@ interface employeeCardInterface {
     role: string;
     description: string;
     url: string;
+    admin: boolean;
 }
 export default function EmployeeCard(props:employeeCardInterface) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -36,15 +37,22 @@ export default function EmployeeCard(props:employeeCardInterface) {
                         image={props.url}
                         className={classes.media}
                     />
-                    <Typography variant={"h5"} className={classes.title}>
-                        {props.name}
-                    </Typography>
-                    <Typography variant={"caption"} color={"textSecondary"}>
-                        <b>{props.role.toUpperCase()}</b>
-                    </Typography>
-                    <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
-                        {props.description}
-                    </Typography>
+                    {
+                        props.admin ?
+                            "EmployeeCard Admin"
+                            :
+                            <>
+                                <Typography variant={"h5"} className={classes.title}>
+                                    {props.name}
+                                </Typography>
+                                <Typography variant={"caption"} color={"textSecondary"}>
+                                    <b>{props.role.toUpperCase()}</b>
+                                </Typography>
+                                <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
+                                    {props.description}
+                                </Typography>
+                            </>
+                    }
                 </Card>
             </Grid>
         </>

@@ -2,7 +2,7 @@ import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@mat
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faHammer, faHouseDamage, faTools } from '@fortawesome/free-solid-svg-icons'
 
-export default function Services(props:{margin:number}) {
+export default function Services(props:{margin:number, admin:boolean}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -63,9 +63,16 @@ export default function Services(props:{margin:number}) {
                                             <Typography variant={"h5"} className={classes.subtitle} color={"textSecondary"}>
                                                 <b>{service[0]}</b>
                                             </Typography>
-                                            <Typography variant={"body2"} className={classes.text} color={"textSecondary"}>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, autem excepturi? Ad aliquam aliquid at atque, ex facere magnam modi nostrum perspiciatis repellat sapiente tempore totam. Adipisci corporis dolorem ipsa.
-                                            </Typography>
+                                            {
+                                                props.admin ?
+                                                    <>
+                                                        "Admin temp"
+                                                    </>
+                                                    :
+                                                    <Typography variant={"body2"} className={classes.text} color={"textSecondary"}>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, autem excepturi? Ad aliquam aliquid at atque, ex facere magnam modi nostrum perspiciatis repellat sapiente tempore totam. Adipisci corporis dolorem ipsa.
+                                                    </Typography>
+                                            }
                                         </div>
                                     </Grid>
                                 )

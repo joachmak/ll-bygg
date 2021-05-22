@@ -1,7 +1,7 @@
 import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
 import EmployeeCard from "./EmployeeCard";
 
-export default function Employees(props: {margin:number}) {
+export default function Employees(props: {margin:number, admin:boolean}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -47,7 +47,7 @@ export default function Employees(props: {margin:number}) {
             <Grid container spacing={3} className={classes.gridContainer}>
                 {
                     employees.map(employee =>
-                        <EmployeeCard key={employee.name} url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
+                        <EmployeeCard admin={props.admin} key={employee.name} url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
                     )
                 }
             </Grid>

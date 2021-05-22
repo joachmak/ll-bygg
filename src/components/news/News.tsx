@@ -2,7 +2,7 @@ import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@mat
 import Announcement, {announcementInterface} from "./Announcement";
 import React from "react";
 
-export default function News(props:{margin:number, news:announcementInterface[]}) {
+export default function News(props:{margin:number, news:announcementInterface[], admin:boolean}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -26,7 +26,7 @@ export default function News(props:{margin:number, news:announcementInterface[]}
     );
     const classes = useStyles()
 
-    if (props.news.length <= 0) {
+    if (props.news.length <= 0 && !props.admin) {
         return (<></>)
     }
     return (
@@ -37,14 +37,23 @@ export default function News(props:{margin:number, news:announcementInterface[]}
                         <Typography variant={"h4"} className={classes.title}>
                             Siste nyheter
                         </Typography>
-                        <Grid container spacing={4}>
-                            {
-                                /* @ts-ignore */
-                                props.news.sort((a,b) => b.date - a.date).map(announcement =>
-                                    <Announcement key={announcement.id} announcement={announcement} />
-                                )
-                            }
-                        </Grid>
+                        {
+                            props.admin ?
+                                <>
+                                    News Admin
+                                </>
+                                :
+                                <>
+                                    <Grid container spacing={4}>
+                                        {
+                                            /* @ts-ignore */
+                                            props.news.sort((a,b) => b.date - a.date).map(announcement =>
+                                                <Announcement key={announcement.id} announcement={announcement} />
+                                            )
+                                        }
+                                    </Grid>
+                                </>
+                        }
                     </Grid>
                 </Grid>
             </Container>
