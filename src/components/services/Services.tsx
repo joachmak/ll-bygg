@@ -1,8 +1,14 @@
 import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faHammer, faHouseDamage, faTools } from '@fortawesome/free-solid-svg-icons'
+import {collection} from "typesaurus";
+import {useGet} from "@typesaurus/react";
+import {ServicesSection} from "../../types";
 
 export default function Services(props:{margin:number, admin:boolean}) {
+    const pageElem = collection("pageElements")
+    let [servicesDoc] = useGet<ServicesSection>(pageElem, "services")
+
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -41,7 +47,12 @@ export default function Services(props:{margin:number, admin:boolean}) {
         }),
     );
     const classes = useStyles()
-    let services = [["Bygg", "Beskrivelse", faHammer], ["Rehabilitering", "Beskrivelse", faHouseDamage], ["Montering", "Beskrivelse", faTools]]
+    const tempDescription = "Beskrivelse laster inn, vennligst vent..."
+    let services = [
+        ["Bygg", (servicesDoc ? servicesDoc.data.byggDesc : tempDescription), faHammer],
+        ["Rehabilitering", (servicesDoc ? servicesDoc.data.rehabiliteringDesc : tempDescription), faHouseDamage],
+        ["Montering", (servicesDoc ? servicesDoc.data.monteringDesc : tempDescription), faTools]
+    ]
     return(
         <>
             <Container className={classes.container}>
@@ -70,7 +81,7 @@ export default function Services(props:{margin:number, admin:boolean}) {
                                                     </>
                                                     :
                                                     <Typography variant={"body2"} className={classes.text} color={"textSecondary"}>
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, autem excepturi? Ad aliquam aliquid at atque, ex facere magnam modi nostrum perspiciatis repellat sapiente tempore totam. Adipisci corporis dolorem ipsa.
+                                                        {service[1]}
                                                     </Typography>
                                             }
                                         </div>
