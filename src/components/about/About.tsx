@@ -1,7 +1,12 @@
 import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import Employees from "../employees/Employees";
+import {collection} from "typesaurus";
+import {useGet} from "@typesaurus/react";
+import {AboutSection} from "../../types";
 
 export default function About(props: {margin:number, admin:boolean}) {
+    const pageElem = collection("pageElements")
+    let [aboutDoc] = useGet<AboutSection>(pageElem, "about")
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -36,15 +41,22 @@ export default function About(props: {margin:number, admin:boolean}) {
                             :
                             <>
                                 <Typography variant={"h5"} color={"textSecondary"} className={classes.title}>
-                                    <b>STIFTET I 2016</b>
+                                    <b>
+                                    {
+                                        aboutDoc ?
+                                            aboutDoc.data.title.toUpperCase()
+                                            :
+                                            "STIFTET I 2016"
+                                    }
+                                    </b>
                                 </Typography>
                                 <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi commodi dignissimos error fugit iste labore, maxime necessitatibus vero! Consectetur, dignissimos fugit id ipsam iure laboriosam non quas quibusdam veritatis voluptate?
-                                    <br /><br />
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cumque dolor maxime perspiciatis quia. Ab alias, assumenda, est ex, magnam molestiae mollitia natus numquam quas quasi totam velit vero voluptates?
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum itaque obcaecati optio saepe sequi? Beatae consequuntur corporis deleniti dolorem ex, incidunt libero nobis nulla obcaecati odio sequi, soluta unde vero?
-                                    <br /><br />
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A autem beatae dolores eius error esse exercitationem fugit harum in incidunt ipsum, itaque, labore officiis praesentium provident repellendus repudiandae sapiente voluptatem?
+                                    {
+                                        aboutDoc ?
+                                            aboutDoc.data.description
+                                            :
+                                            "Beskrivelse laster..."
+                                    }
                                 </Typography>
                             </>
                     }
