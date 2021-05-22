@@ -1,16 +1,11 @@
 import {Backdrop, Button, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import ProjectCarousel from "./ProjectCarousel";
+import {collection, Doc} from "typesaurus";
+import {Project} from "../../types";
+import {useAll} from "@typesaurus/react";
 
-interface projectObj {
-    key: number;
-    imgUrl: string;
-    description: string;
-    images: string[];
-    title: string;
-}
-
-function ProjectGrid(props: {projectData:projectObj}) {
+function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
     let [projectHover, setProjectHover] = useState(false);
     const [open, setOpen] = useState(false);
     const handleClose = () => {
@@ -25,7 +20,7 @@ function ProjectGrid(props: {projectData:projectObj}) {
                 backgroundColor: "rgba(0,0,0,0.1)",
                 height: "100%",
                 width: "100%",
-                backgroundImage: "url('" + props.projectData.imgUrl + "')",
+                backgroundImage: "url('" + (props.projectData ? props.projectData.data.thumbnail : "") + "')",
                 backgroundSize: "cover",
                 minHeight: 250,
                 padding: 0,
@@ -56,10 +51,17 @@ function ProjectGrid(props: {projectData:projectObj}) {
         }),
     );
     const classes = useStyles();
+    if (!props.projectData) {
+        return (
+            <>
+                Laster inn data...
+            </>
+        )
+    }
     return (
         <Grid item sm={6} xs={12}>
             <Button
-                id={"" + props.projectData.key}
+                id={props.projectData.ref!.id}
                 className={classes.projectGrid}
                 onMouseEnter={() => setProjectHover(true)}
                 onMouseLeave={() => setProjectHover(false)}
@@ -70,20 +72,20 @@ function ProjectGrid(props: {projectData:projectObj}) {
                         <b>
                             Vis
                             {
-                                " " + props.projectData.images.length + " bilde" + (props.projectData.images.length > 1 ? "r" : "")
+                                " " + props.projectData.data.images.length + " bilde" + (props.projectData.data.images.length > 1 ? "r" : "")
                             }
                         </b>
                     </Typography>
                 </div>
             </Button>
             <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-                <ProjectCarousel imgUrls={props.projectData.images} />
+                <ProjectCarousel imgUrls={props.projectData.data.images} />
             </Backdrop>
         </Grid>
     )
 }
 
-function ProjectDesc(props: {isMobile:boolean, toggle:boolean, isLast:boolean, projectData:projectObj}) {
+function ProjectDesc(props: {isMobile:boolean, toggle:boolean, isLast:boolean, projectData:Doc<Project> | undefined}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectDesc: {
@@ -106,15 +108,22 @@ function ProjectDesc(props: {isMobile:boolean, toggle:boolean, isLast:boolean, p
     const classes = useStyles();
     const textTitleStyle = "h5"; // Anbefaler h5
     const textStyle = "body2"; // Anbefaler body1, body2 eller caption
+    if (!props.projectData) {
+        return (
+            <>
+                Laster inn beskrivelse...
+            </>
+        )
+    }
     return (
         <Grid item sm={6} xs={12}>
             <div className={classes.projectDesc}>
                 <div>
                     <Typography variant={textTitleStyle} className={classes.title} color={"textPrimary"}>
-                        { props.projectData.title }
+                        { props.projectData.data.title }
                     </Typography>
                     <Typography variant={textStyle} className={classes.text} color={"textSecondary"}>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum eos ex hic id non nostrum, obcaecati porro. Doloribus laboriosam laborum libero mollitia nisi, officia perspiciatis quia repudiandae sit tempora velit.
+                        { props.projectData.data.description }
                     </Typography>
                 </div>
             </div>
@@ -150,12 +159,17 @@ export default function Projects(props: {margin:number}) {
         }
     }, []);
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
-
+    // Retrieve projects from db
+    const projectsCol = collection<Project>("projects")
+    const [projectDocs] = useAll(projectsCol)
+    /*
     let projects:projectObj[] = [
+
         {key: 1, title: "Bygging av hytte", imgUrl:"https://i2.wp.com/www.homesteadbuildingsystemsinc.com/wp-content/uploads/2016/09/Project-Manager-Walking-through-Framed-House.jpg?fit=1920%2C1080&ssl=1", description:"", images:["https://www.thespruce.com/thmb/TIUYmTRJ3NOFnY9LJ6FzMd_9oBc=/2571x1928/smart/filters:no_upscale()/small-garden-ideas-and-inspiration-4101842-01-5e0462c2365e42de86a4f3ebc2152c1b.jpg", "https://cdn.britannica.com/42/91642-050-332E5C66/Keukenhof-Gardens-Lisse-Netherlands.jpg", "https://static.toiimg.com/thumb/68007187/garden.jpg?width=1200&height=900"]},
         {key: 2, title: "Måling av ting", imgUrl:"https://media.istockphoto.com/photos/carpenter-working-with-equipment-on-wooden-table-in-carpentry-shop-picture-id1147804793?k=6&m=1147804793&s=612x612&w=0&h=dB2GkD3p9cz-icf56LGcKQZggtUA4Rp_KU5WxKMfFfM=", description:"", images:["", ""]},
         {key: 3, title: "Prosjekt med tresag", imgUrl:"https://www.careersinconstruction.ca/sites/default/files/styles/career_banner/public/images/careers/4841_stone_farmhouse_reno_8x12_low_0.jpg?itok=VJi18X5T", description:"", images:["", "", "", "", "", ""]},
         {key: 4, title: "Stol-prosjekt", imgUrl:"https://www.homestratosphere.com/wp-content/uploads/2019/12/wooden-chair-woodworker-dec142019-min.jpg", description:"", images:["", "", ""]}];
+    */
     let toggle = false; // Controls whether to display text on left or right side
     let projectCount = 0; // Used to check which image is last
     return (
@@ -165,26 +179,27 @@ export default function Projects(props: {margin:number}) {
                     <Typography variant={"h4"} className={classes.title}>Våre prosjekter</Typography>
                     <Grid container spacing={0}>
                         {
-                            projects.map(project => {
+                            projectDocs ?
+                            projectDocs.map(project => {
                                 toggle = !toggle
                                 projectCount += 1
                                 return (
-                                    <Grid container key={project.key}>
+                                    <Grid container key={project.ref.id}>
                                         {
                                             isMobile ?
                                                 <>
                                                     <ProjectGrid projectData={project} />
-                                                    <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                                    <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
                                                 </>
                                                 :
                                                 toggle ?
                                                     <>
                                                         <ProjectGrid projectData={project} />
-                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
                                                     </>
                                                     :
                                                     <>
-                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projects.length} />
+                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
                                                         <ProjectGrid projectData={project} />
                                                     </>
                                         }
@@ -192,6 +207,8 @@ export default function Projects(props: {margin:number}) {
                                 )
                             }
                             )
+                                :
+                                "Prosjekter laster"
                         }
                     </Grid>
                 </Grid>

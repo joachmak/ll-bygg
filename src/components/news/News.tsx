@@ -1,8 +1,9 @@
 import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
-import Announcement, {announcementInterface} from "./Announcement";
-import React from "react";
+import Announcement from "./Announcement";
+import {NewsDoc} from "../../types";
+import {Doc} from "typesaurus";
 
-export default function News(props:{margin:number, news:announcementInterface[], admin:boolean}) {
+export default function News(props:{margin:number, admin:boolean, news:Doc<NewsDoc>[]}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -48,7 +49,7 @@ export default function News(props:{margin:number, news:announcementInterface[],
                                         {
                                             /* @ts-ignore */
                                             props.news.sort((a,b) => b.date - a.date).map(announcement =>
-                                                <Announcement key={announcement.id} announcement={announcement} />
+                                                <Announcement key={announcement.ref.id} announcement={announcement} />
                                             )
                                         }
                                     </Grid>

@@ -1,4 +1,6 @@
 import {createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {NewsDoc} from "../../types";
+import {Doc} from "typesaurus";
 
 interface announcementInterface {
     id:number;
@@ -7,7 +9,7 @@ interface announcementInterface {
     date:Date;
 }
 
-export default function Announcement(props:{announcement:announcementInterface}) {
+export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             title: {
@@ -26,10 +28,10 @@ export default function Announcement(props:{announcement:announcementInterface})
         <>
             <Grid item xs={12}>
                 <Typography variant={"h5"} className={classes.title}>
-                    {props.announcement.title}
+                    {props.announcement.data.title}
                 </Typography>
                 <Typography variant={"caption"} color={"textSecondary"} className={classes.dateString}>
-                    <b>{props.announcement.date.toLocaleDateString("no-NB", {
+                    <b>{props.announcement.data.datetime.toLocaleDateString("no-NB", {
                         weekday: 'short', // long, short, narrow
                         day: 'numeric', // numeric, 2-digit
                         year: 'numeric', // numeric, 2-digit
@@ -39,7 +41,7 @@ export default function Announcement(props:{announcement:announcementInterface})
                     })}</b>
                 </Typography>
                 <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
-                    {props.announcement.description}
+                    {props.announcement.data.description}
                 </Typography>
             </Grid>
         </>

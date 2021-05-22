@@ -29,4 +29,10 @@ type ServicesSection = {
     rehabiliteringDesc: string,
 }
 
-export type {Employee, Project, AboutSection, HeaderSection, ServicesSection}
+type NewsDoc = {
+    title:string,
+    description:string,
+    datetime:Date,
+}
+
+export type {Employee, Project, AboutSection, HeaderSection, ServicesSection, NewsDoc}
