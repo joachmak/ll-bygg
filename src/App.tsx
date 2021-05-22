@@ -18,7 +18,6 @@ import {announcementInterface} from "./components/news/Announcement";
 import {BrowserRouter as Router, Switch, Route, RouteProps} from "react-router-dom";
 import { Redirect } from "react-router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import 'firebase/auth'
 import firebase from 'firebase/app'
 import Login from "./components/login/Login";
 import AdminPanel from "./components/adminpanel/AdminPanel";
