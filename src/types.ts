@@ -4,6 +4,7 @@ type Employee = {
     role:string,
     description:string,
     priority:number,
+    imgUrl:string,
 }
 
 type Project = {

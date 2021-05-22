@@ -1,7 +1,13 @@
 import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
 import EmployeeCard from "./EmployeeCard";
+import {collection} from "typesaurus";
+import {useAll} from "@typesaurus/react";
+import {Employee} from "../../types";
 
 export default function Employees(props: {margin:number, admin:boolean}) {
+    const employeesCollection = collection("employees")
+    let [employeeDocs] = useAll<Employee>(employeesCollection)
+
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -21,34 +27,25 @@ export default function Employees(props: {margin:number, admin:boolean}) {
         }),
     );
     const classes = useStyles()
-    let employees = [
-            {
-                name: "Ludvig Vik Løite",
-                role: "Innehaver",
-                description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur dolor eos et labore officia tempore ut! Alias amet beatae deserunt dolore fugiat id, in quo, recusandae sed ut voluptates.",
-                url: "https://intern.orakel.ntnu.no/media/cache/80/c4/80c41993bd39581dcaec44b6b2101f36.png",
-            },
-            {
-                name: "Torbjørn Øyan Sørdal",
-                role: "Kjekkas",
-                description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur dolor eos et labore officia tempore ut! Alias amet beatae deserunt dolore fugiat id, in quo, recusandae sed ut voluptates.",
-                url: "https://intern.orakel.ntnu.no/media/cache/71/ce/71cebc442e0df36b127db953852093e6.png",
-            },
-            {
-                name: "Alf Berger Husem",
-                role: "Stonksforvalter",
-                description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur dolor eos et labore officia tempore ut! Alias amet beatae deserunt dolore fugiat id, in quo, recusandae sed ut voluptates.",
-                url: "https://intern.orakel.ntnu.no/media/cache/5b/02/5b0266a495912db4a445ed14e20346ed.png",
-            }
-        ]
 
     return (
         <>
             <Grid container spacing={3} className={classes.gridContainer}>
                 {
-                    employees.map(employee =>
-                        <EmployeeCard admin={props.admin} key={employee.name} url={employee.url} name={employee.name} role={employee.role} description={employee.description} />
-                    )
+                    employeeDocs ?
+                        employeeDocs
+                            .sort((a,b) => a.data.priority - b.data.priority)
+                            .map(employee =>
+                            <EmployeeCard
+                                admin={props.admin}
+                                key={employee.ref.id}
+                                url={employee.data.imgUrl}
+                                name={employee.data.name}
+                                role={employee.data.role}
+                                description={employee.data.description} />
+                            )
+                        :
+                        "Vennligst vent mens seksjonen laster"
                 }
             </Grid>
         </>
