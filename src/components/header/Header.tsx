@@ -1,15 +1,20 @@
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import {HeaderSection} from "../../types";
+import {collection} from "typesaurus";
+import {useGet} from "@typesaurus/react";
 
-let img = require("./header.JPG")
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
 
 export default function Header() {
+    const pageElem = collection("pageElements")
+    let [img] = useGet<HeaderSection>(pageElem, "header")
+
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             header: {
                 height: "85vh",
-                background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + img.default + "')",
+                background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
                 backgroundAttachment: "fixed",
                 backgroundSize: "cover",
                 boxShadow: "inset 0 0 7em 1em #000",
