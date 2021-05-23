@@ -3,6 +3,7 @@ import {HeaderSection} from "../../types";
 import {collection} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {useEffect, useState} from "react";
+import {validateImage} from "../../adminUtils";
 
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
@@ -59,12 +60,6 @@ export default function HeaderAdmin() {
     );
     const classes = useStyles()
     const [isValidImg, setIsValidImg] = useState(true)
-    const validateImage = async (url:string) => {
-        let img = new Image()
-        img.onerror = () => {setIsValidImg(false)}
-        img.onload = () => {setIsValidImg(true)}
-        img.src = url
-    }
     return (
         <>
             <div className={classes.header}>
@@ -84,7 +79,7 @@ export default function HeaderAdmin() {
                                 fullWidth
                                 onChange={e => {
                                     setInputImg(e.target.value)
-                                    validateImage(e.target.value)
+                                    validateImage(e.target.value, () => setIsValidImg(false), () => setIsValidImg(true))
                                 }}
                             />
                             <Button
