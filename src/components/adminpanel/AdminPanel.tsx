@@ -8,6 +8,9 @@ import React from "react";
 import ProjectsAdmin from "../projects/ProjectsAdmin";
 import FooterAdmin from "../FooterAdmin";
 import HeaderAdmin from "../header/HeaderAdmin";
+import {NewsDoc} from "../../types";
+import {collection} from "typesaurus";
+import {useAll} from "@typesaurus/react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -39,6 +42,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function AdminPanel() {
     const classes = useStyles()
     const history = useHistory()
+    const newsCollection = collection<NewsDoc>("news")
+    const [newsDocs] = useAll(newsCollection)
     let margin = 15
     const submit = () => {
         firebase.app().auth().signOut().then(() => {
@@ -63,7 +68,7 @@ export default function AdminPanel() {
             <ProjectsAdmin margin={15} />
             <Divider className={classes.divider} />
 
-            <News admin={true} news={[]} margin={margin} />
+            <News admin={true} news={newsDocs ? newsDocs : []} margin={margin} />
 
 
             <FooterAdmin />

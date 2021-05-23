@@ -2,6 +2,7 @@ import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@mat
 import Announcement from "./Announcement";
 import {NewsDoc} from "../../types";
 import {Doc} from "typesaurus";
+import NewsAdmin from "./NewsAdmin";
 
 export default function News(props:{margin:number, admin:boolean, news:Doc<NewsDoc>[]}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -41,7 +42,7 @@ export default function News(props:{margin:number, admin:boolean, news:Doc<NewsD
                         {
                             props.admin ?
                                 <>
-                                    News Admin
+                                    <NewsAdmin existingNewsDocs={props.news} />
                                 </>
                                 :
                                 <>
