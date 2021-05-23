@@ -1,7 +1,8 @@
-import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {HeaderSection} from "../../types";
 import {collection} from "typesaurus";
 import {useGet} from "@typesaurus/react";
+import {useEffect, useState} from "react";
 
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
@@ -9,7 +10,12 @@ const darkness = 0.25 // Higher = darker
 export default function HeaderAdmin() {
     const pageElem = collection("pageElements")
     let [img] = useGet<HeaderSection>(pageElem, "header")
-
+    let [inputImg, setInputImg] = useState("")
+    useEffect(() => {
+        if (img) {
+            setInputImg(img.data.imgUrl)
+        }
+    }, [img])
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -23,7 +29,7 @@ export default function HeaderAdmin() {
             },
             header: {
                 height: "85vh",
-                background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
+                background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (inputImg) + "')",
                 backgroundAttachment: "fixed",
                 backgroundSize: "cover",
                 boxShadow: "inset 0 0 7em 1em #000",
@@ -52,6 +58,13 @@ export default function HeaderAdmin() {
         }),
     );
     const classes = useStyles()
+    const [isValidImg, setIsValidImg] = useState(true)
+    const validateImage = async (url:string) => {
+        let img = new Image()
+        img.onerror = () => {setIsValidImg(false)}
+        img.onload = () => {setIsValidImg(true)}
+        img.src = url
+    }
     return (
         <>
             <div className={classes.header}>
@@ -64,7 +77,23 @@ export default function HeaderAdmin() {
                             Rediger header
                         </Typography>
                         <div>
-                            *Admin-funksjonalitet for redigering av header*
+                            <TextField
+                                variant={"outlined"}
+                                label={"Bilde-URL"}
+                                value={inputImg}
+                                fullWidth
+                                onChange={e => {
+                                    setInputImg(e.target.value)
+                                    validateImage(e.target.value)
+                                }}
+                            />
+                            <Button
+                                variant={"outlined"}
+                                color={"primary"}
+                                disabled={!isValidImg}
+                            >
+                                Lagre header-bilde
+                            </Button>
                         </div>
                     </Grid>
                 </Grid>
