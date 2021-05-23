@@ -1,14 +1,31 @@
 import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faHammer, faHouseDamage, faTools } from '@fortawesome/free-solid-svg-icons'
-import {collection} from "typesaurus";
+import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {ServicesSection} from "../../types";
 import {useEffect, useState} from "react";
 
+let pageElementsCol = collection("pageElements")
+
+
+
 export default function Services(props:{margin:number, admin:boolean}) {
     const pageElem = collection("pageElements")
     let [servicesDoc] = useGet<ServicesSection>(pageElem, "services")
+    let [error, setError] = useState("")
+    const uploadServiceDescriptions = async (descs:string[]) => {
+        console.log("Prøver å oppdatere descs: " + descs)
+        update(pageElementsCol, "services", { byggDesc: descs[0], monteringDesc: descs[1], rehabiliteringDesc: descs[2] })
+            .then(() => {
+                setError("")
+            })
+            .catch(e => {
+                console.error(e)
+                setError(e)
+            })
+        setError("Noe gikk galt under opplastningen")
+    }
 
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
@@ -84,7 +101,7 @@ export default function Services(props:{margin:number, admin:boolean}) {
                                         <div className={classes.iconContainer}>
                                             <div className={classes.iconContainer}>
                                                 {/* @ts-ignore */}
-                                                <FontAwesomeIcon className={classes.icon} icon={service[2]} />
+                                                <FontAwesomeIcon className={classes.icon} icon={service[3]} />
                                             </div>
                                             <Typography variant={"h5"} className={classes.subtitle} color={"textSecondary"}>
                                                 <b>{service[1]}</b>
@@ -126,7 +143,24 @@ export default function Services(props:{margin:number, admin:boolean}) {
                             {
                                 props.admin &&
                                     <>
-                                        <Button className={classes.saveBtn} variant={"outlined"} color={"primary"}>Lagre beskrivelser</Button>
+                                        <Button
+                                            className={classes.saveBtn}
+                                            variant={"outlined"}
+                                            color={"primary"}
+                                            onClick={() =>
+                                                {
+                                                    uploadServiceDescriptions(descs)
+                                                }
+                                            }
+                                        >
+                                            Lagre beskrivelser
+                                        </Button>
+                                        {
+                                            error !== "" &&
+                                            <Typography variant={"caption"}>
+                                                {error}
+                                            </Typography>
+                                        }
                                     </>
                             }
                         </Grid>
