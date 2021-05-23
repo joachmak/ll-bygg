@@ -1,6 +1,6 @@
 import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {HeaderSection} from "../../types";
-import {collection} from "typesaurus";
+import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {useEffect, useState} from "react";
 import {validateImage} from "../../adminUtils";
@@ -10,8 +10,20 @@ const darkness = 0.25 // Higher = darker
 
 export default function HeaderAdmin() {
     const pageElem = collection("pageElements")
+    const [isValidImg, setIsValidImg] = useState(true)
     let [img] = useGet<HeaderSection>(pageElem, "header")
     let [inputImg, setInputImg] = useState("")
+    const uploadImg = () => {
+        setIsValidImg(false)
+        let pageElements = collection("pageElements")
+        update(pageElements, "header", {imgUrl : inputImg}).then(() => {
+            alert("Header har blitt oppdatert!")
+            setIsValidImg(true)
+        }).catch((e) => {
+            alert(e)
+            setIsValidImg(true)
+        })
+    }
     useEffect(() => {
         if (img) {
             setInputImg(img.data.imgUrl)
@@ -59,7 +71,6 @@ export default function HeaderAdmin() {
         }),
     );
     const classes = useStyles()
-    const [isValidImg, setIsValidImg] = useState(true)
     return (
         <>
             <div className={classes.header}>
@@ -86,6 +97,7 @@ export default function HeaderAdmin() {
                                 variant={"outlined"}
                                 color={"primary"}
                                 disabled={!isValidImg}
+                                onClick={() => uploadImg()}
                             >
                                 Lagre header-bilde
                             </Button>

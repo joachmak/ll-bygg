@@ -5,4 +5,5 @@ const validateImage = async (url:string, errorFunc:() => any, successFunc:() => 
     img.onload = () => successFunc()
     img.src = url
 }
-export {validateImage};
+
+export {validateImage}
