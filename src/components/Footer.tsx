@@ -5,6 +5,9 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import RoomIcon from '@material-ui/icons/Room';
 import {useState} from "react";
+import {collection} from "typesaurus";
+import {FooterSection} from "../types";
+import {useGet} from "@typesaurus/react";
 
 function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -134,6 +137,8 @@ export default function Footer() {
     const classes = useStyles()
     let [iconHoverInsta, setIconHoverInsta] = useState(false);
     let [iconHoverFb, setIconHoverFb] = useState(false);
+    const pageElems = collection("pageElements")
+    const [footerDoc] = useGet<FooterSection>(pageElems, "footer")
     return (
         <>
             <div className={classes.root}>
@@ -159,9 +164,30 @@ export default function Footer() {
                                 </Link>
                             </Grid>
                             <Grid item sm={6} xs={12}>
-                                <FooterIcon text={"(+47) 473 00 567"} linkTo={"tel: 4747300567"} icon={<PhoneIcon className={classes.marginRight10} />}/>
-                                <FooterIcon text={"Kontakt oss via e-post"} linkTo={"mailto: joachimmaksim@gmail.com"} icon={<EmailIcon className={classes.marginRight10} />}/>
-                                <FooterIcon text={"Odd Brochmanns veg 2, 7051 Trondheim"} linkTo={"#"} icon={<RoomIcon className={classes.marginRight10} />}/>
+                                <FooterIcon
+                                    text={
+                                        "(+" +
+                                        (footerDoc ? footerDoc.data.countryCode : "") +") " +
+                                        (footerDoc ? footerDoc.data.phone.slice(0,3) + " " +
+                                            footerDoc.data.phone.slice(3,5) + " " +
+                                            footerDoc.data.phone.slice(5,8) : "")
+                                    }
+                                    linkTo={"tel: " +
+                                    (footerDoc ? footerDoc.data.countryCode + footerDoc.data.phone : "")
+                                    }
+                                    icon={<PhoneIcon className={classes.marginRight10} />}/>
+                                <FooterIcon
+                                    text={"Kontakt oss via e-post"}
+                                    linkTo={footerDoc ? "mailto:" + footerDoc.data.email : ""}
+                                    icon={<EmailIcon className={classes.marginRight10} />}
+                                />
+                                <FooterIcon
+                                    text={footerDoc ? footerDoc.data.address : ""}
+                                    linkTo={"#"}
+                                    icon={
+                                        <RoomIcon className={classes.marginRight10} />
+                                    }
+                                />
                             </Grid>
                             <Grid item sm={6} xs={12}>
                                 <div className={classes.map}>

@@ -29,10 +29,19 @@ type ServicesSection = {
     rehabiliteringDesc: string,
 }
 
+type FooterSection = {
+    address:string,
+    countryCode:string,
+    email:string,
+    fbLink:string,
+    igLink:string,
+    phone:string,
+}
+
 type NewsDoc = {
     title:string,
     description:string,
     datetime:Date,
 }
 
-export type {Employee, Project, AboutSection, HeaderSection, ServicesSection, NewsDoc}
+export type {Employee, Project, AboutSection, HeaderSection, ServicesSection, NewsDoc, FooterSection}
