@@ -1,9 +1,10 @@
-import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faHammer, faHouseDamage, faTools } from '@fortawesome/free-solid-svg-icons'
 import {collection} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {ServicesSection} from "../../types";
+import {useEffect, useState} from "react";
 
 export default function Services(props:{margin:number, admin:boolean}) {
     const pageElem = collection("pageElements")
@@ -43,16 +44,30 @@ export default function Services(props:{margin:number, admin:boolean}) {
                 fontSize: 45,
                 display: "flex",
                 margin: "10px auto",
+            },
+            saveBtn: {
+                marginBottom: 15,
             }
         }),
     );
     const classes = useStyles()
     const tempDescription = "Beskrivelse laster inn, vennligst vent..."
     let services = [
-        ["Bygg", (servicesDoc ? servicesDoc.data.byggDesc : tempDescription), faHammer],
-        ["Rehabilitering", (servicesDoc ? servicesDoc.data.rehabiliteringDesc : tempDescription), faHouseDamage],
-        ["Montering", (servicesDoc ? servicesDoc.data.monteringDesc : tempDescription), faTools]
+        [0, "Bygg", (servicesDoc ? servicesDoc.data.byggDesc : tempDescription), faHammer],
+        [1, "Rehabilitering", (servicesDoc ? servicesDoc.data.rehabiliteringDesc : tempDescription), faHouseDamage],
+        [2, "Montering", (servicesDoc ? servicesDoc.data.monteringDesc : tempDescription), faTools]
     ]
+    let [descs, setDescs] = useState(["","",""])
+    useEffect(() => {
+        if (servicesDoc) {
+            setDescs([
+                servicesDoc.data.byggDesc,
+                servicesDoc.data.rehabiliteringDesc,
+                servicesDoc.data.monteringDesc
+            ])
+        }
+    }, [servicesDoc])
+
     return(
         <>
             <Container className={classes.container}>
@@ -72,21 +87,47 @@ export default function Services(props:{margin:number, admin:boolean}) {
                                                 <FontAwesomeIcon className={classes.icon} icon={service[2]} />
                                             </div>
                                             <Typography variant={"h5"} className={classes.subtitle} color={"textSecondary"}>
-                                                <b>{service[0]}</b>
+                                                <b>{service[1]}</b>
                                             </Typography>
                                             {
                                                 props.admin ?
                                                     <>
-                                                        "Admin temp"
+                                                        <TextField
+                                                            label="Beskrivelse"
+                                                            variant="outlined"
+                                                            multiline
+                                                            /* @ts-ignore */
+                                                            value={descs[service[0]]}
+                                                            onChange = {
+                                                                e =>
+                                                                {
+                                                                    let temp = ["","",""]
+                                                                    for (let i = 0; i<3; i++) {
+                                                                        if (i === service[0]) {
+                                                                            temp[i] = e.target.value
+                                                                        } else {
+                                                                            temp[i] = descs[i]
+                                                                        }
+                                                                    }
+                                                                    setDescs(temp)
+                                                                }
+                                                            }
+                                                        />
                                                     </>
                                                     :
                                                     <Typography variant={"body2"} className={classes.text} color={"textSecondary"}>
-                                                        {service[1]}
+                                                        {service[2]}
                                                     </Typography>
                                             }
                                         </div>
                                     </Grid>
                                 )
+                            }
+                            {
+                                props.admin &&
+                                    <>
+                                        <Button className={classes.saveBtn} variant={"outlined"} color={"primary"}>Lagre beskrivelser</Button>
+                                    </>
                             }
                         </Grid>
                     </Grid>
