@@ -19,12 +19,13 @@ export default function Services(props:{margin:number, admin:boolean}) {
         update(pageElementsCol, "services", { byggDesc: descs[0], monteringDesc: descs[1], rehabiliteringDesc: descs[2] })
             .then(() => {
                 setError("")
+                alert("Beskrivelsen ble oppdatert")
             })
             .catch(e => {
                 console.error(e)
+                alert(e)
                 setError(e)
             })
-        setError("Noe gikk galt under opplastningen")
     }
 
     const useStyles = makeStyles((theme: Theme) =>
