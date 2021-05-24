@@ -44,6 +44,7 @@ export default function Employees(props: {margin:number, admin:boolean}) {
                                         name={employee.data.name}
                                         role={employee.data.role}
                                         priority={employee.data.priority}
+                                        id={employee.ref.id}
                                         description={employee.data.description} />
                                 )
                             :
@@ -68,6 +69,7 @@ export default function Employees(props: {margin:number, admin:boolean}) {
                                 name={employee.data.name}
                                 role={employee.data.role}
                                 priority={employee.data.priority}
+                                id={employee.ref.id}
                                 description={employee.data.description} />
                             )
                         :

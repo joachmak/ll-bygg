@@ -105,7 +105,7 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
                     setTitle(props.announcement.data.title)
                 }}>Angre endringer</Button>
                 <Button disabled={isProcessing} className={classes.btn} variant={"outlined"} onClick={() => {setOpenDialog(true)}} color={"secondary"}>Slett</Button>
-                <ConfirmDeleteDialog setIsOpen={setOpenDialog} isOpen={openDialog} title={"Er du sikker på at du vil slette nyheten?"} information={"Nyheten det gjelder: " + props.announcement.data.title} deleteFunc={deleteAnnouncement} />
+                <ConfirmDeleteDialog key={props.announcement.ref.id} setIsOpen={setOpenDialog} isOpen={openDialog} title={"Er du sikker på at du vil slette nyheten?"} information={"Nyheten det gjelder: " + props.announcement.data.title} deleteFunc={deleteAnnouncement} />
             </Grid>
         </>
     )

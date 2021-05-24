@@ -15,7 +15,6 @@ export default function ConfirmDeleteDialog(props:{setIsOpen:(arg:boolean) => an
         }),
     );
     const classes = useStyles()
-
     return (
         <Dialog onClose={() => {props.setIsOpen(false)}} aria-labelledby="Slett nyhet" open={props.isOpen}>
             <DialogTitle>{props.title}</DialogTitle>
