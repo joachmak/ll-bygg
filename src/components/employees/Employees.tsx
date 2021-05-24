@@ -1,12 +1,12 @@
-import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
+import {createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import EmployeeCard from "./EmployeeCard";
 import {collection} from "typesaurus";
-import {useAll} from "@typesaurus/react";
+import {useOnAll} from "@typesaurus/react";
 import {Employee} from "../../types";
 
 export default function Employees(props: {margin:number, admin:boolean}) {
     const employeesCollection = collection("employees")
-    let [employeeDocs] = useAll<Employee>(employeesCollection)
+    let [employeeDocs] = useOnAll<Employee>(employeesCollection)
 
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
@@ -27,14 +27,39 @@ export default function Employees(props: {margin:number, admin:boolean}) {
         }),
     );
     const classes = useStyles()
-
+    if (props.admin) {
+        return (
+            <>
+                <Typography variant={"body1"} className={classes.title} color={"textSecondary"}><b>Merk:</b> Høyere visningsprioritet vil gjøre at den ansatte vil dukke opp høyere på siden</Typography>
+                <Grid container spacing={3} className={classes.gridContainer}>
+                    {
+                        employeeDocs ?
+                            employeeDocs
+                                .sort((a,b) => b.data.priority - a.data.priority)
+                                .map(employee =>
+                                    <EmployeeCard
+                                        admin={props.admin}
+                                        key={employee.ref.id}
+                                        url={employee.data.imgUrl}
+                                        name={employee.data.name}
+                                        role={employee.data.role}
+                                        priority={employee.data.priority}
+                                        description={employee.data.description} />
+                                )
+                            :
+                            "Vennligst vent mens seksjonen laster"
+                    }
+                </Grid>
+            </>
+        )
+    }
     return (
         <>
             <Grid container spacing={3} className={classes.gridContainer}>
                 {
                     employeeDocs ?
                         employeeDocs
-                            .sort((a,b) => a.data.priority - b.data.priority)
+                            .sort((a,b) => b.data.priority - a.data.priority)
                             .map(employee =>
                             <EmployeeCard
                                 admin={props.admin}
@@ -42,6 +67,7 @@ export default function Employees(props: {margin:number, admin:boolean}) {
                                 url={employee.data.imgUrl}
                                 name={employee.data.name}
                                 role={employee.data.role}
+                                priority={employee.data.priority}
                                 description={employee.data.description} />
                             )
                         :
