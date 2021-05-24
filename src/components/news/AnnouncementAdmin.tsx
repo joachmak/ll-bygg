@@ -1,6 +1,17 @@
-import {Button, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {
+    Button,
+    createStyles,
+    Dialog,
+    DialogTitle,
+    Grid,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from "@material-ui/core";
 import {NewsDoc} from "../../types";
-import {Doc} from "typesaurus";
+import {collection, Doc, update, remove} from "typesaurus";
+import {useState} from "react";
 
 interface announcementInterface {
     id:number;
@@ -25,10 +36,48 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
             btn: {
                 marginBottom: 15,
                 marginRight: 10,
-            }
+            },
+            deleteBtn: {
+                margin: 15,
+            },
+            deleteDiv: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            },
         }),
     );
     const classes = useStyles()
+    const [openDialog, setOpenDialog] = useState(false);
+    let [desc, setDesc] = useState(props.announcement.data.description)
+    let [title, setTitle] = useState(props.announcement.data.title)
+    let [isProcessing, setIsProcessing] = useState(false)
+    const newsCollection = collection<NewsDoc>("news")
+    const updateAnnouncement = () => {
+        setIsProcessing(true)
+        update(newsCollection, props.announcement.ref.id, {title: title, description: desc})
+            .then(() => {
+                setIsProcessing(false)
+            })
+            .catch((e) => {
+                alert(e)
+                console.error(e)
+                setIsProcessing(false)
+            })
+    }
+    const deleteAnnouncement = () => {
+        setIsProcessing(true)
+        remove(newsCollection, props.announcement.ref.id)
+            .then(() => {
+                setIsProcessing(false)
+            })
+            .catch((e) => {
+                alert(e)
+                console.error(e)
+                setIsProcessing(false)
+            })
+    }
     return (
         <>
             <Grid className={classes.root} item xs={12}>
@@ -38,7 +87,8 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
                     multiline
                     variant={"outlined"}
                     label={"Tittel"}
-                    defaultValue={props.announcement.data.title}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
                 <TextField
                     className={classes.txtField}
@@ -46,10 +96,37 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
                     multiline
                     variant={"outlined"}
                     label={"Beskrivelse"}
-                    defaultValue={props.announcement.data.description}
+                    value={desc}
+                    onChange={(e) => setDesc(e.target.value)}
                 />
-                <Button className={classes.btn} variant={"outlined"} color={"primary"}>Oppdater</Button>
-                <Button className={classes.btn} variant={"outlined"} color={"secondary"}>Slett</Button>
+                <Button disabled={isProcessing} className={classes.btn} variant={"outlined"} color={"primary"} onClick={() => {
+                    updateAnnouncement()
+                }}>Oppdater</Button>
+                <Button className={classes.btn} variant={"outlined"} color={"default"} onClick={() => {
+                    setDesc(props.announcement.data.description)
+                    setTitle(props.announcement.data.title)
+                }}>Angre endringer</Button>
+                <Button disabled={isProcessing} className={classes.btn} variant={"outlined"} onClick={() => {setOpenDialog(true)}} color={"secondary"}>Slett</Button>
+                <Dialog onClose={() => {setOpenDialog(false)}} aria-labelledby="Slett nyhet" open={openDialog}>
+                    <DialogTitle>Er du sikker på at du vil slette nyheten?</DialogTitle>
+                    <div className={classes.deleteDiv}>
+                        <Typography variant={"caption"} color={"textSecondary"}>DET VIL IKKE VÆRE MULIG Å ANGRE NÅR DETTE ER GJORT!</Typography>
+                        <Typography variant={"caption"} color={"textSecondary"}><b>Nyheten det gjelder:</b> {props.announcement.data.title}</Typography>
+                        <Typography variant={"body2"} color={"textSecondary"}>Klikk utenfor dette vinduet for å angre sletting.</Typography>
+                        <Button
+                            disabled={isProcessing}
+                            className={classes.deleteBtn}
+                            variant={"outlined"}
+                            color={"secondary"}
+                            onClick={() => {
+                                setOpenDialog(false)
+                                deleteAnnouncement()
+                            }}
+                        >
+                            Bekreft sletting
+                        </Button>
+                    </div>
+                </Dialog>
             </Grid>
         </>
     )

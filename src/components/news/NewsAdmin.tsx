@@ -5,7 +5,10 @@ export default function NewsAdmin(props:{existingNewsDocs:Doc<NewsDoc>[]}) {
     return (
         <>
             {
-                props.existingNewsDocs.map(announcement => <AnnouncementAdmin announcement={announcement} />)
+                props.existingNewsDocs
+                    // @ts-ignore
+                    .sort((a,b) => b.data.datetime - a.data.datetime)
+                    .map(announcement => <AnnouncementAdmin announcement={announcement} />)
             }
         </>
     )

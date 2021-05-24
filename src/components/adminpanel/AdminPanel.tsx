@@ -10,7 +10,8 @@ import FooterAdmin from "../FooterAdmin";
 import HeaderAdmin from "../header/HeaderAdmin";
 import {NewsDoc} from "../../types";
 import {collection} from "typesaurus";
-import {useAll} from "@typesaurus/react";
+import {useOnAll} from "@typesaurus/react";
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,7 +44,7 @@ export default function AdminPanel() {
     const classes = useStyles()
     const history = useHistory()
     const newsCollection = collection<NewsDoc>("news")
-    const [newsDocs] = useAll(newsCollection)
+    const [newsDocs] = useOnAll(newsCollection)
     let margin = 15
     const submit = () => {
         firebase.app().auth().signOut().then(() => {

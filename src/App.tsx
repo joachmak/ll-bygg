@@ -22,7 +22,8 @@ import Login from "./components/login/Login";
 import AdminPanel from "./components/adminpanel/AdminPanel";
 import {collection} from "typesaurus";
 import {NewsDoc} from "./types";
-import {useAll} from "@typesaurus/react";
+import {useOnAll} from "@typesaurus/react";
+
 
 function App() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -43,7 +44,7 @@ function App() {
         }
     });
     const newsCol = collection<NewsDoc>("news")
-    const [news] = useAll(newsCol)
+    const [news] = useOnAll(newsCol)
     if (!news) {
         // TODO: Add loading page
         return (
