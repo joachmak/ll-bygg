@@ -9,6 +9,7 @@ import {
 import {NewsDoc} from "../../types";
 import {collection, add} from "typesaurus";
 import {useState} from "react";
+import {Add} from "@material-ui/icons";
 
 interface announcementInterface {
     id:number;
@@ -33,9 +34,21 @@ export default function Announcement() {
             btn: {
                 marginBottom: 15,
                 marginRight: 10,
-                color: "green",
+                color: "white",
                 borderColor: "green",
             },
+            greyBtn: {
+                backgroundColor: "grey",
+                "&:hover": {
+                    backgroundColor: "#333"
+                }
+            },
+            greenBtn: {
+                backgroundColor: "green",
+                "&:hover": {
+                    backgroundColor: "darkgreen"
+                }
+            }
         }),
     );
     const classes = useStyles()
@@ -89,7 +102,7 @@ export default function Announcement() {
                     error={error}
                     onChange={(e) => setDesc(e.target.value)}
                 />
-                <Button disabled={isProcessing} className={classes.btn} variant={"outlined"} onClick={() => {
+                <Button startIcon={<Add />} disabled={isProcessing} className={classes.btn + " " + classes.greenBtn} variant={"contained"} onClick={() => {
                     createAnnouncement()
                 }}>Publiser nyhet</Button>
             </Grid>

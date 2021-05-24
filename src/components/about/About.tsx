@@ -4,6 +4,7 @@ import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {AboutSection} from "../../types";
 import {useEffect, useState} from "react";
+import {Update} from "@material-ui/icons";
 
 export default function About(props: {margin:number, admin:boolean}) {
     const pageElem = collection("pageElements")
@@ -53,8 +54,11 @@ export default function About(props: {margin:number, admin:boolean}) {
                 whiteSpace: "pre-line",
             },
             btnUpdate: {
-                color: "green",
-                borderColor: "green",
+                color: "white",
+                backgroundColor: "green",
+                "&:hover": {
+                    backgroundColor: "darkgreen",
+                }
             }
         }),
     );
@@ -71,18 +75,19 @@ export default function About(props: {margin:number, admin:boolean}) {
                     {
                         props.admin ?
                             <>
-                                <Typography variant={"h5"}>Rediger "Om oss"-beskrivelse</Typography>
+                                <Typography variant={"h5"}>Rediger "Om oss"-seksjon</Typography>
                                 <TextField onChange={(e) => setTitle(e.target.value)} defaultValue={"a\n b"} value={title} className={classes.txtField} multiline variant={"outlined"} label={"Tittel"} fullWidth />
                                 <TextField onChange={(e) => setDescription(e.target.value)} defaultValue={"a\n b"} value={description} className={classes.txtField} multiline variant={"outlined"} label={"Beskrivelse"} fullWidth />
                                 <Button
-                                    variant={"outlined"}
+                                    variant={"contained"}
                                     className={classes.btnUpdate}
                                     onClick={() => {
                                         updateAboutSection()
                                     }}
                                     disabled={isProcessing}
+                                    startIcon={<Update />}
                                 >
-                                    Oppdater beskrivelse
+                                    Oppdater
                                 </Button>
                             </>
                             :

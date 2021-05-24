@@ -32,16 +32,6 @@ export default function Employees(props: {margin:number, admin:boolean}) {
             <>
                 <Typography variant={"body1"} className={classes.title} color={"textSecondary"}><b>Merk:</b> Høyere visningsprioritet vil gjøre at den ansatte vil dukke opp høyere på siden</Typography>
                 <Grid container spacing={3} className={classes.gridContainer}>
-                    <EmployeeCard
-                        admin={props.admin}
-                        url={""}
-                        name={""}
-                        role={""}
-                        priority={0}
-                        id={""}
-                        createEmployee={true}
-                        description={""}
-                    />
                     {
                         employeeDocs ?
                             employeeDocs
@@ -61,6 +51,16 @@ export default function Employees(props: {margin:number, admin:boolean}) {
                             :
                             "Vennligst vent mens seksjonen laster"
                     }
+                    <EmployeeCard
+                        admin={props.admin}
+                        url={""}
+                        name={""}
+                        role={""}
+                        priority={0}
+                        id={""}
+                        createEmployee={true}
+                        description={""}
+                    />
                 </Grid>
             </>
         )

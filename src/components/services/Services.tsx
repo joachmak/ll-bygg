@@ -5,6 +5,7 @@ import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {ServicesSection} from "../../types";
 import {useEffect, useState} from "react";
+import {Update} from "@material-ui/icons";
 
 let pageElementsCol = collection("pageElements")
 
@@ -65,6 +66,12 @@ export default function Services(props:{margin:number, admin:boolean}) {
             },
             saveBtn: {
                 marginBottom: 15,
+                marginLeft: 15,
+                color: "white",
+                backgroundColor: "green",
+                "&:hover": {
+                    backgroundColor: "darkgreen",
+                }
             }
         }),
     );
@@ -143,26 +150,26 @@ export default function Services(props:{margin:number, admin:boolean}) {
                             }
                             {
                                 props.admin &&
-                                    <>
-                                        <Button
-                                            className={classes.saveBtn}
-                                            variant={"outlined"}
-                                            color={"primary"}
-                                            onClick={() =>
-                                                {
-                                                    uploadServiceDescriptions(descs)
-                                                }
-                                            }
-                                        >
-                                            Lagre beskrivelser
-                                        </Button>
+                                <>
+                                    <Button
+                                        className={classes.saveBtn}
+                                        variant={"contained"}
+                                        startIcon={<Update />}
+                                        onClick={() =>
                                         {
-                                            error !== "" &&
-                                            <Typography variant={"caption"}>
-                                                {error}
-                                            </Typography>
+                                            uploadServiceDescriptions(descs)
                                         }
-                                    </>
+                                        }
+                                    >
+                                        Oppdater
+                                    </Button>
+                                    {
+                                        error !== "" &&
+                                        <Typography variant={"caption"}>
+                                            {error}
+                                        </Typography>
+                                    }
+                                </>
                             }
                         </Grid>
                     </Grid>

@@ -3,6 +3,7 @@ import {useState} from "react";
 import ConfirmDeleteDialog from "../ConfirmDeleteDialog";
 import {add, collection, remove, update} from "typesaurus";
 import {Employee} from "../../types";
+import {Add, Backspace, Delete, Update} from "@material-ui/icons";
 
 interface employeeCardInterface {
     name: string;
@@ -41,8 +42,18 @@ export default function EmployeeCard(props:employeeCardInterface) {
                 marginBottom: 10,
             },
             btnUpdate: {
-                color: "green",
-                borderColor: "green",
+                color: "white",
+                backgroundColor: "green",
+                "&:hover": {
+                    backgroundColor: "darkgreen",
+                }
+            },
+            btnGrey: {
+                color: "white",
+                backgroundColor: "grey",
+                "&:hover": {
+                    backgroundColor: "#333",
+                }
             }
         }),
     );
@@ -114,7 +125,7 @@ export default function EmployeeCard(props:employeeCardInterface) {
                                     <TextField value={desc} onChange={(e) => {setDesc(e.target.value)}} className={classes.txtField} multiline fullWidth variant={"outlined"} label={"Beskrivelse"} />
                                     <TextField value={imgUrl} onChange={(e) => {setImgUrl(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Bilde-URL"} />
                                     <TextField value={displayPriority} onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}} className={classes.txtField} fullWidth variant={"outlined"} label={"Visningsprioritet"} type="number" />
-                                    <Button disabled={isProcessing} onClick={() => createEmployee()} fullWidth variant={"outlined"} className={classes.btnUpdate + " " + classes.btn}>Legg til ansatt</Button>
+                                    <Button disabled={isProcessing} startIcon={<Add />} onClick={() => createEmployee()} fullWidth variant={"contained"} className={classes.btnUpdate + " " + classes.btn}>Legg til ansatt</Button>
                                 </>
                                 :
                                 <>
@@ -123,9 +134,9 @@ export default function EmployeeCard(props:employeeCardInterface) {
                                     <TextField value={desc} onChange={(e) => {setDesc(e.target.value)}} className={classes.txtField} multiline fullWidth variant={"outlined"} label={"Beskrivelse"} />
                                     <TextField value={imgUrl} onChange={(e) => {setImgUrl(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Bilde-URL"} />
                                     <TextField value={displayPriority} onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}} className={classes.txtField} fullWidth variant={"outlined"} label={"Visningsprioritet"} type="number" />
-                                    <Button disabled={isProcessing} onClick={() => updateEmployee()} fullWidth variant={"outlined"} className={classes.btnUpdate + " " + classes.btn}>Oppdater</Button>
-                                    <Button disabled={isProcessing} onClick={() => setOpenDialog(true)} fullWidth variant={"outlined"} color={"secondary"} className={classes.btn}>Slett</Button>
-                                    <Button disabled={isProcessing} fullWidth variant={"outlined"} color={"default"} className={classes.btn} onClick={() => {
+                                    <Button disabled={isProcessing} startIcon={<Update />} onClick={() => updateEmployee()} fullWidth variant={"contained"} className={classes.btnUpdate + " " + classes.btn}>Oppdater</Button>
+                                    <Button disabled={isProcessing} startIcon={<Delete />} onClick={() => setOpenDialog(true)} fullWidth variant={"contained"} color={"secondary"} className={classes.btn}>Slett</Button>
+                                    <Button disabled={isProcessing} startIcon={<Backspace />} fullWidth variant={"contained"} color={"default"} className={classes.btn + " " + classes.btnGrey} onClick={() => {
                                         setName(props.name)
                                         setDesc(props.description)
                                         setRole(props.role)

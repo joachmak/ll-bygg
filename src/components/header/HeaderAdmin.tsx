@@ -4,6 +4,7 @@ import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {useEffect, useState} from "react";
 import {validateImage} from "../../adminUtils";
+import {Update} from "@material-ui/icons";
 
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
@@ -68,6 +69,14 @@ export default function HeaderAdmin() {
                 flexDirection: "row",
                 margin: "auto",
             },
+            greenBtn: {
+                backgroundColor: "green",
+                marginTop: 15,
+                color: "white",
+                "&:hover": {
+                    backgroundColor: "darkgreen",
+                }
+            }
         }),
     );
     const classes = useStyles()
@@ -94,12 +103,13 @@ export default function HeaderAdmin() {
                                 }}
                             />
                             <Button
-                                variant={"outlined"}
-                                color={"primary"}
+                                variant={"contained"}
+                                startIcon={<Update />}
+                                className={classes.greenBtn}
                                 disabled={!isValidImg}
                                 onClick={() => uploadImg()}
                             >
-                                Lagre header-bilde
+                                Oppdater
                             </Button>
                         </div>
                     </Grid>
