@@ -1,17 +1,15 @@
 import {
     Button,
     createStyles,
-    Dialog,
-    DialogTitle,
     Grid,
     makeStyles,
     TextField,
     Theme,
-    Typography
 } from "@material-ui/core";
 import {NewsDoc} from "../../types";
 import {collection, Doc, update, remove} from "typesaurus";
 import {useState} from "react";
+import ConfirmDeleteDialog from "../ConfirmDeleteDialog";
 
 interface announcementInterface {
     id:number;
@@ -107,26 +105,7 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
                     setTitle(props.announcement.data.title)
                 }}>Angre endringer</Button>
                 <Button disabled={isProcessing} className={classes.btn} variant={"outlined"} onClick={() => {setOpenDialog(true)}} color={"secondary"}>Slett</Button>
-                <Dialog onClose={() => {setOpenDialog(false)}} aria-labelledby="Slett nyhet" open={openDialog}>
-                    <DialogTitle>Er du sikker på at du vil slette nyheten?</DialogTitle>
-                    <div className={classes.deleteDiv}>
-                        <Typography variant={"caption"} color={"textSecondary"}>DET VIL IKKE VÆRE MULIG Å ANGRE NÅR DETTE ER GJORT!</Typography>
-                        <Typography variant={"caption"} color={"textSecondary"}><b>Nyheten det gjelder:</b> {props.announcement.data.title}</Typography>
-                        <Typography variant={"body2"} color={"textSecondary"}>Klikk utenfor dette vinduet for å angre sletting.</Typography>
-                        <Button
-                            disabled={isProcessing}
-                            className={classes.deleteBtn}
-                            variant={"outlined"}
-                            color={"secondary"}
-                            onClick={() => {
-                                setOpenDialog(false)
-                                deleteAnnouncement()
-                            }}
-                        >
-                            Bekreft sletting
-                        </Button>
-                    </div>
-                </Dialog>
+                <ConfirmDeleteDialog setIsOpen={setOpenDialog} isOpen={openDialog} title={"Er du sikker på at du vil slette nyheten?"} information={"Nyheten det gjelder: " + props.announcement.data.title} deleteFunc={deleteAnnouncement} />
             </Grid>
         </>
     )
