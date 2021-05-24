@@ -1,12 +1,39 @@
-import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import Employees from "../employees/Employees";
-import {collection} from "typesaurus";
+import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {AboutSection} from "../../types";
+import {useEffect, useState} from "react";
 
 export default function About(props: {margin:number, admin:boolean}) {
     const pageElem = collection("pageElements")
     let [aboutDoc] = useGet<AboutSection>(pageElem, "about")
+    let [description, setDescription] = useState("")
+    let [title, setTitle] = useState("")
+    let [isProcessing, setIsProcessing] = useState(false)
+    useEffect(() => {
+        if (aboutDoc) {
+            setDescription(aboutDoc.data.description)
+            setTitle(aboutDoc.data.title)
+        }
+    }, [aboutDoc])
+    const updateAboutSection = () => {
+        if (!aboutDoc) {
+            alert("Vent til informasjonen laster fra databasen")
+            return
+        }
+        setIsProcessing(true)
+        update(pageElem, aboutDoc.ref.id, {title:title, description:description})
+            .then(() => {
+                alert("Beskrivelsen har blitt oppdatert!")
+                setIsProcessing(false)
+            })
+            .catch((e) => {
+                alert(e)
+                console.error(e)
+                setIsProcessing(false)
+            })
+    }
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             container: {
@@ -20,6 +47,14 @@ export default function About(props: {margin:number, admin:boolean}) {
             },
             text: {
                 lineHeight: "200%",
+            },
+            txtField: {
+                margin: "15px 0",
+                whiteSpace: "pre-line",
+            },
+            btnUpdate: {
+                color: "green",
+                borderColor: "green",
             }
         }),
     );
@@ -36,7 +71,19 @@ export default function About(props: {margin:number, admin:boolean}) {
                     {
                         props.admin ?
                             <>
-                                "About admin"
+                                <Typography variant={"h5"}>Rediger "Om oss"-beskrivelse</Typography>
+                                <TextField onChange={(e) => setTitle(e.target.value)} defaultValue={"a\n b"} value={title} className={classes.txtField} multiline variant={"outlined"} label={"Tittel"} fullWidth />
+                                <TextField onChange={(e) => setDescription(e.target.value)} defaultValue={"a\n b"} value={description} className={classes.txtField} multiline variant={"outlined"} label={"Beskrivelse"} fullWidth />
+                                <Button
+                                    variant={"outlined"}
+                                    className={classes.btnUpdate}
+                                    onClick={() => {
+                                        updateAboutSection()
+                                    }}
+                                    disabled={isProcessing}
+                                >
+                                    Oppdater beskrivelse
+                                </Button>
                             </>
                             :
                             <>
@@ -50,7 +97,7 @@ export default function About(props: {margin:number, admin:boolean}) {
                                     }
                                     </b>
                                 </Typography>
-                                <Typography variant={"body2"} color={"textSecondary"} className={classes.text}>
+                                <Typography style={{whiteSpace: 'pre-line'}} display="block" variant={"body2"} color={"textSecondary"} className={classes.text}>
                                     {
                                         aboutDoc ?
                                             aboutDoc.data.description
