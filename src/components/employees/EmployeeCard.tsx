@@ -135,7 +135,6 @@ export default function EmployeeCard(props:employeeCardInterface) {
                                     <TextField value={imgUrl} onChange={(e) => {setImgUrl(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Bilde-URL"} />
                                     <TextField value={displayPriority} onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}} className={classes.txtField} fullWidth variant={"outlined"} label={"Visningsprioritet"} type="number" />
                                     <Button disabled={isProcessing} startIcon={<Update />} onClick={() => updateEmployee()} fullWidth variant={"contained"} className={classes.btnUpdate + " " + classes.btn}>Oppdater</Button>
-                                    <Button disabled={isProcessing} startIcon={<Delete />} onClick={() => setOpenDialog(true)} fullWidth variant={"contained"} color={"secondary"} className={classes.btn}>Slett</Button>
                                     <Button disabled={isProcessing} startIcon={<Backspace />} fullWidth variant={"contained"} color={"default"} className={classes.btn + " " + classes.btnGrey} onClick={() => {
                                         setName(props.name)
                                         setDesc(props.description)
@@ -144,6 +143,7 @@ export default function EmployeeCard(props:employeeCardInterface) {
                                         setDisplayPriority(props.priority)
                                     }
                                     }>Angre endringer</Button>
+                                    <Button disabled={isProcessing} startIcon={<Delete />} onClick={() => setOpenDialog(true)} fullWidth variant={"contained"} color={"secondary"} className={classes.btn}>Slett</Button>
                                     <ConfirmDeleteDialog key={props.id} setIsOpen={setOpenDialog} isOpen={openDialog} title={"Er du sikker på at du vil slette den ansatte?"} information={"Ansatt det gjelder: " + props.name} deleteFunc={deleteEmployee} />
                                 </>
                             :
