@@ -162,14 +162,6 @@ export default function Projects(props: {margin:number}) {
     // Retrieve projects from db
     const projectsCol = collection<Project>("projects")
     const [projectDocs] = useAll(projectsCol)
-    /*
-    let projects:projectObj[] = [
-
-        {key: 1, title: "Bygging av hytte", imgUrl:"https://i2.wp.com/www.homesteadbuildingsystemsinc.com/wp-content/uploads/2016/09/Project-Manager-Walking-through-Framed-House.jpg?fit=1920%2C1080&ssl=1", description:"", images:["https://www.thespruce.com/thmb/TIUYmTRJ3NOFnY9LJ6FzMd_9oBc=/2571x1928/smart/filters:no_upscale()/small-garden-ideas-and-inspiration-4101842-01-5e0462c2365e42de86a4f3ebc2152c1b.jpg", "https://cdn.britannica.com/42/91642-050-332E5C66/Keukenhof-Gardens-Lisse-Netherlands.jpg", "https://static.toiimg.com/thumb/68007187/garden.jpg?width=1200&height=900"]},
-        {key: 2, title: "Måling av ting", imgUrl:"https://media.istockphoto.com/photos/carpenter-working-with-equipment-on-wooden-table-in-carpentry-shop-picture-id1147804793?k=6&m=1147804793&s=612x612&w=0&h=dB2GkD3p9cz-icf56LGcKQZggtUA4Rp_KU5WxKMfFfM=", description:"", images:["", ""]},
-        {key: 3, title: "Prosjekt med tresag", imgUrl:"https://www.careersinconstruction.ca/sites/default/files/styles/career_banner/public/images/careers/4841_stone_farmhouse_reno_8x12_low_0.jpg?itok=VJi18X5T", description:"", images:["", "", "", "", "", ""]},
-        {key: 4, title: "Stol-prosjekt", imgUrl:"https://www.homestratosphere.com/wp-content/uploads/2019/12/wooden-chair-woodworker-dec142019-min.jpg", description:"", images:["", "", ""]}];
-    */
     let toggle = false; // Controls whether to display text on left or right side
     let projectCount = 0; // Used to check which image is last
     return (

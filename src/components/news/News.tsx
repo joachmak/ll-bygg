@@ -48,8 +48,8 @@ export default function News(props:{margin:number, admin:boolean, news:Doc<NewsD
                                 <>
                                     <Grid container spacing={4}>
                                         {
-                                            /* @ts-ignore */
-                                            props.news.sort((a,b) => b.date - a.date).map(announcement =>
+                                            // @ts-ignore
+                                            props.news.sort((a,b) => b.data.datetime - a.data.datetime).map(announcement =>
                                                 <Announcement key={announcement.ref.id} announcement={announcement} />
                                             )
                                         }
