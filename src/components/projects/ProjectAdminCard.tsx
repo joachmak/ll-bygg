@@ -1,8 +1,10 @@
-import {createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {Backdrop, Button, createStyles, Grid, Link, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {Project} from "../../types";
 import {Doc} from "typesaurus";
 import {useState} from "react";
 import ProjectAdminImage from "./ProjectAdminImage";
+import {Add, Backspace, Delete, Update} from "@material-ui/icons";
+import ProjectCarousel from "./ProjectCarousel";
 
 export default function ProjectAdminCard(props:{project:Doc<Project>}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +24,33 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                 maxHeight: 300,
                 display: "block",
                 margin: "15px auto",
-            }
+            },
+            btn: {
+                margin: "0 10px 15px 0",
+                color: "white",
+            },
+            btnGreen: {
+                backgroundColor: "green",
+                "&:hover": {
+                    backgroundColor: "darkgreen",
+                }
+            },
+            btnGrey: {
+                backgroundColor: "grey",
+                "&:hover": {
+                    backgroundColor: "#333",
+                }
+            },
+            link: {
+                color: "darkblue",
+                cursor: "pointer",
+                marginBottom: 15,
+            },
+            backdrop: {
+                zIndex: theme.zIndex.drawer + 1,
+                color: '#fff',
+                backgroundColor: "rgba(0,0,0,0.8)"
+            },
         }),
     );
     const classes = useStyles()
@@ -30,6 +58,8 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
     const [description, setDescription] = useState(props.project.data.description)
     const [thumbnailUrl, setThumbnailUrl] = useState(props.project.data.thumbnail)
     const [images, setImages] = useState(props.project.data.images)
+    const [open, setOpen] = useState(false)
+    const [rerender, setRerender] = useState(false)
     const setImageByID = (id:number, value:string) => {
         let res = []
         for (let i = 0; i < images.length; i++) {
@@ -41,6 +71,17 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
         }
         setImages(res)
         console.log("TRIGGERED! ID: " + id)
+    }
+    const deleteImageByID = (id:number) => {
+        console.log("TRIGGERED! ID: " + id)
+        let res = []
+        for (let i = 0; i < images.length; i++) {
+            if (i !== id) {
+                res.push(images[i])
+            }
+        }
+        setImages(res)
+        setRerender(!rerender)
     }
     let i = 0
     return (
@@ -74,10 +115,66 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                 />
                 <Typography variant={"h5"} color={"textSecondary"}>Images</Typography>
                 {
-                    props.project.data.images.map(projectImage =>
-                        <ProjectAdminImage id={i++} onChangeFunc={(id, val) => setImageByID(id, val)} initUrl={projectImage} />
+                    images.map(projectImage =>
+                        <ProjectAdminImage
+                            rerender={rerender}
+                            id={i++}
+                            onChangeFunc={(id, val) => setImageByID(id, val)}
+                            initUrl={projectImage}
+                            onDeleteFunc={(id:number) => deleteImageByID(id)}
+                        />
                     )
                 }
+                <Button
+                    className={classes.btn + " " + classes.btnGreen}
+                    startIcon={<Add />}
+                    variant={"contained"}
+                    onClick={() => {
+                        let temp = images
+                        temp.push("")
+                        setImages(temp)
+                        setRerender(!rerender)
+                    }}
+                >
+                    Legg til bilde
+                </Button>
+                <div className={classes.link}>
+                    <Link underline={"always"} color={"textPrimary"} onClick={() => {setOpen(true)}}>Forhåndsvis karusell</Link>
+                </div>
+                <Button
+                    className={classes.btn + " " + classes.btnGreen}
+                    startIcon={<Update />}
+                    variant={"contained"}
+                >
+                    Oppdater
+                </Button>
+                <Button
+                    className={classes.btn + " " + classes.btnGrey}
+                    startIcon={<Backspace />}
+                    variant={"contained"}
+                    color={"secondary"}
+                    onClick={() => {
+                        setImages(props.project.data.images)
+                        setTitle(props.project.data.title)
+                        setDescription(props.project.data.description)
+                        setThumbnailUrl(props.project.data.thumbnail)
+                        setRerender(!rerender)
+                        console.log("Triggered undo")
+                    }}
+                >
+                    Angre alle endringer
+                </Button>
+                <Button
+                    className={classes.btn}
+                    startIcon={<Delete />}
+                    variant={"contained"}
+                    color={"secondary"}
+                >
+                    Slett
+                </Button>
+                <Backdrop className={classes.backdrop} open={open} onClick={() => {setOpen(false)}}>
+                    <ProjectCarousel imgUrls={images} />
+                </Backdrop>
             </Grid>
         </>
     )
