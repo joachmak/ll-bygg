@@ -7,7 +7,7 @@ import RoomIcon from '@material-ui/icons/Room';
 import {useState} from "react";
 import {collection} from "typesaurus";
 import {FooterSection} from "../types";
-import {useGet} from "@typesaurus/react";
+import {useOnGet} from "@typesaurus/react";
 
 function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -138,7 +138,7 @@ export default function Footer() {
     let [iconHoverInsta, setIconHoverInsta] = useState(false);
     let [iconHoverFb, setIconHoverFb] = useState(false);
     const pageElems = collection("pageElements")
-    const [footerDoc] = useGet<FooterSection>(pageElems, "footer")
+    const [footerDoc] = useOnGet<FooterSection>(pageElems, "footer")
     return (
         <>
             <div className={classes.root}>
@@ -149,7 +149,7 @@ export default function Footer() {
                                 <Link
                                     onMouseEnter={() => setIconHoverInsta(true)}
                                     onMouseLeave={() => setIconHoverInsta(false)}
-                                    href={"#"}
+                                    href={footerDoc ? footerDoc.data.igLink : ""}
                                     className={iconHoverInsta ? classes.iconHover : classes.icon}
                                 >
                                     <InstagramIcon />
@@ -157,7 +157,7 @@ export default function Footer() {
                                 <Link
                                     onMouseEnter={() => setIconHoverFb(true)}
                                     onMouseLeave={() => setIconHoverFb(false)}
-                                    href={"#"}
+                                    href={footerDoc ? footerDoc.data.fbLink : ""}
                                     className={iconHoverFb ? classes.iconHover : classes.icon}
                                 >
                                     <FacebookIcon />

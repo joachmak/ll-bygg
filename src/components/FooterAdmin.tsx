@@ -9,8 +9,11 @@ import {
     Theme,
     Typography
 } from "@material-ui/core";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Add, Email, Facebook, Instagram, Phone, Room, Update} from "@material-ui/icons";
+import {collection, update} from "typesaurus";
+import {FooterSection} from "../types";
+import {useOnGet} from "@typesaurus/react";
 
 export default function FooterAdmin() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -49,13 +52,38 @@ export default function FooterAdmin() {
         }),
     );
     const classes = useStyles()
+    const pageElements = collection("pageElements")
+    const [footerDoc, status] = useOnGet<FooterSection>(pageElements, "footer")
     const [countryCode, setCountryCode] = useState(47)
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [address, setAddress] = useState("")
     const [ig, setIg] = useState("")
     const [fb, setFb] = useState("")
-
+    const [isProcessing, setIsProcessing] = useState(false)
+    useEffect(() => {
+        if (footerDoc && !status.loading && !status.error) {
+            setCountryCode(footerDoc.data.countryCode)
+            setPhoneNumber(footerDoc.data.phone)
+            setAddress(footerDoc.data.address)
+            setEmail(footerDoc.data.email)
+            setIg(footerDoc.data.igLink)
+            setFb(footerDoc.data.fbLink)
+        }
+    }, [footerDoc, status.error, status.loading])
+    const updateFooter = () => {
+        setIsProcessing(true)
+        update(pageElements, "footer", {countryCode:countryCode, address:address, email:email, fbLink:fb, igLink:ig, phone:phoneNumber})
+            .then(() => {
+                alert("Footeren har blitt oppdatert!")
+                setIsProcessing(false)
+            })
+            .catch((e) => {
+                alert(e)
+                console.error(e)
+                setIsProcessing(false)
+            })
+    }
     return (
         <>
             <Container className={classes.container}>
@@ -162,6 +190,8 @@ export default function FooterAdmin() {
                                 variant={"outlined"}
                                 startIcon={<Update />}
                                 className={classes.btnGreen}
+                                disabled={isProcessing}
+                                onClick={() => updateFooter()}
                             >
                                 Oppdater
                             </Button>

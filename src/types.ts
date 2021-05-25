@@ -31,7 +31,7 @@ type ServicesSection = {
 
 type FooterSection = {
     address:string,
-    countryCode:string,
+    countryCode:number,
     email:string,
     fbLink:string,
     igLink:string,
