@@ -1,4 +1,16 @@
-import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    createStyles,
+    Grid,
+    InputAdornment,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from "@material-ui/core";
+import {useState} from "react";
+import {Add, Email, Facebook, Instagram, Phone, Room, Update} from "@material-ui/icons";
 
 export default function FooterAdmin() {
     const useStyles = makeStyles((theme: Theme) =>
@@ -18,81 +30,141 @@ export default function FooterAdmin() {
                 flexDirection: "column",
                 margin: "auto",
             },
-            title: {
-                marginBottom: 15,
-                color: "white",
-            },
-            text: {
-                lineHeight: "200%",
-                color: "white",
-            },
-            textFaded: {
-                lineHeight: "200%",
-                color: "#888",
-            },
-            center: {
-                margin: "auto",
-                textAlign: "center",
-            },
-            marginTop15: {
-                marginTop: 15
-            },
-            marginRight10: {
-                marginRight: 10,
-            },
-            icon: {
-                color: "white",
-                marginRight: 10,
-                transition: "all 0.2s ease-in-out",
-            },
-            iconHover: {
-                marginRight: 10,
-                color: theme.palette.primary.main,
-                transition: "all 0.2s ease-in-out",
-            },
-            iconText: {
+            div: {
                 display: "flex",
-                alignItems: "center",
+                flexDirection: "row",
+                width: "100%",
+            },
+            txtField: {
+                margin: "7.5px 15px 7.5px 0"
+            },
+            btnGreen: {
+                backgroundColor: "green",
                 color: "white",
-                textDecoration: "none",
-            },
-            map: {
-                maxHeight: "400px",
-                minHeight: "300px",
-                maxWidth: "400px",
-                borderRadius: 5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundImage: "url('https://assets.website-files.com/5e832e12eb7ca02ee9064d42/5f7db426b676b95755fb2844_Group%20805.jpg')",
-                backgroundSize: "cover",
-            },
-            link: {
-                color: "orange",
+                "&:hover": {
+                    backgroundColor: "darkgreen",
+                },
+                marginBottom: 50,
             }
         }),
     );
     const classes = useStyles()
+    const [countryCode, setCountryCode] = useState(47)
+    const [email, setEmail] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
+    const [address, setAddress] = useState("")
+    const [ig, setIg] = useState("")
+    const [fb, setFb] = useState("")
 
     return (
         <>
             <Container className={classes.container}>
                 <Grid item lg={8} md={10} xs={12} className={classes.gridContainer}>
                     <Grid container spacing={4} alignItems={"center"}>
-                        <Grid item sm={6} xs={12}>
-                            {
-                                /* Textfields here
-                                * urls: instagram, facebook, google maps
-                                * contact info: email, phone number, address
-                                * extra: map radius, map location(?)
-                                * WARNING: Changing this email will possibly change the email form - email!
-                                * (we'll see after implementation)
-                                * */
-                            }
+                        <Grid item xs={12}>
                             <Typography variant={"h4"}>
                                 Rediger footer
                             </Typography>
-                            Footer-admin
+                            <div className={classes.div}>
+                                <TextField
+                                    className={classes.txtField}
+                                    fullWidth
+                                    variant={"outlined"}
+                                    label={"Landkode"}
+                                    value={countryCode}
+                                    type={"number"}
+                                    onChange={(e) => setCountryCode(parseInt(e.target.value))}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Add />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    className={classes.txtField}
+                                    fullWidth
+                                    variant={"outlined"}
+                                    label={"Telefonnummer"}
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Phone />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </div>
+                            <TextField
+                                className={classes.txtField}
+                                fullWidth
+                                variant={"outlined"}
+                                label={"E-post"}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Email />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className={classes.txtField}
+                                fullWidth
+                                variant={"outlined"}
+                                label={"Adresse"}
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Room />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className={classes.txtField}
+                                variant={"outlined"}
+                                fullWidth
+                                label={"Instagram-URL"}
+                                value={ig}
+                                onChange={(e) => setIg(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Instagram />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className={classes.txtField}
+                                variant={"outlined"}
+                                fullWidth
+                                label={"Facebook-URL"}
+                                value={fb}
+                                onChange={(e) => setFb(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Facebook />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <Button
+                                variant={"outlined"}
+                                startIcon={<Update />}
+                                className={classes.btnGreen}
+                            >
+                                Oppdater
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
