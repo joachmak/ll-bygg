@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import ProjectCarousel from "./ProjectCarousel";
 import {collection, Doc} from "typesaurus";
 import {Project} from "../../types";
-import {useAll} from "@typesaurus/react";
+import {useOnAll} from "@typesaurus/react";
 
 function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
     let [projectHover, setProjectHover] = useState(false);
@@ -161,7 +161,7 @@ export default function Projects(props: {margin:number}) {
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
     // Retrieve projects from db
     const projectsCol = collection<Project>("projects")
-    const [projectDocs] = useAll(projectsCol)
+    const [projectDocs] = useOnAll(projectsCol)
     let toggle = false; // Controls whether to display text on left or right side
     let projectCount = 0; // Used to check which image is last
     return (

@@ -2,7 +2,8 @@ import {Button, createStyles, makeStyles, TextField, Theme} from "@material-ui/c
 import {useEffect, useState} from "react";
 import {Delete} from "@material-ui/icons";
 
-export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any, rerender:boolean, id:number, initUrl:string, onChangeFunc:(id:number, val:string) => any}) {
+export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any, rerender:boolean, id:number, otherImages:string[], initUrl:string, onChangeFunc:(id:number, val:string) => any}) {
+    const [duplicate, setDuplicate] = useState(false)
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -42,6 +43,15 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
     useEffect(() => {
         setUrl(props.initUrl)
     }, [props.initUrl, props.rerender])
+    useEffect(() => {
+        let count = 0
+        for (let i = 0; i<props.otherImages.length; i++) {
+            if (props.otherImages[i] === url) {
+                count++
+            }
+        }
+        setDuplicate(count > 1)
+    }, [props.otherImages, url])
     return (
         <>
             <div className={classes.div}>
@@ -54,6 +64,7 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
                         setUrl(e.target.value)
                         props.onChangeFunc(props.id, e.target.value)
                     }}
+                    helperText={duplicate ? "Dette bildet har blitt lagt til 2 ganger!" : ""}
                 />
                 <Button
                     variant={"contained"}

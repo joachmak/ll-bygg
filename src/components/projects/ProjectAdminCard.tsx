@@ -133,6 +133,7 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                 {
                     images.map(projectImage =>
                         <ProjectAdminImage
+                            otherImages={images}
                             rerender={rerender}
                             id={i++}
                             onChangeFunc={(id, val) => setImageByID(id, val)}

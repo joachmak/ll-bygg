@@ -1,7 +1,7 @@
 import {Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {collection} from "typesaurus";
 import {Project} from "../../types";
-import {useAll} from "@typesaurus/react";
+import {useOnAll} from "@typesaurus/react";
 import ProjectAdminCard from "./ProjectAdminCard";
 
 export default function ProjectsAdmin(props: {margin:number}) {
@@ -21,7 +21,7 @@ export default function ProjectsAdmin(props: {margin:number}) {
     const classes = useStyles();
     // Retrieve projects from db
     const projectsCol = collection<Project>("projects")
-    const [projectDocs] = useAll(projectsCol)
+    const [projectDocs] = useOnAll(projectsCol)
     return (
         <>
             <Container className={classes.container}>
