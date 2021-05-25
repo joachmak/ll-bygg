@@ -51,8 +51,6 @@ export default function AdminPanel() {
             history.push("/")
         })
     }
-    console.log("I AdminPanel: ")
-    console.log(newsDocs)
     return (
         <>
             <form className={classes.root} noValidate autoComplete="off">

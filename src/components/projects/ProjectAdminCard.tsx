@@ -172,7 +172,7 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                 <Button
                     id={"0"}
                     className={classes.projectGrid}
-                ></Button>
+                />
                 <TextField
                     variant={"outlined"}
                     className={classes.txtField}
@@ -185,6 +185,7 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                 {
                     images.map(projectImage =>
                         <ProjectAdminImage
+                            key={projectImage + i}
                             otherImages={images}
                             rerender={rerender}
                             id={i++}

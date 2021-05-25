@@ -28,7 +28,7 @@ export default function EmployeeCard(props:employeeCardInterface) {
                 boxShadow: "none",
             },
             media: {
-                height: 0,
+                height: 10,
                 paddingTop: '100%',
                 filter: "grayscale(100%)",
                 borderRadius: 1,
@@ -61,7 +61,7 @@ export default function EmployeeCard(props:employeeCardInterface) {
     const [name, setName] = useState(props.name)
     const [role, setRole] = useState(props.role)
     const [desc, setDesc] = useState(props.description)
-    const [imgUrl, setImgUrl] = useState(props.url)
+    const [imgUrl, setImgUrl] = useState(props.url ? props.url : "")
     const [displayPriority, setDisplayPriority] = useState(props.priority)
     const [openDialog, setOpenDialog] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false)
@@ -113,7 +113,8 @@ export default function EmployeeCard(props:employeeCardInterface) {
             <Grid item xs={8} sm={5} xl={4}>
                 <Card className={classes.card}>
                     <CardMedia
-                        image={imgUrl}
+                        title={props.name}
+                        image={imgUrl ? imgUrl : "empty"}
                         className={classes.media}
                     />
                     {

@@ -4,8 +4,6 @@ import AnnouncementAdmin from "./AnnouncementAdmin";
 import CreateAnnouncementAdmin from "./CreateAnnouncementAdmin";
 import {Typography} from "@material-ui/core";
 export default function NewsAdmin(props:{existingNewsDocs:Doc<NewsDoc>[]}) {
-    console.log("NewsAdmin: ")
-    console.log(props.existingNewsDocs)
     return (
         <>
             <Typography variant={"h5"} color={"textSecondary"}>Publiser nyhet</Typography>

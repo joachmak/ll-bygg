@@ -76,8 +76,8 @@ export default function About(props: {margin:number, admin:boolean}) {
                         props.admin ?
                             <>
                                 <Typography variant={"h5"}>Rediger "Om oss"-seksjon</Typography>
-                                <TextField onChange={(e) => setTitle(e.target.value)} defaultValue={"a\n b"} value={title} className={classes.txtField} multiline variant={"outlined"} label={"Tittel"} fullWidth />
-                                <TextField onChange={(e) => setDescription(e.target.value)} defaultValue={"a\n b"} value={description} className={classes.txtField} multiline variant={"outlined"} label={"Beskrivelse"} fullWidth />
+                                <TextField onChange={(e) => setTitle(e.target.value)} value={title} className={classes.txtField} multiline variant={"outlined"} label={"Tittel"} fullWidth />
+                                <TextField onChange={(e) => setDescription(e.target.value)} value={description} className={classes.txtField} multiline variant={"outlined"} label={"Beskrivelse"} fullWidth />
                                 <Button
                                     variant={"contained"}
                                     className={classes.btnUpdate}
