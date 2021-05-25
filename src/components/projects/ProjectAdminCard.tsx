@@ -1,6 +1,6 @@
 import {Backdrop, Button, createStyles, Grid, Link, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
 import {Project} from "../../types";
-import {Doc} from "typesaurus";
+import {collection, Doc, update} from "typesaurus";
 import {useState} from "react";
 import ProjectAdminImage from "./ProjectAdminImage";
 import {Add, Backspace, Delete, Update} from "@material-ui/icons";
@@ -60,6 +60,7 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
     const [images, setImages] = useState(props.project.data.images)
     const [open, setOpen] = useState(false)
     const [rerender, setRerender] = useState(false)
+    const [isProcessing, setIsProcessing] = useState(false)
     const setImageByID = (id:number, value:string) => {
         let res = []
         for (let i = 0; i < images.length; i++) {
@@ -83,6 +84,20 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
         setImages(res)
         setRerender(!rerender)
     }
+    const projectCollection = collection<Project>("projects")
+    const updateProject = () => {
+        setIsProcessing(true)
+        update(projectCollection, props.project.ref.id, {title: title, description: description, thumbnail: thumbnailUrl, images:images})
+            .then(() => {
+                alert("Prosjektet har blitt oppdatert!")
+                setIsProcessing(false)
+            })
+            .catch((e) => {
+                alert(e)
+                console.error(e)
+                setIsProcessing(false)
+            })
+    }
     let i = 0
     return (
         <>
@@ -99,6 +114,7 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                     variant={"outlined"}
                     className={classes.txtField}
                     label={"Beskrivelse"}
+                    multiline
                     value={description}
                     onChange={(e) => {setDescription(e.target.value)}}
                     fullWidth
@@ -135,6 +151,7 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                         setImages(temp)
                         setRerender(!rerender)
                     }}
+                    disabled={isProcessing}
                 >
                     Legg til bilde
                 </Button>
@@ -145,6 +162,8 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                     className={classes.btn + " " + classes.btnGreen}
                     startIcon={<Update />}
                     variant={"contained"}
+                    disabled={isProcessing}
+                    onClick={() => updateProject()}
                 >
                     Oppdater
                 </Button>
@@ -153,13 +172,13 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                     startIcon={<Backspace />}
                     variant={"contained"}
                     color={"secondary"}
+                    disabled={isProcessing}
                     onClick={() => {
                         setImages(props.project.data.images)
                         setTitle(props.project.data.title)
                         setDescription(props.project.data.description)
                         setThumbnailUrl(props.project.data.thumbnail)
                         setRerender(!rerender)
-                        console.log("Triggered undo")
                     }}
                 >
                     Angre alle endringer
@@ -169,6 +188,7 @@ export default function ProjectAdminCard(props:{project:Doc<Project>}) {
                     startIcon={<Delete />}
                     variant={"contained"}
                     color={"secondary"}
+                    disabled={isProcessing}
                 >
                     Slett
                 </Button>

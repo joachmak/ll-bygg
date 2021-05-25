@@ -27,7 +27,8 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
             btn: {
                 marginLeft: 5,
                 color: "white",
-                flexBasis: "5%"
+                flexBasis: "5%",
+                height: 55,
             },
             div: {
                 display: "flex",
@@ -40,7 +41,7 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
     const [url, setUrl] = useState(props.initUrl)
     useEffect(() => {
         setUrl(props.initUrl)
-    }, [props.rerender])
+    }, [props.initUrl, props.rerender])
     return (
         <>
             <div className={classes.div}>
