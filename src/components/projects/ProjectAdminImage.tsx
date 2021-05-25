@@ -14,10 +14,11 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
                 boxShadow: "0 3px 5px rgba(0,0,0,0.2)"
             },
             txtField: {
-                marginBottom: 15,
+                marginBottom: 5,
                 marginTop: 15,
                 flexWrap: "wrap",
                 flexBasis: "90%",
+
             },
             img: {
                 maxWidth: "50%",
@@ -27,6 +28,7 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
             },
             btn: {
                 marginLeft: 5,
+                marginBottom: 12,
                 color: "white",
                 flexBasis: "5%",
                 height: 55,
@@ -35,6 +37,9 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
+            },
+            inputDuplicate: {
+                color: "orange",
             }
         }),
     );
@@ -64,7 +69,10 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
                         setUrl(e.target.value)
                         props.onChangeFunc(props.id, e.target.value)
                     }}
-                    helperText={duplicate ? "Dette bildet har blitt lagt til 2 ganger!" : ""}
+                    InputProps={{
+                        className: duplicate ? classes.inputDuplicate : ""
+                    }}
+                    helperText={duplicate ? "OBS: Dette bildet har blitt lagt til flere ganger i dette prosjektet!" : " "}
                 />
                 <Button
                     variant={"contained"}
