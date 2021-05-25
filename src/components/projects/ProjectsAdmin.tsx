@@ -27,10 +27,11 @@ export default function ProjectsAdmin(props: {margin:number}) {
             <Container className={classes.container}>
                 <Grid item lg={8} md={10} xs={12}>
                     <Typography variant={"h4"} className={classes.title}>Våre prosjekter</Typography>
+                    <ProjectAdminCard create={true} key={0} />
                     {
                         projectDocs &&
                             projectDocs.map(project =>
-                            <ProjectAdminCard key={project.ref.id} project={project} />
+                            <ProjectAdminCard create={false} key={project.ref.id} project={project} />
                         )
                     }
                 </Grid>
