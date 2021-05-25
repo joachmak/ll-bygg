@@ -185,11 +185,13 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                 {
                     images.map(projectImage =>
                         <ProjectAdminImage
-                            key={projectImage + i}
+                            key={props.project ? (props.project.data.images[i] + " " + i) : i}
                             otherImages={images}
                             rerender={rerender}
                             id={i++}
-                            onChangeFunc={(id, val) => setImageByID(id, val)}
+                            onChangeFunc={(id, val) => {
+                                setImageByID(id, val)
+                            }}
                             initUrl={projectImage}
                             onDeleteFunc={(id:number) => deleteImageByID(id)}
                         />
