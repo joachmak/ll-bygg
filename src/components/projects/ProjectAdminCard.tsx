@@ -8,6 +8,7 @@ import ProjectCarousel from "./ProjectCarousel";
 import ConfirmDeleteDialog from "../ConfirmDeleteDialog";
 
 export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Project>}) {
+    const [thumbnailUrl, setThumbnailUrl] = useState(props.project ? props.project.data.thumbnail : "")
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -52,13 +53,25 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                 color: '#fff',
                 backgroundColor: "rgba(0,0,0,0.8)"
             },
+            projectGrid: {
+                backgroundColor: "rgba(0,0,0,0.1)",
+                height: "100%",
+                width: 400,
+                display: "block",
+                margin: "15px auto",
+                backgroundImage: "url('" + thumbnailUrl + "')",
+                backgroundSize: "cover",
+                minHeight: 250,
+                padding: 0,
+                borderRadius: 0,
+                cursor: "context-menu",
+            },
         }),
     );
     const classes = useStyles()
     const [title, setTitle] = useState(props.project ? props.project.data.title : "")
     const [description, setDescription] = useState(props.project ? props.project.data.description : "")
-    const [thumbnailUrl, setThumbnailUrl] = useState(props.project ? props.project.data.thumbnail : "")
-    const [images, setImages] = useState(props.project ?props.project.data.images : ["", "", ""])
+    const [images, setImages] = useState(props.project ?props.project.data.images : [""])
     const [open, setOpen] = useState(false)
     const [rerender, setRerender] = useState(false)
     const [isProcessing, setIsProcessing] = useState(false)
@@ -123,6 +136,10 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
             .then(() => {
                 alert("Prosjektet har blitt slettet!")
                 setIsProcessing(false)
+                setTitle("")
+                setDescription("")
+                setImages([""])
+                setThumbnailUrl("")
             })
             .catch((e) => {
                 alert(e)
@@ -152,7 +169,10 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                     fullWidth
                 />
                 <Typography variant={"h5"} color={"textSecondary"}>Thumbnail</Typography>
-                <img src={thumbnailUrl} alt={props.project ? props.project.data.title + " thumbnail" : ""} className={classes.img} />
+                <Button
+                    id={"0"}
+                    className={classes.projectGrid}
+                ></Button>
                 <TextField
                     variant={"outlined"}
                     className={classes.txtField}
