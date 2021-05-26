@@ -10,7 +10,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {useEffect, useState} from "react";
-import {Add, Email, Facebook, Instagram, Phone, Room, Update} from "@material-ui/icons";
+import {Add, Email, Facebook, Instagram, Map, Phone, Room, Update} from "@material-ui/icons";
 import {collection, update} from "typesaurus";
 import {FooterSection} from "../types";
 import {useOnGet} from "@typesaurus/react";
@@ -58,6 +58,7 @@ export default function FooterAdmin() {
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [address, setAddress] = useState("")
+    const [mapsUrl, setMapsUrl] = useState("")
     const [ig, setIg] = useState("")
     const [fb, setFb] = useState("")
     const [isProcessing, setIsProcessing] = useState(false)
@@ -66,6 +67,7 @@ export default function FooterAdmin() {
             setCountryCode(footerDoc.data.countryCode)
             setPhoneNumber(footerDoc.data.phone)
             setAddress(footerDoc.data.address)
+            setMapsUrl(footerDoc.data.mapsUrl)
             setEmail(footerDoc.data.email)
             setIg(footerDoc.data.igLink)
             setFb(footerDoc.data.fbLink)
@@ -73,7 +75,7 @@ export default function FooterAdmin() {
     }, [footerDoc, status.error, status.loading])
     const updateFooter = () => {
         setIsProcessing(true)
-        update(pageElements, "footer", {countryCode:countryCode, address:address, email:email, fbLink:fb, igLink:ig, phone:phoneNumber})
+        update(pageElements, "footer", {countryCode:countryCode, address:address, email:email, fbLink:fb, igLink:ig, phone:phoneNumber, mapsUrl:mapsUrl})
             .then(() => {
                 alert("Footeren har blitt oppdatert!")
                 setIsProcessing(false)
@@ -152,6 +154,21 @@ export default function FooterAdmin() {
                                     startAdornment: (
                                         <InputAdornment position="start">
                                             <Room />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className={classes.txtField}
+                                fullWidth
+                                variant={"outlined"}
+                                label={"Google Maps URL"}
+                                value={mapsUrl}
+                                onChange={(e) => setMapsUrl(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Map />
                                         </InputAdornment>
                                     ),
                                 }}

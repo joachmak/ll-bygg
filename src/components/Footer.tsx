@@ -52,6 +52,7 @@ function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
                 onMouseLeave={() => setHover(false)}
                 href={props.linkTo}
                 underline={"none"}
+                target={"_blank"}
                 className={classes.iconText}
             >
                 <Typography variant={"body2"} className={hover ? classes.textHover + " " + classes.iconDivHover : classes.text + " " + classes.iconDiv}>
@@ -183,7 +184,7 @@ export default function Footer() {
                                 />
                                 <FooterIcon
                                     text={footerDoc ? footerDoc.data.address : ""}
-                                    linkTo={"#"}
+                                    linkTo={footerDoc ? footerDoc.data.mapsUrl : ""}
                                     icon={
                                         <RoomIcon className={classes.marginRight10} />
                                     }

@@ -36,6 +36,7 @@ type FooterSection = {
     fbLink:string,
     igLink:string,
     phone:string,
+    mapsUrl:string,
 }
 
 type NewsDoc = {
