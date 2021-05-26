@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/header/Header";
 import NavigationBar from "./components/NavigationBar";
 import About from "./components/about/About";
-import {CircularProgress, createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
+import {Backdrop, CircularProgress, createStyles, Divider, makeStyles, Theme} from "@material-ui/core";
 import Services from "./components/services/Services";
 import Footer from "./components/Footer";
 import ContactForm from "./components/contactform/ContactForm";
@@ -31,7 +31,12 @@ function App() {
             divider: {
                 width: "30vw",
                 margin: "auto",
-            }
+            },
+            backdrop: {
+                zIndex: theme.zIndex.drawer + 1,
+                color: '#fff',
+                backgroundColor: "black",
+            },
         }),
     );
     const classes = useStyles()
@@ -45,15 +50,12 @@ function App() {
     });
     const newsCol = collection<NewsDoc>("news")
     const [news] = useOnAll(newsCol)
-    if (!news) {
-        // TODO: Add loading page
-        return (
-            <>
-                <CircularProgress />
-            </>
-        )
+    const [displayOverlay, setDisplayOverlay] = useState(true)
+    if (news && displayOverlay) {
+        setTimeout(() => {
+            setDisplayOverlay(false);
+        }, 1000);
     }
-
     const menuItems =
         news && news.length > 0 ?
             [ // [section-reference, menu-text]
@@ -72,58 +74,87 @@ function App() {
                 ["prosjektRef", "våre prosjekter"],
                 ["kontaktRef", "kontakt oss"]
             ]
-
+    // Detect mobile screen
+    const [width, setWidth] = useState<number>(window.innerWidth);
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+    let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
     return (
         <div className="App">
-            <ScrollingProvider scrollBehavior={"smooth"}>
-                <ThemeProvider theme={theme}>
-                    <Router>
-                        <Switch>
-                            <DisallowAuthenticatedRoute path={"/admin"}>
-                                <Login />
-                            </DisallowAuthenticatedRoute>
-                            <AuthenticatedRoute path={"/adminPanel"}>
-                                <AdminPanel />
-                            </AuthenticatedRoute>
-                            <UnAuthenticatedRoute path={"/"}>
-                                <NavigationBar menuItems={menuItems} />
 
-                                <Section id={"hjemRef"}>
-                                    <Header />
-                                </Section>
+            <Backdrop
+                className={classes.backdrop}
+                open={displayOverlay}
+                onClick={(e) => e}
+                transitionDuration={{appear:0, enter:0, exit:2000}}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f0852b" strokeWidth="45" width={isMobile ? "25vw" : "10vw"}
+                     viewBox="0 0 521.42 368.27">
+                    <polyline
+                        className="path"
+                        points="92.31 344.77 22.5 344.77 22.5 200.11 190.43 32.19 358.83 199.6 358.83 345.77 163.78 345.77 163.78 199.6 331.31 31.79 498.92 198.4 498.92 345.77 426.27 345.77"
+                    />
+                </svg>
+            </Backdrop>
+            {
+                news &&
+                <ScrollingProvider scrollBehavior={"smooth"}>
+                    <ThemeProvider theme={theme}>
+                        <Router>
+                            <Switch>
+                                <DisallowAuthenticatedRoute path={"/admin"}>
+                                    <Login />
+                                </DisallowAuthenticatedRoute>
+                                <AuthenticatedRoute path={"/adminPanel"}>
+                                    <AdminPanel />
+                                </AuthenticatedRoute>
+                                <UnAuthenticatedRoute path={"/"}>
+                                    <NavigationBar menuItems={menuItems} />
 
-                                <Section id={"tjenesteRef"}>
-                                    <Services margin={margin} admin={false} />
-                                </Section>
-                                <Divider className={classes.divider} />
+                                    <Section id={"hjemRef"}>
+                                        <Header />
+                                    </Section>
 
-                                <Section id={"omRef"}>
-                                    <About admin={false} margin={margin} />
-                                </Section>
-                                <Divider className={classes.divider} />
+                                    <Section id={"tjenesteRef"}>
+                                        <Services margin={margin} admin={false} />
+                                    </Section>
+                                    <Divider className={classes.divider} />
 
-                                <Section id={"prosjektRef"}>
-                                    <Projects margin={margin} />
-                                </Section>
-                                <Divider className={classes.divider} />
-                                {
-                                    news.length > 0 &&
-                                    <>
-                                        <Section id={"nyhetRef"}>
-                                            <News admin={false} news={news} margin={margin} />
-                                        </Section>
-                                        <Divider className={classes.divider} />
-                                    </>
-                                }
-                                <Section id={"kontaktRef"}>
-                                    <ContactForm margin={margin} />
-                                </Section>
-                                <Footer />
-                            </UnAuthenticatedRoute>
-                        </Switch>
-                    </Router>
-                </ThemeProvider>
-            </ScrollingProvider>
+                                    <Section id={"omRef"}>
+                                        <About admin={false} margin={margin} />
+                                    </Section>
+                                    <Divider className={classes.divider} />
+
+                                    <Section id={"prosjektRef"}>
+                                        <Projects margin={margin} />
+                                    </Section>
+                                    <Divider className={classes.divider} />
+                                    {
+                                        news && news.length > 0 &&
+                                        <>
+                                            <Section id={"nyhetRef"}>
+                                                <News admin={false} news={news} margin={margin} />
+                                            </Section>
+                                            <Divider className={classes.divider} />
+                                        </>
+                                    }
+                                    <Section id={"kontaktRef"}>
+                                        <ContactForm margin={margin} />
+                                    </Section>
+                                    <Footer />
+                                </UnAuthenticatedRoute>
+                            </Switch>
+                        </Router>
+                    </ThemeProvider>
+                </ScrollingProvider>
+            }
         </div>
     );
 }

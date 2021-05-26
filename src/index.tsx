@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import firebase from "firebase/app"
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 firebase.initializeApp({
     apiKey: "AIzaSyBNP28c3vsIihTrYVOzkOG_YuXgHGZvbTw",
