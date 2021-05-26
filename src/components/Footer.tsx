@@ -4,14 +4,11 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import RoomIcon from '@material-ui/icons/Room';
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import {collection} from "typesaurus";
 import {FooterSection} from "../types";
 import {useOnGet} from "@typesaurus/react";
-// @ts-ignore
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hY2htYWsiLCJhIjoiY2tvcWd6Z24zMGQ0cjJ5bmxmOWZhYXRsZyJ9.7Cy8PdQU07QvQw4O2FMKDQ';
 
 function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -136,7 +133,7 @@ export default function Footer() {
             },
             link: {
                 color: "orange",
-            }
+            },
         }),
     );
     const classes = useStyles()
@@ -144,21 +141,6 @@ export default function Footer() {
     let [iconHoverFb, setIconHoverFb] = useState(false);
     const pageElems = collection("pageElements")
     const [footerDoc] = useOnGet<FooterSection>(pageElems, "footer")
-    // MAP
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const [lng] = useState(10.415631469955498);
-    const [lat] = useState(63.414066721383);
-    const [zoom] = useState(17);
-    useEffect(() => {
-        if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [lng, lat],
-            zoom: zoom
-        });
-    });
 
     return (
         <>
@@ -211,7 +193,7 @@ export default function Footer() {
                                 />
                             </Grid>
                             <Grid item sm={6} xs={12}>
-                                <div ref={mapContainer} className="map-container" />
+
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant={"body2"} className={classes.textFaded + " " + classes.center + " " + classes.marginTop15}>
