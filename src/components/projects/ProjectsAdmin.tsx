@@ -27,7 +27,9 @@ export default function ProjectsAdmin(props: {margin:number}) {
             <Container className={classes.container}>
                 <Grid item lg={8} md={10} xs={12}>
                     <Typography variant={"h4"} className={classes.title}>Våre prosjekter</Typography>
+                    <Typography variant={"h5"} color={"textSecondary"} className={classes.title}>Nytt prosjekt</Typography>
                     <ProjectAdminCard create={true} key={0} />
+                    <Typography variant={"h5"} color={"textSecondary"} className={classes.title}>Rediger prosjekter</Typography>
                     {
                         projectDocs &&
                             projectDocs.map(project =>

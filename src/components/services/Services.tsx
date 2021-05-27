@@ -68,6 +68,13 @@ export default function Services(props:{margin:number, admin:boolean}) {
                 "&:hover": {
                     backgroundColor: "darkgreen",
                 }
+            },
+            btnDiv: {
+                width: "100%",
+            },
+            gridContainerCenter: {
+                display: "flex",
+                justifyContent: "center",
             }
         }),
     );
@@ -97,7 +104,7 @@ export default function Services(props:{margin:number, admin:boolean}) {
                         <Typography variant={"h4"} className={classes.title}>
                             Våre tjenester
                         </Typography>
-                        <Grid container spacing={4}>
+                        <Grid container className={classes.gridContainerCenter} spacing={4}>
                             {
                                 services.map(service =>
                                     // @ts-ignore
@@ -144,29 +151,31 @@ export default function Services(props:{margin:number, admin:boolean}) {
                                     </Grid>
                                 )
                             }
-                            {
-                                props.admin &&
-                                <>
-                                    <Button
-                                        className={classes.saveBtn}
-                                        variant={"contained"}
-                                        startIcon={<Update />}
-                                        onClick={() =>
+                            <div className={classes.btnDiv}>
+                                {
+                                    props.admin &&
+                                    <>
+                                        <Button
+                                            className={classes.saveBtn}
+                                            variant={"contained"}
+                                            startIcon={<Update />}
+                                            onClick={() =>
+                                            {
+                                                uploadServiceDescriptions(descs)
+                                            }
+                                            }
+                                        >
+                                            Oppdater
+                                        </Button>
                                         {
-                                            uploadServiceDescriptions(descs)
+                                            error !== "" &&
+                                            <Typography variant={"caption"}>
+                                                {error}
+                                            </Typography>
                                         }
-                                        }
-                                    >
-                                        Oppdater
-                                    </Button>
-                                    {
-                                        error !== "" &&
-                                        <Typography variant={"caption"}>
-                                            {error}
-                                        </Typography>
-                                    }
-                                </>
-                            }
+                                    </>
+                                }
+                            </div>
                         </Grid>
                     </Grid>
                 </Grid>

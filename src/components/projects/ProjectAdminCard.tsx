@@ -212,7 +212,7 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                         ),
                     }}
                 />
-                <Typography variant={"h5"} color={"textSecondary"}>Images</Typography>
+                <Typography variant={"h5"} color={"textSecondary"}>Bilder</Typography>
                 {
                     images.map(projectImage =>
                         <ProjectAdminImage
