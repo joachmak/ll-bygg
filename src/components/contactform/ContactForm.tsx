@@ -1,4 +1,5 @@
 import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {useState} from "react";
 
 export default function ContactForm(props: {margin:number}) {
     const useStyles = makeStyles((theme: Theme) =>
@@ -21,6 +22,7 @@ export default function ContactForm(props: {margin:number}) {
         }),
     );
     const classes = useStyles()
+    const [notRobot, setNotRobot] = useState("")
     return (
         <>
             <Container className={classes.container}>
@@ -34,7 +36,8 @@ export default function ContactForm(props: {margin:number}) {
                         <TextField required fullWidth id="standard-basic" label="Adresse" className={classes.textField} />
                         <TextField required fullWidth id="standard-basic" label="Tema" className={classes.textField} />
                         <TextField name={"message"} required multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
-                        <Button type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
+                        <TextField value={notRobot} onChange={(e) => setNotRobot(e.target.value)} required fullWidth id="standard-basic" label="Vennligst skriv 'ikkerobot' for å bekrefte at du er en ekte person" className={classes.textField} />
+                        <Button disabled={notRobot !== "ikkerobot"} type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
 
 
                     </form>
