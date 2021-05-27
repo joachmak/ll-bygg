@@ -28,14 +28,13 @@ export default function ContactForm(props: {margin:number}) {
                     <Typography variant={"h4"} className={classes.title} >
                         Kontakt oss
                     </Typography>
-                    <form noValidate autoComplete="off">
-                        <TextField required fullWidth id="standard-basic" label="E-post" className={classes.textField} />
+                    <form method={"post"} noValidate action="https://formspree.io/f/xnqldjry" autoComplete="off">
+                        <TextField type={"email"} name={"_replyto"} required fullWidth id="standard-basic" label="E-post" className={classes.textField} />
                         <TextField required fullWidth id="standard-basic" label="Navn" className={classes.textField} />
                         <TextField required fullWidth id="standard-basic" label="Adresse" className={classes.textField} />
                         <TextField required fullWidth id="standard-basic" label="Tema" className={classes.textField} />
-                        <TextField required multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
-                        
-                        <Button variant={"outlined"} color={"primary"} >Send henvendelse</Button>
+                        <TextField name={"message"} required multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
+                        <Button type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
 
 
                     </form>
