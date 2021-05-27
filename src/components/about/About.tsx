@@ -1,10 +1,20 @@
-import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    createStyles,
+    Grid,
+    InputAdornment,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from "@material-ui/core";
 import Employees from "../employees/Employees";
 import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {AboutSection} from "../../types";
 import {useEffect, useState} from "react";
-import {Update} from "@material-ui/icons";
+import {Description, Title, Update} from "@material-ui/icons";
 
 export default function About(props: {margin:number, admin:boolean}) {
     const pageElem = collection("pageElements")
@@ -76,8 +86,38 @@ export default function About(props: {margin:number, admin:boolean}) {
                         props.admin ?
                             <>
                                 <Typography variant={"h5"}>Rediger "Om oss"-seksjon</Typography>
-                                <TextField onChange={(e) => setTitle(e.target.value)} value={title} className={classes.txtField} multiline variant={"outlined"} label={"Tittel"} fullWidth />
-                                <TextField onChange={(e) => setDescription(e.target.value)} value={description} className={classes.txtField} multiline variant={"outlined"} label={"Beskrivelse"} fullWidth />
+                                <TextField
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={title}
+                                    className={classes.txtField}
+                                    multiline
+                                    variant={"outlined"}
+                                    label={"Tittel"}
+                                    fullWidth
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Title />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <TextField
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    value={description}
+                                    className={classes.txtField}
+                                    multiline
+                                    variant={"outlined"}
+                                    label={"Beskrivelse"}
+                                    fullWidth
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Description />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                                 <Button
                                     variant={"contained"}
                                     className={classes.btnUpdate}

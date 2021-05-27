@@ -1,9 +1,30 @@
-import {Button, Card, CardMedia, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardMedia,
+    createStyles,
+    Grid,
+    InputAdornment,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from "@material-ui/core";
 import {useState} from "react";
 import ConfirmDeleteDialog from "../ConfirmDeleteDialog";
 import {add, collection, remove, update} from "typesaurus";
 import {Employee} from "../../types";
-import {Add, Backspace, Delete, Update} from "@material-ui/icons";
+import {
+    AccountCircle,
+    Add,
+    Backspace,
+    Build,
+    Delete,
+    Description,
+    Link,
+    PriorityHigh,
+    Update
+} from "@material-ui/icons";
 
 interface employeeCardInterface {
     name: string;
@@ -121,20 +142,164 @@ export default function EmployeeCard(props:employeeCardInterface) {
                         props.admin ?
                             props.createEmployee ?
                                 <>
-                                    <TextField value={name} onChange={(e) => {setName(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Navn"} />
-                                    <TextField value={role} onChange={(e) => {setRole(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Rolle"} />
-                                    <TextField value={desc} onChange={(e) => {setDesc(e.target.value)}} className={classes.txtField} multiline fullWidth variant={"outlined"} label={"Beskrivelse"} />
-                                    <TextField value={imgUrl} onChange={(e) => {setImgUrl(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Bilde-URL"} />
-                                    <TextField value={displayPriority} onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}} className={classes.txtField} fullWidth variant={"outlined"} label={"Visningsprioritet"} type="number" />
+                                    <TextField
+                                        value={name}
+                                        onChange={(e) => {setName(e.target.value)}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Navn"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={role}
+                                        onChange={(e) => {setRole(e.target.value)}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Rolle"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Build />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={desc}
+                                        onChange={(e) => {setDesc(e.target.value)}}
+                                        className={classes.txtField}
+                                        multiline
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Beskrivelse"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Description />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={imgUrl}
+                                        onChange={(e) => {setImgUrl(e.target.value)}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Bilde-URL"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Link />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={displayPriority}
+                                        onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Visningsprioritet"}
+                                        type="number"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <PriorityHigh />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
                                     <Button disabled={isProcessing} startIcon={<Add />} onClick={() => createEmployee()} fullWidth variant={"contained"} className={classes.btnUpdate + " " + classes.btn}>Legg til ansatt</Button>
                                 </>
                                 :
                                 <>
-                                    <TextField value={name} onChange={(e) => {setName(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Navn"} />
-                                    <TextField value={role} onChange={(e) => {setRole(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Rolle"} />
-                                    <TextField value={desc} onChange={(e) => {setDesc(e.target.value)}} className={classes.txtField} multiline fullWidth variant={"outlined"} label={"Beskrivelse"} />
-                                    <TextField value={imgUrl} onChange={(e) => {setImgUrl(e.target.value)}} className={classes.txtField} fullWidth variant={"outlined"} label={"Bilde-URL"} />
-                                    <TextField value={displayPriority} onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}} className={classes.txtField} fullWidth variant={"outlined"} label={"Visningsprioritet"} type="number" />
+                                    <TextField
+                                        value={name}
+                                        onChange={(e) => {setName(e.target.value)}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Navn"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={role}
+                                        onChange={(e) => {setRole(e.target.value)}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Rolle"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Build />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={desc}
+                                        onChange={(e) => {setDesc(e.target.value)}}
+                                        className={classes.txtField}
+                                        multiline
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Beskrivelse"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Description />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={imgUrl}
+                                        onChange={(e) => {setImgUrl(e.target.value)}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Bilde-URL"}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Link />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                    <TextField
+                                        value={displayPriority}
+                                        onChange={(e) => {setDisplayPriority(parseInt(e.target.value))}}
+                                        className={classes.txtField}
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Visningsprioritet"}
+                                        type="number"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <PriorityHigh />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
                                     <Button disabled={isProcessing} startIcon={<Update />} onClick={() => updateEmployee()} fullWidth variant={"contained"} className={classes.btnUpdate + " " + classes.btn}>Oppdater</Button>
                                     <Button disabled={isProcessing} startIcon={<Backspace />} fullWidth variant={"contained"} color={"default"} className={classes.btn + " " + classes.btnGrey} onClick={() => {
                                         setName(props.name)

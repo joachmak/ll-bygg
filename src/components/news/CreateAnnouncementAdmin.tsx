@@ -1,7 +1,7 @@
 import {
     Button,
     createStyles,
-    Grid,
+    Grid, InputAdornment,
     makeStyles,
     TextField,
     Theme,
@@ -9,7 +9,7 @@ import {
 import {NewsDoc} from "../../types";
 import {collection, add} from "typesaurus";
 import {useState} from "react";
-import {Add} from "@material-ui/icons";
+import {Add, Description, Title} from "@material-ui/icons";
 
 interface announcementInterface {
     id:number;
@@ -91,6 +91,13 @@ export default function Announcement() {
                     value={title}
                     error={error}
                     onChange={(e) => setTitle(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Title />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <TextField
                     className={classes.txtField}
@@ -101,6 +108,13 @@ export default function Announcement() {
                     value={desc}
                     error={error}
                     onChange={(e) => setDesc(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Description />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <Button startIcon={<Add />} disabled={isProcessing} className={classes.btn + " " + classes.greenBtn} variant={"contained"} onClick={() => {
                     createAnnouncement()

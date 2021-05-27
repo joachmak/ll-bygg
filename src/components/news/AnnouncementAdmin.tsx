@@ -1,7 +1,7 @@
 import {
     Button,
     createStyles,
-    Grid,
+    Grid, InputAdornment,
     makeStyles,
     TextField,
     Theme,
@@ -10,7 +10,7 @@ import {NewsDoc} from "../../types";
 import {collection, Doc, update, remove} from "typesaurus";
 import {useState} from "react";
 import ConfirmDeleteDialog from "../ConfirmDeleteDialog";
-import {Backspace, Delete, Update} from "@material-ui/icons";
+import {Backspace, Delete, Description, Title, Update} from "@material-ui/icons";
 
 interface announcementInterface {
     id:number;
@@ -101,6 +101,13 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
                     label={"Tittel"}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Title />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <TextField
                     className={classes.txtField}
@@ -110,6 +117,13 @@ export default function Announcement(props:{announcement:Doc<NewsDoc>}) {
                     label={"Beskrivelse"}
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Description />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <Button startIcon={<Update />} disabled={isProcessing} className={classes.btn + " " + classes.greenBtn} variant={"contained"} color={"primary"} onClick={() => {
                     updateAnnouncement()

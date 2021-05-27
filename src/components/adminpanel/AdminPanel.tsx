@@ -11,6 +11,7 @@ import HeaderAdmin from "../header/HeaderAdmin";
 import {NewsDoc} from "../../types";
 import {collection} from "typesaurus";
 import {useOnAll} from "@typesaurus/react";
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,10 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         btn: {
             color: "white",
-            backgroundColor: theme.palette.success.main,
+            backgroundColor: "green",
             width: "300px",
             "&:hover": {
-                backgroundColor: theme.palette.success.dark,
+                backgroundColor: "darkgreen",
             }
         },
         divider: {
@@ -55,8 +56,8 @@ export default function AdminPanel() {
         <>
             <form className={classes.root} noValidate autoComplete="off">
                 <Typography variant={"h4"}>Administrator-panel</Typography>
-                <Button fullWidth variant="contained" onClick={submit} className={classes.btn}>
-                    Lagre endringer og logg ut
+                <Button startIcon={<MeetingRoomIcon />} fullWidth variant="contained" onClick={submit} className={classes.btn}>
+                    Logg ut
                 </Button>
             </form>
             <HeaderAdmin />

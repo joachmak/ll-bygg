@@ -1,10 +1,20 @@
-import {Button, Container, createStyles, Grid, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    createStyles,
+    Grid,
+    InputAdornment,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from "@material-ui/core";
 import {HeaderSection} from "../../types";
 import {collection, update} from "typesaurus";
 import {useGet} from "@typesaurus/react";
 import {useEffect, useState} from "react";
 import {validateImage} from "../../adminUtils";
-import {Update} from "@material-ui/icons";
+import {Link, Update} from "@material-ui/icons";
 
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
@@ -100,6 +110,13 @@ export default function HeaderAdmin() {
                                 onChange={e => {
                                     setInputImg(e.target.value)
                                     validateImage(e.target.value, () => setIsValidImg(false), () => setIsValidImg(true))
+                                }}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Link />
+                                        </InputAdornment>
+                                    ),
                                 }}
                             />
                             <Button

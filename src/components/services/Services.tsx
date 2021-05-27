@@ -8,15 +8,11 @@ import {useEffect, useState} from "react";
 import {Update} from "@material-ui/icons";
 
 let pageElementsCol = collection("pageElements")
-
-
-
 export default function Services(props:{margin:number, admin:boolean}) {
     const pageElem = collection("pageElements")
     let [servicesDoc] = useGet<ServicesSection>(pageElem, "services")
     let [error, setError] = useState("")
     const uploadServiceDescriptions = async (descs:string[]) => {
-        console.log("Prøver å oppdatere descs: " + descs)
         update(pageElementsCol, "services", { byggDesc: descs[0], monteringDesc: descs[1], rehabiliteringDesc: descs[2] })
             .then(() => {
                 setError("")

@@ -1,6 +1,7 @@
-import {Button, createStyles, makeStyles, TextField, Theme} from "@material-ui/core";
+import {Button, createStyles, InputAdornment, makeStyles, TextField, Theme} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {Delete} from "@material-ui/icons";
+import LinkIcon from "@material-ui/icons/Link";
 
 export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any, rerender:boolean, id:number, otherImages:string[], initUrl:string, onChangeFunc:(id:number, val:string) => any}) {
     const [duplicate, setDuplicate] = useState(false)
@@ -39,7 +40,7 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
                 alignItems: "center",
             },
             inputDuplicate: {
-                color: "orange",
+                color: "red",
             }
         }),
     );
@@ -70,7 +71,12 @@ export default function ProjectAdminImage(props:{onDeleteFunc:(id:number) => any
                         props.onChangeFunc(props.id, e.target.value)
                     }}
                     InputProps={{
-                        className: duplicate ? classes.inputDuplicate : ""
+                        className: duplicate ? classes.inputDuplicate : "",
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <LinkIcon />
+                            </InputAdornment>
+                        ),
                     }}
                     helperText={duplicate ? "OBS: Dette bildet har blitt lagt til flere ganger i dette prosjektet!" : " "}
                 />

@@ -1,11 +1,23 @@
-import {Backdrop, Button, createStyles, Grid, Link, makeStyles, TextField, Theme, Typography} from "@material-ui/core";
+import {
+    Backdrop,
+    Button,
+    createStyles,
+    Grid,
+    InputAdornment,
+    Link,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from "@material-ui/core";
 import {Project} from "../../types";
 import {add, collection, Doc, remove, update} from "typesaurus";
 import {useState} from "react";
 import ProjectAdminImage from "./ProjectAdminImage";
-import {Add, Backspace, Delete, Update} from "@material-ui/icons";
+import {Add, Backspace, Delete, Description, Title, Update} from "@material-ui/icons";
 import ProjectCarousel from "./ProjectCarousel";
 import ConfirmDeleteDialog from "../ConfirmDeleteDialog";
+import LinkIcon from '@material-ui/icons/Link';
 
 export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Project>}) {
     const [thumbnailUrl, setThumbnailUrl] = useState(props.project ? props.project.data.thumbnail : "")
@@ -86,10 +98,8 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
             }
         }
         setImages(res)
-        console.log("TRIGGERED! ID: " + id)
     }
     const deleteImageByID = (id:number) => {
-        console.log("TRIGGERED! ID: " + id)
         let res = []
         for (let i = 0; i < images.length; i++) {
             if (i !== id) {
@@ -158,6 +168,13 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                     value={title}
                     onChange={(e) => {setTitle(e.target.value)}}
                     fullWidth
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Title />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <TextField
                     variant={"outlined"}
@@ -167,6 +184,13 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                     value={description}
                     onChange={(e) => {setDescription(e.target.value)}}
                     fullWidth
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Description />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <Typography variant={"h5"} color={"textSecondary"}>Thumbnail</Typography>
                 <Button
@@ -180,6 +204,13 @@ export default function ProjectAdminCard(props:{create:boolean, project?:Doc<Pro
                     value={thumbnailUrl}
                     onChange={(e) => {setThumbnailUrl(e.target.value)}}
                     fullWidth
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <LinkIcon />
+                            </InputAdornment>
+                        ),
+                    }}
                 />
                 <Typography variant={"h5"} color={"textSecondary"}>Images</Typography>
                 {
