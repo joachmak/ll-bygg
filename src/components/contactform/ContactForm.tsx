@@ -32,10 +32,10 @@ export default function ContactForm(props: {margin:number}) {
                     </Typography>
                     <form method={"post"} noValidate action="https://formspree.io/f/xnqldjry" autoComplete="off">
                         <TextField type={"email"} name={"_replyto"} required fullWidth id="standard-basic" label="E-post" className={classes.textField} /> {/* TODO: Enforce this */}
-                        <TextField fullWidth id="standard-basic" label="Navn" className={classes.textField} />
-                        <TextField fullWidth id="standard-basic" label="Adresse" className={classes.textField} />
-                        <TextField fullWidth id="standard-basic" label="Tema" className={classes.textField} />
-                        <TextField name={"message"} multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
+                        <TextField name={"Navn"} fullWidth id="standard-basic" label="Navn" className={classes.textField} />
+                        <TextField name={"Adresse"} fullWidth id="standard-basic" label="Adresse" className={classes.textField} />
+                        <TextField name={"Tema"} fullWidth id="standard-basic" label="Tema" className={classes.textField} />
+                        <TextField name={"Melding"} multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
                         <TextField value={notRobot} onChange={(e) => setNotRobot(e.target.value)} fullWidth id="standard-basic" label="Vennligst skriv 'ikkerobot' for å bekrefte at du er en ekte person" className={classes.textField} />
                         <Button disabled={notRobot !== "ikkerobot" && notRobot !== "'ikkerobot'" && notRobot !== '"ikkerobot"'} type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
                     </form>
