@@ -16,7 +16,7 @@ import { useScrollSection } from "react-scroll-section";
 
 
 const menuIconSize = 30; // Burger menu icon
-const arrowIconSize = 60; // Right-arrow icon when hovering over menu element
+const arrowIconSize = 40; // Right-arrow icon when hovering over menu element
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         menuButton: {
