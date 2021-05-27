@@ -195,7 +195,7 @@ export default function Footer() {
                             <Grid item sm={6} xs={12}>
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1785.6085223286616!2d10.413453516317942!3d63.41395388406932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x466d31c7583d2bb7%3A0x262e43399830a637!2sOdd%20Brochmanns%20veg%202%2C%207030%20Trondheim!5e0!3m2!1sen!2sno!4v1622100492231!5m2!1sen!2sno"
-                                    width="600" height="450" frameBorder={"none"} title={"kart"}
+                                    width="100%" height="350" frameBorder={"none"} title={"kart"}
                                     loading="lazy">
                                 </iframe>
                             </Grid>
