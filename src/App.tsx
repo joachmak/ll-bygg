@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./components/header/Header";
 import NavigationBar from "./components/NavigationBar";
@@ -14,15 +14,16 @@ import {
 } from '@material-ui/core/styles';
 import Projects from "./components/projects/Projects";
 import { ScrollingProvider, Section } from "react-scroll-section";
-import {BrowserRouter as Router, Switch, Route, RouteProps} from "react-router-dom";
+import {HashRouter as Router, Switch, Route, RouteProps} from "react-router-dom";
 import { Redirect } from "react-router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from 'firebase/app'
+import "./firebase"
 import Login from "./components/login/Login";
 import AdminPanel from "./components/adminpanel/AdminPanel";
 import {collection} from "typesaurus";
 import {NewsDoc} from "./types";
 import {useOnAll} from "@typesaurus/react";
+import { auth } from "./firebase";
 
 
 function App() {
@@ -88,7 +89,6 @@ function App() {
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
     return (
         <div className="App">
-
             <Backdrop
                 className={classes.backdrop}
                 open={displayOverlay}
@@ -107,7 +107,7 @@ function App() {
                 news &&
                 <ScrollingProvider scrollBehavior={"smooth"}>
                     <ThemeProvider theme={theme}>
-                        <Router>
+                        <Router basename={process.env.PUBLIC_URL}>
                             <Switch>
                                 <DisallowAuthenticatedRoute path={"/admin"}>
                                     <Login />
@@ -167,7 +167,7 @@ interface AuthRouteProps extends RouteProps {
 }
 
 function AuthenticatedRoute({ children, redirect = "/", ...rest }: AuthRouteProps) {
-    const [user, loading, error] = useAuthState(firebase.app().auth())
+    const [user, loading, error] = useAuthState(auth)
     error && console.error(error)
     return (
         <Route {...rest}>
@@ -187,7 +187,7 @@ function UnAuthenticatedRoute({ children, redirect = "/", ...rest }: AuthRoutePr
 }
 
 function DisallowAuthenticatedRoute({ children, redirect = "/adminPanel", ...rest }: AuthRouteProps) {
-    const [user, loading, error] = useAuthState(firebase.app().auth())
+    const [user, loading, error] = useAuthState(auth)
     error && console.error(error)
     return (
         <Route {...rest}>

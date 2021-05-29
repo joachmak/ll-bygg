@@ -1,5 +1,4 @@
 import {Button, createStyles, Divider, makeStyles, Theme, Typography} from "@material-ui/core";
-import firebase from "firebase";
 import {useHistory} from 'react-router-dom'
 import Services from "../services/Services";
 import About from "../about/About";
@@ -12,7 +11,7 @@ import {NewsDoc} from "../../types";
 import {collection} from "typesaurus";
 import {useOnAll} from "@typesaurus/react";
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-
+import {auth} from "../../firebase"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,7 +47,7 @@ export default function AdminPanel() {
     const [newsDocs] = useOnAll(newsCollection)
     let margin = 15
     const submit = () => {
-        firebase.app().auth().signOut().then(() => {
+        auth.signOut().then(() => {
             history.push("/")
         })
     }
