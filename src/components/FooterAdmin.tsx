@@ -10,7 +10,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {useEffect, useState} from "react";
-import {Add, Email, Facebook, Instagram, Map, Phone, Room, Update} from "@material-ui/icons";
+import {Add, Backspace, Email, Facebook, Instagram, Link, Map, Phone, Room, Update} from "@material-ui/icons";
 import {collection, update} from "typesaurus";
 import {FooterSection} from "../types";
 import {useOnGet} from "@typesaurus/react";
@@ -48,6 +48,17 @@ export default function FooterAdmin() {
                     backgroundColor: "darkgreen",
                 },
                 marginBottom: 50,
+                marginRight: 10,
+            },
+            btnGrey: {
+                backgroundColor: "grey",
+                color: "white",
+                "&:hover": {
+                    backgroundColor: "#333",
+                },
+                marginBottom: 50,
+                marginRight: 10,
+                border: "none",
             }
         }),
     );
@@ -61,6 +72,7 @@ export default function FooterAdmin() {
     const [mapsUrl, setMapsUrl] = useState("")
     const [ig, setIg] = useState("")
     const [fb, setFb] = useState("")
+    const [mapEmbed, setMapEmbed] = useState("")
     const [isProcessing, setIsProcessing] = useState(false)
     useEffect(() => {
         if (footerDoc && !status.loading && !status.error) {
@@ -71,11 +83,12 @@ export default function FooterAdmin() {
             setEmail(footerDoc.data.email)
             setIg(footerDoc.data.igLink)
             setFb(footerDoc.data.fbLink)
+            setMapEmbed(footerDoc.data.mapsEmbed)
         }
     }, [footerDoc, status.error, status.loading])
     const updateFooter = () => {
         setIsProcessing(true)
-        update(pageElements, "footer", {countryCode:countryCode, address:address, email:email, fbLink:fb, igLink:ig, phone:phoneNumber, mapsUrl:mapsUrl})
+        update(pageElements, "footer", {countryCode:countryCode, address:address, email:email, fbLink:fb, igLink:ig, phone:phoneNumber, mapsUrl:mapsUrl, mapsEmbed:mapEmbed})
             .then(() => {
                 alert("Footeren har blitt oppdatert!")
                 setIsProcessing(false)
@@ -203,6 +216,21 @@ export default function FooterAdmin() {
                                     ),
                                 }}
                             />
+                            <TextField
+                                className={classes.txtField}
+                                variant={"outlined"}
+                                fullWidth
+                                label={"Google maps embed-src"}
+                                value={mapEmbed}
+                                onChange={(e) => setMapEmbed(e.target.value)}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Link />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
                             <Button
                                 variant={"outlined"}
                                 startIcon={<Update />}
@@ -211,6 +239,15 @@ export default function FooterAdmin() {
                                 onClick={() => updateFooter()}
                             >
                                 Oppdater
+                            </Button>
+                            <Button
+                                variant={"outlined"}
+                                startIcon={<Backspace />}
+                                className={classes.btnGrey}
+                                disabled={isProcessing}
+                                onClick={() => updateFooter()}
+                            >
+                                Angre alle endringer
                             </Button>
                         </Grid>
                     </Grid>

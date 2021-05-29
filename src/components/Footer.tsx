@@ -194,7 +194,7 @@ export default function Footer() {
                             </Grid>
                             <Grid item sm={6} xs={12}>
                                 <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2071.968654179147!2d9.224823216047472!3d58.71375038144772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4647a89c58a8362f%3A0xb4617494010031e9!2sUtkikken%206%2C%204950%20Ris%C3%B8r!5e0!3m2!1sen!2sno!4v1622118264349!5m2!1sen!2sno"
+                                    src={footerDoc ? footerDoc.data.mapsEmbed : ""}
                                     width="100%" height="350" frameBorder={"none"} title={"kart"}
                                     loading="lazy">
                                 </iframe>
