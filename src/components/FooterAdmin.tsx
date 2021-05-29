@@ -245,7 +245,18 @@ export default function FooterAdmin() {
                                 startIcon={<Backspace />}
                                 className={classes.btnGrey}
                                 disabled={isProcessing}
-                                onClick={() => updateFooter()}
+                                onClick={() => {
+                                    if (footerDoc) {
+                                        setPhoneNumber(footerDoc.data.phone)
+                                        setMapEmbed(footerDoc.data.mapsEmbed)
+                                        setEmail(footerDoc.data.email)
+                                        setAddress(footerDoc.data.address)
+                                        setMapsUrl(footerDoc.data.mapsUrl)
+                                        setIg(footerDoc.data.igLink)
+                                        setFb(footerDoc.data.fbLink)
+                                        setCountryCode(footerDoc.data.countryCode)
+                                    }
+                                }}
                             >
                                 Angre alle endringer
                             </Button>
