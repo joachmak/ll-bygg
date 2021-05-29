@@ -40,7 +40,7 @@ export default function ContactForm(props: {margin:number}) {
                             Vennligst skriv 'ikkerobot' i tekstfeltet under for å bekrefte at du er en ekte person
                         </Typography>
                         <TextField multiline value={notRobot} onChange={(e) => setNotRobot(e.target.value)} fullWidth id="standard-basic" label="Skriv 'ikkerobot' her" className={classes.textField} />
-                        <Button disabled={!notRobot.toLowerCase().includes("ikkerobot")} type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
+                        <Button disabled={!notRobot.toLowerCase().includes("ikkerobot") || notRobot.length >= 12} type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
                     </form>
                 </Grid>
             </Container>
