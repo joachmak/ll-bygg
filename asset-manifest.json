@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/ll-bygg/static/css/main.3f24a57a.chunk.css",
+    "main.js": "/ll-bygg/static/js/main.6ddb0741.chunk.js",
+    "main.js.map": "/ll-bygg/static/js/main.6ddb0741.chunk.js.map",
+    "runtime-main.js": "/ll-bygg/static/js/runtime-main.1cf393ec.js",
+    "runtime-main.js.map": "/ll-bygg/static/js/runtime-main.1cf393ec.js.map",
+    "static/js/2.27002b8a.chunk.js": "/ll-bygg/static/js/2.27002b8a.chunk.js",
+    "static/js/2.27002b8a.chunk.js.map": "/ll-bygg/static/js/2.27002b8a.chunk.js.map",
+    "static/js/3.7c93c87d.chunk.js": "/ll-bygg/static/js/3.7c93c87d.chunk.js",
+    "static/js/3.7c93c87d.chunk.js.map": "/ll-bygg/static/js/3.7c93c87d.chunk.js.map",
+    "static/js/4.c6f98884.chunk.js": "/ll-bygg/static/js/4.c6f98884.chunk.js",
+    "static/js/4.c6f98884.chunk.js.map": "/ll-bygg/static/js/4.c6f98884.chunk.js.map",
+    "index.html": "/ll-bygg/index.html",
+    "static/css/main.3f24a57a.chunk.css.map": "/ll-bygg/static/css/main.3f24a57a.chunk.css.map",
+    "static/js/2.27002b8a.chunk.js.LICENSE.txt": "/ll-bygg/static/js/2.27002b8a.chunk.js.LICENSE.txt",
+    "static/media/llbygg_redusert.png": "/ll-bygg/static/media/llbygg_redusert.fc265ec0.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1cf393ec.js",
+    "static/js/2.27002b8a.chunk.js",
+    "static/css/main.3f24a57a.chunk.css",
+    "static/js/main.6ddb0741.chunk.js"
+  ]
+}
