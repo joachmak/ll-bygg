@@ -36,8 +36,11 @@ export default function ContactForm(props: {margin:number}) {
                         <TextField name={"Adresse"} fullWidth id="standard-basic" label="Adresse" className={classes.textField} />
                         <TextField name={"Tema"} fullWidth id="standard-basic" label="Tema" className={classes.textField} />
                         <TextField name={"Melding"} multiline rows={5} fullWidth id="standard-basic" label="Melding" className={classes.textField} />
-                        <TextField value={notRobot} onChange={(e) => setNotRobot(e.target.value)} fullWidth id="standard-basic" label="Vennligst skriv 'ikkerobot' for å bekrefte at du er en ekte person" className={classes.textField} />
-                        <Button disabled={notRobot !== "ikkerobot" && notRobot !== "'ikkerobot'" && notRobot !== '"ikkerobot"'} type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
+                        <Typography variant={"caption"} color={"textSecondary"} className={classes.title} >
+                            Vennligst skriv 'ikkerobot' i tekstfeltet under for å bekrefte at du er en ekte person
+                        </Typography>
+                        <TextField multiline value={notRobot} onChange={(e) => setNotRobot(e.target.value)} fullWidth id="standard-basic" label="Skriv 'ikkerobot' her" className={classes.textField} />
+                        <Button disabled={!notRobot.toLowerCase().includes("ikkerobot")} type={"submit"} variant={"outlined"} color={"primary"} >Send henvendelse</Button>
                     </form>
                 </Grid>
             </Container>
