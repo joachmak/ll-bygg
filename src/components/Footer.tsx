@@ -4,7 +4,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import RoomIcon from '@material-ui/icons/Room';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {collection} from "typesaurus";
 import {FooterSection} from "../types";
 import {useOnGet} from "@typesaurus/react";
@@ -65,6 +65,18 @@ function FooterIcon(props:{text:string, linkTo:string, icon:JSX.Element}) {
 }
 
 export default function Footer() {
+    // Detect mobile screen
+    const [width, setWidth] = useState<number>(window.innerWidth);
+    function handleWindowSizeChange() {
+        setWidth(window.innerWidth);
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+    let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -134,6 +146,12 @@ export default function Footer() {
             link: {
                 color: "orange",
             },
+            footerInfoContainer: {
+                display: "flex",
+                justifyContent: isMobile ? "center" : "",
+                alignItems: isMobile ? "center" : "",
+                flexDirection: "column",
+            }
         }),
     );
     const classes = useStyles()
@@ -166,7 +184,7 @@ export default function Footer() {
                                     <FacebookIcon />
                                 </Link>
                             </Grid>
-                            <Grid item sm={6} xs={12}>
+                            <Grid item sm={6} xs={12} className={classes.footerInfoContainer}>
                                 <FooterIcon
                                     text={
                                         "(+" +
