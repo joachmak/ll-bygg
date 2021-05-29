@@ -17,6 +17,7 @@ export default function Header(props:{isMobile:boolean}) {
                 background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
                 backgroundAttachment: props.isMobile ? "scroll" : "fixed",
                 backgroundSize: "cover",
+                backgroundPosition: "center",
                 boxShadow: "inset 0 0 7em 1em #000",
                 display: "flex",
                 alignItems: "center",
