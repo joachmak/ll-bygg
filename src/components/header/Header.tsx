@@ -9,13 +9,13 @@ const darkness = 0.25 // Higher = darker
 export default function Header(props:{isMobile:boolean}) {
     const pageElem = collection("pageElements")
     let [img] = useGet<HeaderSection>(pageElem, "header")
-
+    let isIOS = window.navigator.userAgent.indexOf("Mac") !== -1
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             header: {
                 height: "85vh",
                 background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
-                backgroundAttachment: (props.isMobile || window.navigator.userAgent.indexOf("Mac")) ? "scroll" : "fixed",
+                backgroundAttachment: (props.isMobile || isIOS) ? "scroll" : "fixed",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 boxShadow: "inset 0 0 7em 1em #000",
