@@ -219,7 +219,7 @@ export default function Footer() {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant={"body2"} className={classes.textFaded + " " + classes.center + " " + classes.marginTop15}>
-                                    <b>Nettside laget av <Link href={"https://joachimmaksim.no/"} target="_blank" className={classes.link}>Foxden Consulting</Link> (2021)</b>
+                                    <b>Nettside laget av <Link href={"https://www.linkedin.com/in/joachim-maksim-3823a5197/"} target="_blank" className={classes.link}>Foxden Consulting</Link> (2021)</b>
                                 </Typography>
                             </Grid>
                         </Grid>
