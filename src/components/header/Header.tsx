@@ -15,7 +15,7 @@ export default function Header(props:{isMobile:boolean}) {
             header: {
                 height: "85vh",
                 background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
-                backgroundAttachment: props.isMobile ? "scroll" : "fixed",
+                backgroundAttachment: (props.isMobile || window.navigator.userAgent.indexOf("Mac")) ? "scroll" : "fixed",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 boxShadow: "inset 0 0 7em 1em #000",
