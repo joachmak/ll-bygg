@@ -6,7 +6,7 @@ import {useGet} from "@typesaurus/react";
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
 
-export default function Header() {
+export default function Header(props:{isMobile:boolean}) {
     const pageElem = collection("pageElements")
     let [img] = useGet<HeaderSection>(pageElem, "header")
 
@@ -15,7 +15,7 @@ export default function Header() {
             header: {
                 height: "85vh",
                 background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
-                backgroundAttachment: "fixed",
+                backgroundAttachment: props.isMobile ? "scroll" : "fixed",
                 backgroundSize: "cover",
                 boxShadow: "inset 0 0 7em 1em #000",
                 display: "flex",
@@ -40,7 +40,7 @@ export default function Header() {
     const classes = useStyles()
     return (
         <div className={classes.header}>
-            <img alt={"Header"} className={"headerAnim"} src={logoImg.default} height={200} />
+            <img alt={"Header"} className={"headerAnim"} src={logoImg.default} height={props.isMobile ? 100 : 200} />
         </div>
     )
 }

@@ -119,7 +119,7 @@ function App() {
                                     <NavigationBar menuItems={menuItems} />
 
                                     <Section id={"hjemRef"}>
-                                        <Header />
+                                        <Header isMobile={isMobile} />
                                     </Section>
 
                                     <Section id={"tjenesteRef"}>
