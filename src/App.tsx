@@ -87,6 +87,7 @@ function App() {
         }
     }, []);
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
+    let isIpad: boolean = !isMobile && width <= 1366
     return (
         <div className="App">
             <Backdrop
@@ -119,7 +120,7 @@ function App() {
                                     <NavigationBar menuItems={menuItems} />
 
                                     <Section id={"hjemRef"}>
-                                        <Header isMobile={isMobile} />
+                                        <Header isMobile={isMobile} isIpad={isIpad} />
                                     </Section>
 
                                     <Section id={"tjenesteRef"}>

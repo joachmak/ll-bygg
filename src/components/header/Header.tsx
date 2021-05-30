@@ -6,7 +6,7 @@ import {useGet} from "@typesaurus/react";
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
 
-export default function Header(props:{isMobile:boolean}) {
+export default function Header(props:{isMobile:boolean, isIpad:boolean}) {
     const pageElem = collection("pageElements")
     let [img] = useGet<HeaderSection>(pageElem, "header")
     let isIOS = window.navigator.userAgent.indexOf("Mac") !== -1
@@ -15,7 +15,7 @@ export default function Header(props:{isMobile:boolean}) {
             header: {
                 height: "85vh",
                 background: "linear-gradient( rgba(0, 0, 0, " + darkness + "), rgba(0, 0, 0, " + darkness + ") ), url('" + (img ? img.data!.imgUrl : "") + "')",
-                backgroundAttachment: (props.isMobile || isIOS) ? "scroll" : "fixed",
+                backgroundAttachment: ((props.isIpad || props.isMobile) && isIOS) ? "scroll" : "fixed",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 boxShadow: "inset 0 0 7em 1em #000",
