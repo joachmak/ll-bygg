@@ -168,7 +168,7 @@ export default function Projects(props: {margin:number}) {
         <>
             <Container className={classes.container}>
                 <Grid item lg={8} md={10} xs={12}>
-                    <Typography variant={"h4"} className={classes.title}>Våre prosjekter</Typography>
+                    <Typography variant={"h4"} className={classes.title}>Noen av våre prosjekter</Typography>
                     <Grid container spacing={0}>
                         {
                             projectDocs ?
