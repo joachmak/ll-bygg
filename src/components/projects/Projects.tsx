@@ -22,6 +22,7 @@ function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
                 width: "100%",
                 backgroundImage: "url('" + (props.projectData ? props.projectData.data.thumbnail : "") + "')",
                 backgroundSize: "cover",
+                backgroundPosition: "center",
                 minHeight: 250,
                 padding: 0,
                 borderRadius: 0,

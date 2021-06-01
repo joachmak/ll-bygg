@@ -13,7 +13,7 @@ export default function Services(props:{margin:number, admin:boolean}) {
     let [servicesDoc] = useGet<ServicesSection>(pageElem, "services")
     let [error, setError] = useState("")
     const uploadServiceDescriptions = async (descs:string[]) => {
-        update(pageElementsCol, "services", { byggDesc: descs[0], monteringDesc: descs[1], rehabiliteringDesc: descs[2] })
+        update(pageElementsCol, "services", { byggDesc: descs[0], rehabiliteringDesc: descs[1], monteringDesc: descs[2] })
             .then(() => {
                 setError("")
                 alert("Beskrivelsen ble oppdatert")
