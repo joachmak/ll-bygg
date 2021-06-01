@@ -1,4 +1,4 @@
-import {Backdrop, Button, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
+import {Backdrop, Container, createStyles, Grid, makeStyles, Theme, Typography} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import ProjectCarousel from "./ProjectCarousel";
 import {collection, Doc} from "typesaurus";
@@ -18,37 +18,44 @@ function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
         createStyles({
             projectGrid: {
                 backgroundColor: "rgba(0,0,0,0.1)",
-                height: "100%",
                 width: "100%",
-                backgroundImage: "url('" + (props.projectData ? props.projectData.data.thumbnail : "") + "')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                minHeight: 250,
                 padding: 0,
-                borderRadius: 0,
+                marginBottom: -4,
+                position: "relative",
             },
             displayProjectText: {
                 color: "white",
                 opacity: projectHover ? "100%" : "0%",
                 transition: "all 0.2s ease-in-out",
+                margin: 0,
+                padding: 0,
             },
             projectHoverDiv: {
                 width: "100%",
                 height: projectHover ? "100%" : 0,
-                bottom: "0",
                 backgroundColor: "rgba(255,140,0, 0.9)",
                 color: "white",
-                position: "absolute",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                wrap: "nowrap",
                 transition: "0.2s ease-in-out",
+                position: "absolute",
+                bottom: 0,
+                pointerEvents: "none",
+                padding: 0,
             },
             backdrop: {
                 zIndex: theme.zIndex.drawer + 1,
                 color: '#fff',
                 backgroundColor: "rgba(0,0,0,0.8)"
             },
+            imgContainerDiv: {
+                position: "relative",
+                cursor: "pointer",
+                margin: 0,
+                padding: 0,
+            }
         }),
     );
     const classes = useStyles();
@@ -59,15 +66,18 @@ function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
             </>
         )
     }
+
     return (
         <Grid item sm={6} xs={12}>
-            <Button
-                id={props.projectData.ref!.id}
-                className={classes.projectGrid}
-                onMouseEnter={() => setProjectHover(true)}
-                onMouseLeave={() => setProjectHover(false)}
-                onClick={handleToggle}
-            >
+            <div className={classes.imgContainerDiv}>
+                <img
+                    alt={props.projectData.data.title + " bilde"}
+                    src={props.projectData.data.thumbnail}
+                    className={classes.projectGrid}
+                    onMouseEnter={() => setProjectHover(true)}
+                    onMouseLeave={() => setProjectHover(false)}
+                    onClick={handleToggle}
+                />
                 <div className={classes.projectHoverDiv}>
                     <Typography variant={"body1"} className={classes.displayProjectText}>
                         <b>
@@ -78,7 +88,7 @@ function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
                         </b>
                     </Typography>
                 </div>
-            </Button>
+            </div>
             <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
                 <ProjectCarousel imgUrls={props.projectData.data.images} />
             </Backdrop>
@@ -86,7 +96,7 @@ function ProjectGrid(props: {projectData:Doc<Project> | undefined}) {
     )
 }
 
-function ProjectDesc(props: {isMobile:boolean, toggle:boolean, isLast:boolean, projectData:Doc<Project> | undefined}) {
+function ProjectDesc(props: {isMobile:boolean, toggle:boolean | undefined, isLast:boolean, projectData:Doc<Project> | undefined}) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             projectDesc: {
@@ -163,8 +173,19 @@ export default function Projects(props: {margin:number}) {
     // Retrieve projects from db
     const projectsCol = collection<Project>("projects")
     const [projectDocs] = useOnAll(projectsCol)
-    let toggle = false; // Controls whether to display text on left or right side
-    let projectCount = 0; // Used to check which image is last
+    const [toggleStates, setToggleStates] = useState<Map<string, boolean>>(new Map())
+    useEffect(() => {
+        if (projectDocs) {
+            let toggleState = true
+            let tempMap:Map<string, boolean> = new Map()
+            projectDocs.forEach(project => {
+                tempMap.set(project.ref.id, toggleState)
+                toggleState = !toggleState
+            })
+            setToggleStates(tempMap)
+        }
+    }, [projectDocs])
+    let projectCount = 0
     return (
         <>
             <Container className={classes.container}>
@@ -174,25 +195,25 @@ export default function Projects(props: {margin:number}) {
                         {
                             projectDocs ?
                             projectDocs.map(project => {
-                                toggle = !toggle
-                                projectCount += 1
-                                return (
+                                projectCount++
+
+                                    return (
                                     <Grid container key={project.ref.id}>
                                         {
                                             isMobile ?
                                                 <>
                                                     <ProjectGrid projectData={project} />
-                                                    <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
+                                                    <ProjectDesc toggle={false} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
                                                 </>
                                                 :
-                                                toggle ?
+                                                (toggleStates && toggleStates.has(project.ref.id) ? toggleStates.get(project.ref.id) : false) ?
                                                     <>
                                                         <ProjectGrid projectData={project} />
-                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
+                                                        <ProjectDesc toggle={(toggleStates && toggleStates.has(project.ref.id) ? toggleStates.get(project.ref.id) : true)} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
                                                     </>
                                                     :
                                                     <>
-                                                        <ProjectDesc toggle={toggle} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
+                                                        <ProjectDesc toggle={toggleStates && toggleStates.has(project.ref.id) ? toggleStates.get(project.ref.id) : false} projectData={project} isMobile={isMobile} isLast={projectCount === projectDocs.length} />
                                                         <ProjectGrid projectData={project} />
                                                     </>
                                         }
