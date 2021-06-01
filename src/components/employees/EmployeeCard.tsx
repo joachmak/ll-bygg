@@ -131,7 +131,7 @@ export default function EmployeeCard(props:employeeCardInterface) {
     }
     return (
         <>
-            <Grid item xs={8} sm={5} xl={4}>
+            <Grid item xs={8} sm={5} md={4}>
                 <Card className={classes.card}>
                     <CardMedia
                         title={props.name}
