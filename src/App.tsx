@@ -47,6 +47,34 @@ function App() {
             primary: {
                 main: "#FF8C00"
             },
+        },
+        typography: {
+            h5: {
+                fontFamily: [
+                    "Urbanist",
+                    "Roboto",
+                ].join(","),
+                fontSize: 25,
+            },
+            h4: {
+                fontFamily: [
+                    "Julius Sans One",
+                    "Urbanist",
+                    "Roboto",
+                ].join(","),
+                fontSize: 40,
+            },
+            body1: {
+                fontFamily: [
+                    "Urbanist",
+                    "Roboto",
+                ].join(","),
+                fontSize: 18,
+            },
+            body2: {
+                fontSize: 16,
+            }
+
         }
     });
     const newsCol = collection<NewsDoc>("news")

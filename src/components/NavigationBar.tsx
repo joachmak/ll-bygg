@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
         backdrop: {
             zIndex: theme.zIndex.drawer + 1,
             color: '#fff',
-            backgroundColor: "rgba(255,102,0,0.93)",
+            backgroundColor: "rgba(255,102,0,0.99)",
         },
         icon: {
             width: menuIconSize,
