@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme: Theme) =>
             opacity: 0,
             width: 0,
             height: 0,
+        },
+        typography: {
+            color: "white",
         }
     }),
 );
@@ -103,7 +106,7 @@ function MenuItem(props:{reference:string, boldText:boolean, menuItem:string}) {
         <>
             <Link onClick={headerSection.onClick} underline="none" className={classes.menuText} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} >
                 <NavigateNextIcon className={isMobile ? classes.navigateIconMobile : (hover ? classes.navigateIconHover : classes.navigateIconExit)} />
-                <Typography variant={isMobile ? "h5" : "h4"}>
+                <Typography className={classes.typography} variant={isMobile ? "h5" : "h4"}>
                     {
                         props.boldText ?
                             <b>{props.menuItem.toUpperCase()}</b> : props.menuItem.toUpperCase()

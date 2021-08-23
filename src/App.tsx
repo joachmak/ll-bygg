@@ -51,6 +51,7 @@ function App() {
         typography: {
             h5: {
                 fontFamily: [
+                    "Poppins",
                     "Urbanist",
                     "Roboto",
                 ].join(","),
@@ -58,11 +59,12 @@ function App() {
             },
             h4: {
                 fontFamily: [
-                    "Julius Sans One",
+                    "Poppins",
                     "Urbanist",
                     "Roboto",
                 ].join(","),
-                fontSize: 40,
+                fontSize: 35,
+                color: "#666"
             },
             body1: {
                 fontFamily: [
