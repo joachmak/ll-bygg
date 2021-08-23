@@ -2,6 +2,7 @@ import Carousel from 'react-material-ui-carousel'
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import CarouselImage from "./CarouselImage";
 
 interface carouselProps {
     imgUrls:string[]
@@ -10,16 +11,11 @@ interface carouselProps {
 export default function ProjectCarousel(props:carouselProps) {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
-            image: {
-                maxHeight: "90vh",
-                maxWidth: "90vw",
-                margin: "auto",
-                alignSelf: "center",
-            },
             imgContainer: {
                 width: "90vw",
                 height: "90vh",
                 display: "flex",
+                justifyContent: "center",
             }
         }),
     );
@@ -81,7 +77,7 @@ export default function ProjectCarousel(props:carouselProps) {
             {
                 props.imgUrls.map(imageUrl =>
                     <div key={imageUrl} className={classes.imgContainer}>
-                        <img alt={"bilde"} className={classes.image} src={imageUrl} />
+                        <CarouselImage imgUrl={imageUrl} key={imageUrl} />
                     </div>
                     )
             }
