@@ -6,7 +6,7 @@ import {useGet} from "@typesaurus/react";
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
 
-export default function Header(props:{isMobile:boolean, isIpad:boolean}) {
+export default function Header(props:{isMobile:boolean, isIpad:boolean, lowHeight:boolean}) {
     const pageElem = collection("pageElements")
     let [img] = useGet<HeaderSection>(pageElem, "header")
     let isIOS = window.navigator.userAgent.indexOf("Mac") !== -1
@@ -35,13 +35,32 @@ export default function Header(props:{isMobile:boolean, isIpad:boolean}) {
                 justifyContent: "center",
                 alignItems: "center",
                 padding: 10,
+            },
+            waves: {
+                position: "absolute",
+                bottom: props.isIpad ? "7em" : "2em",
+                zIndex: 0,
+                display: props.isMobile || props.lowHeight ? "none" : "default",
+            },
+            rect: {
+                backgroundColor: "white",
+                width: "100%",
+                height: 100,
+                position: "absolute",
+                bottom: 20,
             }
         }),
     );
     const classes = useStyles()
     return (
-        <div className={classes.header}>
-            <img alt={"Header"} className={"headerAnim"} src={logoImg.default} height={props.isMobile ? 100 : 200} />
-        </div>
+        <>
+            <div className={classes.header}>
+                <img alt={"Header"} className={"headerAnim"} src={logoImg.default} height={props.isMobile ? 100 : 200} />
+                <svg className={classes.waves} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill="#fff" fillOpacity="1" d="M0,128L80,138.7C160,149,320,171,480,165.3C640,160,800,128,960,117.3C1120,107,1280,117,1360,122.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z" />
+                </svg>
+                <div className={classes.rect} />
+            </div>
+        </>
     )
 }

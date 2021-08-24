@@ -77,12 +77,14 @@ export default function Footer() {
         }
     }, []);
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
+    let isTablet: boolean = !isMobile && width <= 1200
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
                 backgroundColor: "#222",
                 width: "100%",
-                padding: "50px 0"
+                padding: "50px 0",
+                marginTop: 0,
             },
             container: {
                 display: "flex",
@@ -151,6 +153,11 @@ export default function Footer() {
                 justifyContent: isMobile ? "center" : "",
                 alignItems: isMobile ? "center" : "",
                 flexDirection: "column",
+            },
+            waves: {
+                marginBottom: -10,
+                marginTop: width > 2100 ? "-25em" : (isTablet ? "-7em" : "-18em"),
+                display: isMobile ? "none" : "default"
             }
         }),
     );
@@ -162,6 +169,9 @@ export default function Footer() {
 
     return (
         <>
+            <svg className={classes.waves} xmlns="http://www.w3.org/2000/svg" viewBox="0 -50 1440 320">
+                <path fill="#222222" fillOpacity="1" d="M0,192L120,197.3C240,203,480,213,720,208C960,203,1200,181,1320,170.7L1440,160L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z" />
+            </svg>
             <div className={classes.root}>
                 <Container className={classes.container}>
                     <Grid item lg={8} md={10} xs={12} className={classes.gridContainer}>

@@ -32,6 +32,7 @@ export default function Services(props:{margin:number, admin:boolean}) {
                 justifyContent: "center",
                 margin: props.margin + "px auto",
                 textAlign: "left",
+                position: "relative",
             },
             title: {
                 marginBottom: 15,

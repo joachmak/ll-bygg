@@ -107,8 +107,10 @@ function App() {
             ]
     // Detect mobile screen
     const [width, setWidth] = useState<number>(window.innerWidth);
+    const [height, setHeight] = useState<number>(window.innerHeight);
     function handleWindowSizeChange() {
         setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
     }
     useEffect(() => {
         window.addEventListener('resize', handleWindowSizeChange);
@@ -117,7 +119,8 @@ function App() {
         }
     }, []);
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
-    let isIpad: boolean = !isMobile && width <= 1366
+    let isIpad: boolean = !isMobile && width <= 1366;
+    let lowHeight: boolean = height <= 900;
     return (
         <div className="App">
             <Backdrop
@@ -150,7 +153,7 @@ function App() {
                                     <NavigationBar menuItems={menuItems} />
 
                                     <Section id={"hjemRef"}>
-                                        <Header isMobile={isMobile} isIpad={isIpad} />
+                                        <Header lowHeight={lowHeight} isMobile={isMobile} isIpad={isIpad} />
                                     </Section>
 
                                     <Section id={"tjenesteRef"}>
