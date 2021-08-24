@@ -6,9 +6,12 @@ import {useGet} from "@typesaurus/react";
 let logoImg = require("./llbygg_redusert.png")
 const darkness = 0.25 // Higher = darker
 
-export default function Header(props:{isMobile:boolean, isIpad:boolean, lowHeight:boolean}) {
+export default function Header(props:{isMobile:boolean, isIpad:boolean, lowHeight:boolean, setIsHeaderLoaded:React.Dispatch<React.SetStateAction<boolean>>}) {
     const pageElem = collection("pageElements")
     let [img] = useGet<HeaderSection>(pageElem, "header")
+    let image = new Image()
+    image.onload = () => props.setIsHeaderLoaded(true)
+    image.src = img ? img.data.imgUrl : ""
     let isIOS = window.navigator.userAgent.indexOf("Mac") !== -1
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({

@@ -81,11 +81,13 @@ function App() {
     });
     const newsCol = collection<NewsDoc>("news")
     const [news] = useOnAll(newsCol)
+
     const [displayOverlay, setDisplayOverlay] = useState(true)
-    if (news && displayOverlay) {
+    let [isHeaderLoaded, setIsHeaderLoaded] = useState(false)
+    if (news && displayOverlay && isHeaderLoaded) {
         setTimeout(() => {
             setDisplayOverlay(false);
-        }, 1000);
+        }, 500);
     }
     const menuItems =
         news && news.length > 0 ?
@@ -153,7 +155,7 @@ function App() {
                                     <NavigationBar menuItems={menuItems} />
 
                                     <Section id={"hjemRef"}>
-                                        <Header lowHeight={lowHeight} isMobile={isMobile} isIpad={isIpad} />
+                                        <Header setIsHeaderLoaded={setIsHeaderLoaded} lowHeight={lowHeight} isMobile={isMobile} isIpad={isIpad} />
                                     </Section>
 
                                     <Section id={"tjenesteRef"}>
