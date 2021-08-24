@@ -3,12 +3,20 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import CarouselImage from "./CarouselImage";
+import {useEffect, useRef} from "react";
 
 interface carouselProps {
     imgUrls:string[]
 }
 
 export default function ProjectCarousel(props:carouselProps) {
+    const isMounted = useRef(false)
+
+    useEffect(() => {
+        isMounted.current = true;
+        return () => { isMounted.current = false }
+    }, []);
+
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             imgContainer: {
@@ -20,7 +28,9 @@ export default function ProjectCarousel(props:carouselProps) {
         }),
     );
     const classes = useStyles();
-
+    if (!isMounted.current) {
+        return (<></>)
+    }
     return (
         <>
             {/*@ts-ignore*/}

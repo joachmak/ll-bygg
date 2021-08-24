@@ -1,11 +1,18 @@
 import {CircularProgress, createStyles, makeStyles, Theme} from "@material-ui/core";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 interface CarouselImageProps {
     imgUrl: string;
 }
 
-export default function CarouselImage(props: CarouselImageProps) {
+export default function CarouselImage(this: any, props: CarouselImageProps) {
+    const isMounted = useRef(false)
+
+    useEffect(() => {
+        isMounted.current = true;
+        return () => { isMounted.current = false }
+    }, []);
+
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             image: {
@@ -21,11 +28,13 @@ export default function CarouselImage(props: CarouselImageProps) {
         }),
     );
     const classes = useStyles();
-
     let [isLoaded, setIsLoaded] = useState(false)
     let image = new Image()
+    if (!isMounted.current) {
+        image.onload = () => setIsLoaded(true)
+    }
     image.src = props.imgUrl
-    image.onload = () => setIsLoaded(true)
+
 
     return (
         <div className={classes.imageContainer}>
@@ -35,7 +44,6 @@ export default function CarouselImage(props: CarouselImageProps) {
                         alt={"bilde"}
                         className={classes.image}
                         src={props.imgUrl}
-                        onLoad={() => setIsLoaded(true)}
                     />
                     :
                     <CircularProgress />
