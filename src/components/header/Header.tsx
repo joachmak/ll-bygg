@@ -51,6 +51,7 @@ export default function Header(props:{isMobile:boolean, isIpad:boolean, lowHeigh
                 height: 100,
                 position: "absolute",
                 bottom: 20,
+                display: props.isMobile || props.lowHeight ? "none" : "default",
             }
         }),
     );
