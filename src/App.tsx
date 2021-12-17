@@ -24,6 +24,7 @@ import {collection} from "typesaurus";
 import {NewsDoc} from "./types";
 import {useOnAll} from "@typesaurus/react";
 import { auth } from "./firebase";
+import Snowflakes from "./components/misc/Snowflakes";
 
 
 function App() {
@@ -123,8 +124,10 @@ function App() {
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
     let isIpad: boolean = !isMobile && width <= 1366;
     let lowHeight: boolean = height <= 900;
+    let christmas = true; // Christmas styling
     return (
         <div className="App">
+            { christmas && <Snowflakes /> }
             <Backdrop
                 className={classes.backdrop}
                 open={displayOverlay}
