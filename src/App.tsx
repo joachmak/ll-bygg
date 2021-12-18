@@ -124,7 +124,8 @@ function App() {
     let isMobile: boolean = (width <= 599); // Mobile if width <= 599px (Material UI Grid breakpoint)
     let isIpad: boolean = !isMobile && width <= 1366;
     let lowHeight: boolean = height <= 900;
-    let christmas = true; // Christmas styling
+    let currentDate = new Date();
+    let christmas = currentDate.getMonth() === 11; // Christmas styling in December
     return (
         <div className="App">
             { christmas && <Snowflakes /> }
