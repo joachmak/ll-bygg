@@ -83,7 +83,7 @@ export default function Services(props:{margin:number, admin:boolean}) {
     const tempDescription = "Beskrivelse laster inn, vennligst vent..."
     let services = [
         [0, "Bygg", (servicesDoc ? servicesDoc.data.byggDesc : tempDescription), faHammer],
-        [1, "Rehabilitering", (servicesDoc ? servicesDoc.data.rehabiliteringDesc : tempDescription), faHouseDamage],
+        [1, "Prosjektering", (servicesDoc ? servicesDoc.data.rehabiliteringDesc : tempDescription), faHouseDamage],
         [2, "Montering", (servicesDoc ? servicesDoc.data.monteringDesc : tempDescription), faTools]
     ]
     let [descs, setDescs] = useState(["","",""])
